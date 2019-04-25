@@ -1,0 +1,531 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Home</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Layout/LayoutAdmin/dist/css/adminlte.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/iCheck/flat/blue.css">
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/morris/morris.css">
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/datepicker/datepicker3.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/daterangepicker/daterangepicker-bs3.css">
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <link href="~/Framwork/CSS/style.css" rel="stylesheet" />
+
+
+
+
+    @*thư viện thêm css*@
+    <link href="~/Scripts/Colorbox/colorbox.css" rel="stylesheet" />
+    <link href="~/Framwork/CSS/sweetalert.css" rel="stylesheet" />
+    @*<link href="~/Framwork/CSS/select2.css" rel="stylesheet" />*@
+    <link href="~/Framwork/CSS/select2.min.css" rel="stylesheet" />
+    <link href="~/Framwork/CSS/angular-toastr.min.css" rel="stylesheet" />
+    <link href="~/Framwork/CSS/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Framwork/Script/slick-1.8.1/slick/slick-theme.css" rel="stylesheet" />
+    <link href="~/Framwork/Script/slick-1.8.1/slick/slick.css" rel="stylesheet" />
+    <link href="~/Framwork/CSS/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Framwork/CSS/fileinput.min.css" rel="stylesheet" />
+
+
+    @*slick slider*@
+    <style>
+        .slider {
+            width: 42%;
+            margin: 100px auto;
+        }
+
+        .slick-slide {
+            margin: 0px 20px;
+        }
+
+        
+
+        .slick-prev:before,
+        .slick-next:before {
+            color: black;
+        }
+
+
+        .slick-slide {
+            transition: all ease-in-out .3s;
+            opacity: .2;
+        }
+
+        .slick-active {
+            opacity: .5;
+        }
+
+        .slick-current {
+            opacity: 1;
+        }
+        .slick-track{
+            width:500px;
+        }
+    </style>
+    @*load more*@
+    <style>
+        .btn-load-more {
+            font-size: 14px;
+            color: #fff;
+            background-color: #00712c;
+            border: 0;
+            outline: 0;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+            .btn-load-more:hover {
+                background-color: #00481c;
+            }
+    </style>
+    <style>
+        .connected, .sortable, .exclude, .handles {
+            margin: auto;
+            padding: 0;
+            width: 310px;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+            .sortable.grid {
+                overflow: hidden;
+            }
+
+            .connected li, .sortable li, .exclude li, .handles li {
+                list-style: none;
+                border: 1px solid #CCC;
+                background: #F6F6F6;
+                font-family: "Tahoma";
+                color: #1C94C4;
+                margin: 5px;
+                padding: 5px;
+                height: 22px;
+            }
+
+            .handles span {
+                cursor: move;
+            }
+
+        li.disabled {
+            opacity: 0.5;
+        }
+
+        .sortable.grid li {
+            line-height: 80px;
+            float: left;
+            width: 80px;
+            height: 80px;
+            text-align: center;
+        }
+
+        li.highlight {
+            background: #FEE25F;
+        }
+
+        #connected {
+            width: 440px;
+            overflow: hidden;
+            margin: auto;
+        }
+
+        .connected {
+            float: left;
+            width: 200px;
+        }
+
+            .connected.no2 {
+                float: right;
+            }
+
+        li.sortable-placeholder {
+            border: 1px dashed #CCC;
+            background: none;
+        }
+    </style>
+    @*<link href="~/Framwork/CSS/dropify.min.css" rel="stylesheet" />*@
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+</head>
+<body class="hold-transition sidebar-mini" ng-app="myApp" ng-controller="myCtrl" ng-init="init()">
+    <div class="wrapper">
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="index3.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <!-- SEARCH FORM -->
+            <form class="form-inline ml-3">
+                <div class="input-group input-group-sm">
+                    <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-navbar" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Messages Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="fa fa-bell-o"></i>
+                        <span class="badge badge-danger navbar-badge">3</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <a href="#" class="dropdown-item">
+                            <!-- Message Start -->
+                            <div class="media">
+                                <img src="../Layout/LayoutAdmin/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                                <div class="media-body">
+                                    <h3 class="dropdown-item-title">
+                                        Brad Diesel
+                                        <span class="float-right text-sm text-danger"><i class="fa fa-star"></i></span>
+                                    </h3>
+                                    <p class="text-sm">Call me whenever you can...</p>
+                                    <p class="text-sm text-muted"><i class="fa fa-clock-o mr-1"></i> 4 Hours Ago</p>
+                                </div>
+                            </div>
+                            <!-- Message End -->
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <!-- Message Start -->
+                            <div class="media">
+                                <img src="../Layout/LayoutAdmin/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                                <div class="media-body">
+                                    <h3 class="dropdown-item-title">
+                                        John Pierce
+                                        <span class="float-right text-sm text-muted"><i class="fa fa-star"></i></span>
+                                    </h3>
+                                    <p class="text-sm">I got your message bro</p>
+                                    <p class="text-sm text-muted"><i class="fa fa-clock-o mr-1"></i> 4 Hours Ago</p>
+                                </div>
+                            </div>
+                            <!-- Message End -->
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <!-- Message Start -->
+                            <div class="media">
+                                <img src="../Layout/LayoutAdmin/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                                <div class="media-body">
+                                    <h3 class="dropdown-item-title">
+                                        Nora Silvester
+                                        <span class="float-right text-sm text-warning"><i class="fa fa-star"></i></span>
+                                    </h3>
+                                    <p class="text-sm">The subject goes here</p>
+                                    <p class="text-sm text-muted"><i class="fa fa-clock-o mr-1"></i> 4 Hours Ago</p>
+                                </div>
+                            </div>
+                            <!-- Message End -->
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                    </div>
+                </li>
+                <!-- Notifications Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="fa fa-comments-o"></i>
+                        <span class="badge badge-warning navbar-badge">15</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <span class="dropdown-item dropdown-header">15 Notifications</span>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fa fa-envelope mr-2"></i> 4 new messages
+                            <span class="float-right text-muted text-sm">3 mins</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fa fa-users mr-2"></i> 8 friend requests
+                            <span class="float-right text-muted text-sm">12 hours</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fa fa-file mr-2"></i> 3 new reports
+                            <span class="float-right text-muted text-sm">2 days</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                    </div>
+                </li>
+
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="~/HomeAdmin/Index" class="brand-link" style="background:white;">
+                <img style="margin-left:15px;" src="../img/1469936020.png" alt="AdminLTE Logo" width="200" height="70">
+            </a>
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img ng-src="/img/{{HinhAnh}}" id="IMG" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block" ng-bind="TenNV" style="margin-top:10px;"></a>
+                    </div>
+                </div>
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+                             with font-awesome or any other icon font library -->
+                        <li class="nav-item has-treeview">
+                            <a href="~/HomeAdmin/Index" class="nav-link {{HomeActive}}">
+                                <i class="nav-icon fa fa-dashboard"></i>
+                                <p>
+                                    Trang Chủ
+                                    @*<i class="right fa fa-angle-left"></i>*@
+                                </p>
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fa fa-pie-chart"></i>
+                                <p>
+                                    Thống kê
+                                    @*<i class="right fa fa-angle-left"></i>*@
+                                </p>
+                            </a>
+                            @*<ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="pages/charts/chartjs.html" class="nav-link">
+                                            <i class="fa fa-circle-o nav-icon"></i>
+                                            <p>ChartJS</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="pages/charts/flot.html" class="nav-link">
+                                            <i class="fa fa-circle-o nav-icon"></i>
+                                            <p>Flot</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="pages/charts/inline.html" class="nav-link">
+                                            <i class="fa fa-circle-o nav-icon"></i>
+                                            <p>Inline</p>
+                                        </a>
+                                    </li>
+                                </ul>*@
+                        </li>
+                        <li class="nav-item has-treeview {{TableOpen}}">
+                            <a href="#" class="nav-link {{TableActive}}">
+                                <i class="nav-icon fa fa-table"></i>
+                                <p>
+                                    Quản lý
+                                    <i class="fa fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item" ng-show="ShowLSP">
+                                    <a href="#" class="nav-link {{ActiveLSP}}">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>Loại sản phẩm</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item" ng-show="ShowNCC">
+                                    <a href="#" class="nav-link {{ActiveNCC}}">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>Nhà cung cấp</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item" ng-show="ShowSP">
+                                    <a href="/SanPham/Index" class="nav-link {{ActiveSP}}">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>Sản Phẩm</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+        <!-- Content Wrapper. Contains page content -->
+        @RenderBody()
+
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <strong>Copyright &copy; 2014-2018 <a href="http://adminlte.io">AdminLTE.io</a>.</strong>
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 3.0.0-alpha
+            </div>
+        </footer>
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- jQuery -->
+    @*<script src="~/Layout/LayoutAdmin/plugins/jquery/jquery.min.js"></script>*@
+    <script src="~/Framwork/Script/jquery-3.2.1.min.js"></script>
+
+    <!-- Bootstrap 4 -->
+    <script src="~/Layout/LayoutAdmin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables -->
+    <script src="~/Layout/LayoutAdmin/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="~/Layout/LayoutAdmin/plugins/datatables/dataTables.bootstrap4.js"></script>
+    <!-- SlimScroll -->
+    <script src="~/Layout/LayoutAdmin/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="~/Layout/LayoutAdmin/plugins/fastclick/fastclick.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Layout/LayoutAdmin/dist/js/adminlte.min.js"></script>
+
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/Layout/LayoutAdmin/dist/js/demo.js"></script>
+
+    <!--thư viện js thêm -->
+
+    <script src="~/Framwork/Script/angular.min.js"></script>
+
+    <script src="~/Framwork/Script/dirPagination.js"></script>
+    <script src="~/Framwork/Script/fileinput.min.js"></script>
+    <script src="~/Framwork/Script/angular-toastr.tpls.min.js"></script>
+    <script src="~/Scripts/Colorbox/jquery.colorbox-min.js"></script>
+    <script src="~/Framwork/Script/bootstrap-filestyle.min.js"></script>
+    <script src="~/Framwork/Script/select2.min.js"></script>
+    <script src="~/Framwork/Script/sweetalert.js"></script>
+    <script src="~/Framwork/Script/jquery-ui-1.10.3.min.js"></script>
+    <script src="~/Framwork/Script/loadMoreResults.js"></script>
+    <script src="~/Framwork/Script/slick-1.8.1/slick/slick.min.js"></script>
+    <script src="~/Framwork/Script/jquery.sortable.min.js"></script>
+    <script src="~/Framwork/Script/ckeditor/ckeditor.js"></script>
+    <script src="~/Framwork/Script/jquery.Timeago.js"></script>
+
+
+    <!--thư viện slect chosen jquery -->
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+
+
+    <!-- page script -->
+    <script>
+        $(function () {
+           
+            $("#tabs").tabs();
+            $('.sortable').sortable();
+            //$('select').selectpicker();
+
+        });
+    </script>
+    <script>
+        function ShowPopup(selector, url, width, height) {
+            selector.colorbox({
+                inline: true,
+                iframe: false,
+                innerWidth: width,
+                innerHeight: height,
+                href: url
+            });
+        }
+        $("#e2").select2({
+            dropdownParent: $('#ShowPopup'),
+            allowClear: true
+        });
+        $("#e3").select2({
+            dropdownParent: $('#ShowPopup'),
+            allowClear: true
+
+        });
+        $("#e4").select2({
+            dropdownParent: $('#ShowPopup'),
+        });
+        $("#e5").select2({
+            placeholder: "--Chọn loại sản phẩm--",
+            allowClear: true
+        });
+        $("#e6").select2({
+            placeholder: "--Chọn sản phẩm--",
+            allowClear: true
+        });
+
+        $("#regular").slick({
+            infinite: true,
+            slidesToShow: 3,
+            slidesToScroll: 3
+
+            ////prevArrow: false,
+            ////nextArrow: false
+        });
+        $('#ctrlFile').filestyle({
+            'text': 'Chọn ảnh',
+            'htmlIcon': '',
+            'btnClass': 'btn-primary',
+            'size': 'nr',
+            'input': true,
+            'badge': true,
+            'badgeName': 'badge-light',
+            'buttonBefore': false,
+            'disabled': false,
+            'placeholder': '',
+            'onChange': function () { }
+        });
+        var btnCust = '';
+        $("#avatar-2").fileinput({
+            overwriteInitial: true,
+            maxFileSize: 1500,
+            showClose: false,
+            showCaption: false,
+            showBrowse: false,
+            browseOnZoneClick: true,
+            removeLabel: '',
+            removeIcon: '<i class="fa fa-remove"></i>',
+            removeTitle: 'Cancel or reset changes',
+            elErrorContainer: '#kv-avatar-errors-2',
+            msgErrorClass: 'alert alert-block alert-danger',
+            defaultPreviewContent: '<img src="/img/top-10-khung-hinh-trang-dep-nhat-1.jpg" alt="Your Avatar"><h6 class="text-muted">Click to select</h6>',
+            layoutTemplates: { main2: '{preview} ' + btnCust + ' {remove} {browse}' },
+            allowedFileExtensions: ["jpg", "png", "gif"]
+        });
+    </script>
+
+    @RenderSection("Angularjs", false);
+</body>
+</html>

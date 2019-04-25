@@ -1,0 +1,219 @@
+﻿
+@{
+    ViewBag.Title = "Trang Chủ";
+    Layout = "~/Views/Shared/LayoutShop.cshtml";
+}
+
+@{Html.RenderAction("Slider", "HomeShop");}
+
+@{Html.RenderAction("Banner", "HomeShop");}
+<!--banner area end-->
+<!--featured product area start-->
+<div class="new_product_area product_two sanpham" style="display:none">
+    <div class="row">
+        <div class="col-12">
+            <div class="block_title">
+                <h3>VANG Ý </h3>
+            </div>
+        </div>
+    </div>
+    <div class="row display-block-vangy" >
+        <div>
+            <div ng-repeat="list in ListSanPham " style="width:300px;height:370px;float:left" >
+                <div class="single_product">
+                    <div class="product_thumb">
+                        <a href="/Detail/Index/{{list.MaSP}}" title="Xem Chi tiết"><img style="margin-left:70px;" ng-src="/img/{{list.HinhAnh}}" width="150" alt=""></a>
+                        <div  class="{{list.NeworOld}}">
+                            <img ng-if="list.NeworOld!=null" ng-src="~/Layout/LayoutShop/assets/img/cart/{{list.ImgNeworOld}}" alt="">
+                            @*<img src="~/Layout/LayoutShop/assets/img/cart/span-new.png" alt="">*@
+                        </div>
+                        <div class="product_action">
+                            <a style="color:white;" id="pointer" ng-click="AddCart(list.MaSP)"> <i class="fa fa-shopping-cart"></i> Add to cart</a>
+                        </div>
+                    </div>
+                    <div class="product_content">
+                        <span class="product_price" style="color:red">{{list.GiaBan|number:0}} đ</span>
+                        <h3 class="product_title"><a href="/Detail/Index/{{list.MaSP}}" ng-bind="list.TenSP"></a></h3>
+                    </div>
+                    <div class="product_info">
+                        <ul>
+                            <li><a href="/Detail/Index/{{list.MaSP}}" title="Xem Chi tiết">Xem Chi tiết</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#modal_box" ng-click="ModalDetail(list.MaSP)" title="Quick view">Xem nhanh</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <center style="margin:auto;display:none;color:white;" class="cart_button button-vangy">
+            <a id="pointer" ng-click="LoadMoreVangY()" ng-show="isShowLoadMoreVangY">Xem Thêm</a>
+            <a id="pointer" ng-click="HideMoreVangY()" ng-show="isShowHideMoreVangY">Ẩn Bớt</a>
+        </center>
+    </div>
+
+</div>
+
+<div class="new_product_area product_two sanpham" style="display:none">
+    <div class="row">
+        <div class="col-12">
+            <div class="block_title">
+                <h3>VANG Pháp</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row display-block-vangphap">
+        <div>
+            <div ng-repeat="list in ListVangPhap " style="width:300px;height:370px;float:left">
+                <div class="single_product">
+                    <div class="product_thumb">
+                        <a href="/Detail/Index/{{list.MaSP}}" title="Xem Chi tiết"><img style="margin-left:70px;" ng-src="/img/{{list.HinhAnh}}" width="150" alt=""></a>
+                        <div class="{{list.NeworOld}}">
+                            <img ng-if="list.NeworOld!=null" ng-src="~/Layout/LayoutShop/assets/img/cart/{{list.ImgNeworOld}}" alt="">
+                            @*<img src="~/Layout/LayoutShop/assets/img/cart/span-new.png" alt="">*@
+                        </div>
+                        <div class="product_action">
+                            <a style="color:white;" id="pointer" ng-click="AddCart(list.MaSP)"> <i class="fa fa-shopping-cart"></i> Add to cart</a>
+                        </div>
+                    </div>
+                    <div class="product_content">
+                        <span class="product_price" style="color:red">{{list.GiaBan|number:0}} đ</span>
+                        <h3 class="product_title"><a href="/Detail/Index/{{list.MaSP}}" ng-bind="list.TenSP"></a></h3>
+                    </div>
+                    <div class="product_info">
+                        <ul>
+                            <li><a href="/Detail/Index/{{list.MaSP}}" title="Xem Chi tiết">Xem Chi tiết</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#modal_box" ng-click="ModalDetail(list.MaSP)" title="Quick view">Xem nhanh</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <center style="margin:auto;display:none;color:white;" class="cart_button button-vangphap">
+            <a id="pointer" ng-click="LoadMoreVangPhap()" ng-show="isShowLoadPhap">Xem Thêm</a>
+            <a id="pointer" ng-click="HideVangPhap()" ng-show="isShowHideVangPhap">Ẩn Bớt</a>
+        </center>
+    </div>
+
+</div>
+
+<div class="new_product_area product_two sanpham" style="display:none">
+    <div class="row">
+        <div class="col-12">
+            <div class="block_title">
+                <h3>VANG TÂY BAN NHA </h3>
+            </div>
+        </div>
+    </div>
+    <div class="row display-block-vangtaybannha">
+        <div>
+            <div ng-repeat="list in ListVangTayBanNha " style="width:300px;height:370px;float:left">
+                <div class="single_product">
+                    <div class="product_thumb">
+                        <a href="/Detail/Index/{{list.MaSP}}" title="Xem Chi tiết"><img style="margin-left:70px;" ng-src="/img/{{list.HinhAnh}}" width="150" alt=""></a>
+                        <div class="{{list.NeworOld}}">
+                            <img ng-if="list.NeworOld!=null" ng-src="~/Layout/LayoutShop/assets/img/cart/{{list.ImgNeworOld}}" alt="">
+                            @*<img src="~/Layout/LayoutShop/assets/img/cart/span-new.png" alt="">*@
+                        </div>
+                        <div class="product_action">
+                            <a style="color:white;" id="pointer" ng-click="AddCart(list.MaSP)"> <i class="fa fa-shopping-cart"></i> Add to cart</a>
+                        </div>
+                    </div>
+                    <div class="product_content">
+                        <span class="product_price" style="color:red">{{list.GiaBan|number:0}} đ</span>
+                        <h3 class="product_title"><a href="/Detail/Index/{{list.MaSP}}" ng-bind="list.TenSP"></a></h3>
+                    </div>
+                    <div class="product_info">
+                        <ul>
+                            <li><a href="/Detail/Index/{{list.MaSP}}" title="Xem Chi tiết">Xem Chi tiết</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#modal_box" ng-click="ModalDetail(list.MaSP)" title="Quick view">Xem nhanh</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <center style="margin:auto;display:none;color:white;" class="cart_button button-vangtaybannha">           
+            <a id="pointer" ng-click="LoadMoreVangTayBanNha()" ng-show="isShowLoadVangTayBanNha">Xem Thêm</a>
+            <a id="pointer" ng-click="HideVangTayBanNha()" ng-show="isShowHideVangTayBanNha">Ẩn Bớt</a>
+        </center>
+    </div>
+
+</div>
+
+<div class="new_product_area product_two sanpham" style="display:none">
+    <div class="row">
+        <div class="col-12">
+            <div class="block_title">
+                <h3>VANG CHILE </h3>
+            </div>
+        </div>
+    </div>
+    <div class="row display-block-vangchile">
+        <div>
+            <div ng-repeat="list in ListVangChile" style="width:300px;height:370px;float:left">
+                <div class="single_product">
+                    <div class="product_thumb">
+                        <a href="/Detail/Index/{{list.MaSP}}" title="Xem Chi tiết"><img style="margin-left:70px;" ng-src="/img/{{list.HinhAnh}}" width="150" alt=""></a>
+                        <div class="{{list.NeworOld}}">
+                            <img ng-if="list.NeworOld!=null" ng-src="~/Layout/LayoutShop/assets/img/cart/{{list.ImgNeworOld}}" alt="">
+                            @*<img src="~/Layout/LayoutShop/assets/img/cart/span-new.png" alt="">*@
+                        </div>
+                        <div class="product_action">
+                            <a style="color:white;" id="pointer" ng-click="AddCart(list.MaSP)"> <i class="fa fa-shopping-cart"></i> Add to cart</a>
+                        </div>
+                    </div>
+                    <div class="product_content">
+                        <span class="product_price" style="color:red">{{list.GiaBan|number:0}} đ</span>
+                        <h3 class="product_title"><a href="/Detail/Index/{{list.MaSP}}" ng-bind="list.TenSP"></a></h3>
+                    </div>
+                    <div class="product_info">
+                        <ul>
+                            <li><a href="/Detail/Index/{{list.MaSP}}" title="Xem Chi tiết">Xem Chi tiết</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#modal_box" ng-click="ModalDetail(list.MaSP)" title="Quick view">Xem nhanh</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <center style="margin:auto;display:none;color:white;" class="cart_button button-vangchile">
+            <a id="pointer" ng-click="LoadMoreVangChile()" ng-show="isShowLoadVangChile">Xem Thêm</a>
+            <a id="pointer" ng-click="HideVangChile()" ng-show="isShowHideVangChile">Ẩn Bớt</a>
+        </center>
+    </div>
+</div>
+
+
+@section Angularjs{
+
+    <script src="~/Scripts/HomeShop/HomeShop.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".display-block-vangy").hover(function () {
+                $(".button-vangy").fadeIn(1000);
+
+            }, function () {
+                $(".button-vangy").fadeOut(1000);
+
+            });
+            $(".display-block-vangphap").hover(function () {
+                $(".button-vangphap").fadeIn(1000);
+
+            }, function () {
+                $(".button-vangphap").fadeOut(1000);
+
+            });
+            $(".display-block-vangtaybannha").hover(function () {
+                $(".button-vangtaybannha").fadeIn(1000);
+
+            }, function () {
+                $(".button-vangtaybannha").fadeOut(1000);
+
+            });
+            $(".display-block-vangchile").hover(function () {
+                $(".button-vangchile").fadeIn(1000);
+
+            }, function () {
+                $(".button-vangchile").fadeOut(1000);
+
+            });
+        });
+    </script>
+}

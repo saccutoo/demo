@@ -1,0 +1,217 @@
+﻿
+@{
+    ViewBag.Title = "Thanh Toán";
+    Layout = "~/Views/Shared/LayoutShop.cshtml";
+}
+
+ <!--breadcrumbs area start-->
+<div class="breadcrumbs_area sanpham" style="display:none;">
+    <div class="row">
+        <div class="col-12">
+            <div class="breadcrumb_content">
+                <ul>
+                    <li><a href="/HomeShop/Index">TRANG CHỦ</a></li>
+                    <li><i class="fa fa-angle-right"></i></li>
+                    <li ><a href="/MyCart/Index" >GIỎ HÀNG</a></li>
+                    <li><i class="fa fa-angle-right"></i></li>
+                    <li>THANH TOÁN</li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!--Checkout page section-->
+<div class="Checkout_section sanpham" style="display:none;">
+    <div class="row">
+        <div class="col-12" ng-show="Login">
+            <div class="user-actions mb-20">
+                <h3>
+                    <i class="fa fa-file-o" aria-hidden="true"></i>
+                    Bạn đã có tài khoản?
+                    <a class="Returning" href="#" data-toggle="collapse" data-target="#checkout_login" aria-expanded="true">Click vào để đăng nhập</a>
+
+                </h3>
+                <div id="checkout_login" class="collapse" data-parent="#accordion">
+                    <div class="checkout_info">
+                        <p>Nếu bạn đã mua sắm với chúng tôi trước đây, vui lòng nhập thông tin của bạn vào các ô bên dưới. Nếu bạn là khách hàng mới, vui lòng tiếp tục với phần Thanh toán & Giao hàng.</p>
+                        <form action="#">
+                            <div class="form_group mb-20">
+                                <label>Tài khoản <span style="color:red"> (*)</span></label>
+                                <input type="text" ng-model="TaiKhoan1">
+                            </div>
+                            <div class="form_group mb-25">
+                                <label>Mật khẩu <span style="color:red"> (*)</span></label>
+                                <input type="password" ng-model="MatKhau">
+                            </div>
+                            <div >
+                                <button id="pointer" type="submit" class="btn btn-primary" ng-click="Login()">Đăng nhập</button>
+                            </div>
+                            <a href="#">Tạo tài khoản.</a>
+                            <a href="#">Bạn quên mật khẩu?</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            @*<div class="user-actions mb-20">
+                <h3>
+                    <i class="fa fa-file-o" aria-hidden="true"></i>
+                    Returning customer?
+                    <a class="Returning" href="#" data-toggle="collapse" data-target="#checkout_coupon" aria-expanded="true">Click here to enter your code</a>
+
+                </h3>
+                <div id="checkout_coupon" class="collapse" data-parent="#accordion">
+                    <div class="checkout_info">
+                        <form action="#">
+                            <input placeholder="Coupon code" type="text">
+                            <input value="Apply coupon" type="submit">
+                        </form>
+                    </div>
+                </div>
+            </div>*@
+        </div>
+    </div>
+    <div class="checkout_form">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <form action="#">
+                    <h3>THÔNG TIN KHÁCH HÀNG</h3>
+                    <div class="row">
+
+                        <div class="col-lg-6 mb-30">
+                            <label>Tên <span>(*)</span></label>
+                            <input type="text" ng-model="Data.Ten" ng-change="ChangeTen()">
+                            <span ng-bind="ErrorTen" style="color:red;margin-top:10px;"></span>
+                        </div>
+                        <div class="col-lg-6 mb-30">
+                            <label>Họ và tên đệm  <span>(*)</span></label>
+                            <input type="text" ng-model="Data.TenDem" ng-change="ChangeTenDem()">
+                            <span ng-bind="ErrorTenDem" style="color:red;margin-top:10px;"></span>
+                        </div>
+                        <div class="col-12 mb-30">
+                            <label>Địa chỉ <span>(*)</span></label>
+                            <input type="text" ng-model="Data.DiaChi" ng-change="ChangeDiaChi()">
+                            <span ng-bind="ErrorDiaChi" style="color:red;margin-top:10px;" ></span>
+                        </div>
+                        <div class="col-12 mb-30">
+                            <label for="country">Tỉnh/Thành <span>(*)</span></label>
+                            <select name="cuntry" style="width: 100%;" id="e2" ng-model="Data.MaThanhPho" ng-options="list.MaThanhPho as list.TenThanhPho for list in ListCity" ng-change="ChangeCity()">
+                                <option value="" selected>--Chọn Tỉnh/Thành--</option>                                
+                            </select>
+                            <span ng-bind="ErrorMaThanhPho" style="color:red;margin-top:10px;"></span>
+
+                        </div>
+                        <div class="col-12 mb-30">
+                            <label for="country">Quận/Huyện <span>(*)</span></label>
+                            <select name="cuntry" style="width: 100%;" id="e3" ng-model="Data.MaHuyen" ng-options="list.MaHuyen as list.TenHuyen for list in ListDistrict" ng-change="ChangeHuyen()">
+                                <option value="99" selected>--Chọn Quận/Huyện--</option>
+                               
+                            </select>
+                            <span ng-bind="ErrorMaHuyen" style="color:red;margin-top:10px;"></span>
+
+                        </div>
+                        <div class="col-lg-6 mb-30">
+                            <label>Số điện thoại <span>(*)</span></label>
+                            <input type="text" ng-model="Data.SDT" ng-change="ChangeSDT()">
+                            <span ng-bind="ErrorSDT" style="color:red;margin-top:10px;" ></span>
+                        </div>
+                        <div class="col-lg-6 mb-30">
+                            <label> Đia chỉ Email <span>(*)</span></label>
+                            <input type="text" ng-model="Data.Gmail" ng-change="ChangeGmail()">
+                            <span ng-bind="ErrorGmail" style="color:red;margin-top:10px;"></span>
+                        </div>
+                        
+                        <div class="col-12 mb-30">
+                            <label class="righ_0" for="address" data-toggle="collapse" data-target="#collapsetwo" aria-controls="collapseOne" ng-click="Order()">GỬI ĐƠN HÀNG</label>                           
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <form action="#">
+                    <h3>SẢN PHẨM BẠN ĐÃ ĐẶT</h3>
+                    <div class="order_table table-responsive mb-30">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Sản phẩm </th>
+                                    <th>Tổng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="list in ListShopCart">
+                                    <td> {{list.iTenSP}} <strong> × {{list.iSoLuongBan}}</strong></td>
+                                    <td style="color:red"> {{(list.iGiaBan*list.iSoLuongBan | number:0)}} ₫</td>
+                                </tr>                               
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Tổng tiền</th>
+                                    <td style="color:red">{{TotalCart | number:0}} ₫</td>
+                                </tr>
+                                <tr>
+                                    <th>Phương thức thanh toán</th>
+                                    <td>
+                                        <select name="cuntry" style="width: 100%;" id="e4" ng-model="Data.PhuongThuc">
+                                            <option value="0" >Thanh toán tiền mặt</option>
+                                            <option value="1">Thanh toán qua thẻ</option>                                          
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr ng-show="(Data.PhuongThuc=='0')?true:false">
+                                    <th>Phí ship</th>
+                                    <td ng-show="(Data.MaThanhPho==1 )?true:false"><strong style="color:red" ng-bind="NoiThanh"></strong></td>
+                                    <td ng-show="(Data.MaThanhPho!=1 )?true:false"><strong style="color:red" ng-bind="NgoaiThanh"></strong></td>
+
+                                </tr>
+                                <tr class="order_total" ng-show="(Data.PhuongThuc=='0')?true:false">
+                                    <th>Tổng tiền cần trả</th>
+                                    <td ng-show="(Data.MaThanhPho==1 )?true:false"><strong style="color:red" >{{(TotalCart + 15000 | number:0)}} ₫</strong></td>
+                                    <td ng-show="(Data.MaThanhPho!=1 )?true:false"><strong style="color:red" >{{(TotalCart + 35000 | number:0)}} ₫</strong></td>
+                                </tr>
+                                <tr class="order_total" ng-show="(Data.PhuongThuc=='1')?true:false">
+                                    <th>Tổng tiền cần trả</th>
+                                    <td ng-show="(Data.MaThanhPho==1 || Data.MaThanhPho!=1)?true:false"><strong style="color:red">{{(TotalCart | number:0)}} ₫</strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    @*<div class="payment_method">
+                        <div class="panel-default">
+                            Chọn phương thức thanh toán
+                        </div>
+                        <div class="panel-default">
+                            <input id="payment" name="check_method" type="radio" data-target="createp_account" />
+                            <label for="payment" data-toggle="collapse" data-target="#method" aria-controls="method">Create an account?</label>
+
+                            <div id="method" class="collapse one" data-parent="#accordion">
+                                <div class="card-body1">
+                                    <p>Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-default">
+                            <input id="payment_defult" name="check_method" type="radio" data-target="createp_account" />
+                            <label for="payment_defult" data-toggle="collapse" data-target="#collapsedefult" aria-controls="collapsedefult">PayPal <img src="assets/img/visha/papyel.png" alt=""></label>
+
+                            <div id="collapsedefult" class="collapse one" data-parent="#accordion">
+                                <div class="card-body1">
+                                    <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="order_button">
+                            <button type="submit">Proceed to PayPal</button>
+                        </div>
+                    </div>*@
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Checkout page section end-->
+@section Angularjs{
+    <script src="~/Scripts/Pay/Pay.js"></script>
+}

@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "Giỏ hàng";
+    Layout = "~/Views/Shared/LayoutShop.cshtml";
+}
+<div class="breadcrumbs_area sanpham" style="display:none">
+    <div class="row">
+        <div class="col-12">
+            <div class="breadcrumb_content">
+                <ul>
+                    <li><a href="/HomeShop/Index">TRANG CHỦ</a></li>
+                    <li><i class="fa fa-angle-right"></i></li>
+                    <li>GIỎ HÀNG</li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!--shopping cart area start -->
+<div class="shopping_cart_area sanpham"  style="display:none">
+    <form action="#">
+        <div class="row">
+            <div class="col-12">
+                <div class="table_desc">
+                    <div class="cart_page table-responsive">
+                        <table>
+                            <thead>
+                                <tr style="font-weight:bold">
+                                    <th class="product_remove">Xóa</th>
+                                    <th class="product_thumb">Hình ảnh</th>
+                                    <th class="product_name">Sản phẩm</th>
+                                    <th class="product-price">Giá tiền</th>
+                                    <th class="product_quantity">Số lượng</th>
+                                    <th class="product_total">Tổng tiền</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="list in ListShopCart">
+                                    <td class="product_remove"><a id="pointer" ng-click="DeteleCart(list.iMaSP)"><i class="fa fa-trash-o"></i></a></td>
+                                    <td class="product_thumb"><a href="#"><img ng-src="~/img/{{list.iHinhAnh}}" style="width:50px" alt=""></a></td>
+                                    <td class="product_name"  ><a href="#" ng-bind="list.iTenSP"></a></td>
+                                    <td class="product-price" style="color:red">{{list.iGiaBan | number:0}} ₫</td>
+                                    <td class="product_quantity" ><input  type="number" ng-model="list.iSoLuongBan" ng-change="ChangeSoLuong(list.iMaSP,list.iSoLuongBan)"></td>
+                                    <td class="product_total" style="color:red">{{(list.iGiaBan*list.iSoLuongBan | number:0)}} ₫</td>
+                                </tr>                               
+                            </tbody>
+                        </table>
+                        <div  ng-show="isShowCartHollow">
+                            <div>
+                                <p ng-bind="CartHollow" style="color:red;margin-top:10px;text-align:center"></p>
+
+                            </div>
+                            <div>
+                                <p style="text-align:center"> <i class="fa fa-arrow-left"></i> <a href="/HomeShop/Index" style="color:blue">Tiếp tục mua hàng</a></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cart_submit" ng-show="!isShowCartHollow">
+                        <button type="button" ng-click="refrech()"><i class="fa fa-refresh"></i> TẢI LẠI</button>
+                        <button type="button" ng-click="Update()"><i class="fa fa-edit"></i> CẬP NHẬP</button>
+                        <button type="button" ng-click="GoHome()"><i class="fa fa-mail-reply"></i> TRANG CHỦ</button>
+                        <button type="button" ng-click="Pay()"><i class="fa fa-cc-visa"></i> THANH TOÁN</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--coupon code area start-->
+        <div class="coupon_area">
+            <div class="row">
+                @*<div class="col-lg-6 col-md-6">
+                    <div class="coupon_code">
+                        <h3>Coupon</h3>
+                        <div class="coupon_inner">
+                            <p>Enter your coupon code if you have one.</p>
+                            <input placeholder="Coupon code" type="text">
+                            <button type="submit">Apply coupon</button>
+                        </div>
+                    </div>
+                </div>*@
+                <div class="col-lg-6 col-md-6">
+                    <div class="coupon_code">
+                        <h3>TỔNG SỐ</h3>
+                        <div class="coupon_inner">
+                            <div class="cart_subtotal ">
+                                <p>Tổng số lượng</p>
+                                <p class="cart_amount" ng-bind="TotalQuanty"></p>
+                            </div>
+                            <div class="cart_subtotal">
+                                <p>Tổng tiền</p>
+                                <p class="cart_amount" style="color:red">{{TotalCart|number:0}} ₫</p>
+                            </div>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--coupon code area end-->
+    </form>
+</div>
+<!--shopping cart area end -->
+@section Angularjs{
+<script src="~/Scripts/MyCart/MyCart.js"></script>
+}

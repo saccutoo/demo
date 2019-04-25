@@ -1,0 +1,98 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login-Admin</title>
+    <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/font-awesome/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Layout/LayoutAdmin/dist/css/adminlte.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/iCheck/flat/blue.css">
+    <!-- Morris chart -->
+    <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/morris/morris.css">
+    <!-- jvectormap -->
+    <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+    <!-- Date Picker -->
+    <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/datepicker/datepicker3.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/daterangepicker/daterangepicker-bs3.css">
+    <!-- bootstrap wysihtml5 - text editor -->
+    <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
+    <!--Fontawesome CDN-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="~/Framwork/CSS/LoginAdmin.css" rel="stylesheet" />
+    <link href="~/Framwork/CSS/angular-toastr.min.css" rel="stylesheet" />
+
+</head>
+<body ng-app="myApp" ng-controller="myCtrl" ng-init="init()">
+    <div class="container" >
+        <div class="d-flex justify-content-center h-100">
+            <div class="card">
+                <div class="card-header">
+                    <h3 >Sign In</h3>
+                    <div class="d-flex justify-content-end social_icon">
+                        <span><i class="fab fa-facebook-square"></i></span>
+                        <span><i class="fab fa-google-plus-square"></i></span>
+                        <span><i class="fab fa-twitter-square"></i></span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form role="form" name="EditForm" ng-submit="SaveAction(tableInfo.AddUrl,EditForm)">
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Tài khoản..." ng-model="TaiKhoan1">
+
+                        </div>
+                        <div class="input-group form-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input type="password" class="form-control" placeholder="Mật khẩu..." ng-model="MatKhau">
+                        </div>
+                        <div class="row align-items-center remember">
+                            <input type="checkbox">Remember Me
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Login" class="btn float-right login_btn" ng-click="btnLogin()">
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-center links">
+                        Don't have an account?<a href="#">Sign Up</a>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <a href="#">Forgot your password?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/Framwork/Script/jquery-3.2.1.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="~/Layout/LayoutAdmin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables -->
+<script src="~/Layout/LayoutAdmin/plugins/datatables/jquery.dataTables.js"></script>
+<script src="~/Layout/LayoutAdmin/plugins/datatables/dataTables.bootstrap4.js"></script>
+<!-- SlimScroll -->
+<script src="~/Layout/LayoutAdmin/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<!-- FastClick -->
+<script src="~/Layout/LayoutAdmin/plugins/fastclick/fastclick.js"></script>
+<!-- AdminLTE App -->
+<script src="~/Layout/LayoutAdmin/dist/js/adminlte.min.js"></script>
+<script src="~/Framwork/Script/angular.min.js"></script>
+<script src="~/Framwork/Script/angular-toastr.tpls.min.js"></script>
+<script src="~/Scripts/LoginAdmin/LoginAdmin.js"></script>

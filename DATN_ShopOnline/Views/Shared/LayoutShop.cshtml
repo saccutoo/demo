@@ -1,0 +1,923 @@
+﻿<!doctype html>
+<html class="no-js" lang="zxx">
+
+<!-- Mirrored from demo.devitems.com/coron-v4/coron/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 30 Jan 2019 17:25:29 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Coron - Fashion eCommerce Bootstrap4 Template</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="996386397457-6jb9tlsg9uk6uq174h6tknh922t0q0t8.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/1469936020.png">
+
+    <!-- all css here -->
+    <link rel="stylesheet" href="~/Layout/LayoutShop/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Layout/LayoutShop/assets/css/plugin.css">
+    <link rel="stylesheet" href="~/Layout/LayoutShop/assets/css/bundle.css">
+    <link rel="stylesheet" href="~/Layout/LayoutShop/assets/css/style.css">
+    <link rel="stylesheet" href="~/Layout/LayoutShop/assets/css/responsive.css">
+    <script src="~/Layout/LayoutShop/assets/js/vendor/modernizr-2.8.3.min.js"></script>
+
+    @*thư viện thêm css*@
+    <link href="~/Scripts/Colorbox/colorbox.css" rel="stylesheet" />
+    <link href="~/Framwork/CSS/sweetalert.css" rel="stylesheet" />
+    @*<link href="~/Framwork/CSS/select2.css" rel="stylesheet" />*@
+    <link href="~/Framwork/CSS/select2.min.css" rel="stylesheet" />
+    <link href="~/Framwork/CSS/angular-toastr.min.css" rel="stylesheet" />
+    <link href="~/Framwork/CSS/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Framwork/CSS/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="~/Framwork/CSS/fileinput.min.css" rel="stylesheet" />
+    <link href="~/Framwork/CSS/jquery.bxslider.css" rel="stylesheet" />
+    <link href="~/Framwork/CSS/star-rating-svg.css" rel="stylesheet" />
+    @*<link href="~/Framwork/CSS/index.css" rel="stylesheet" />*@
+    <link href="~/Framwork/CSS/showLoading.css" rel="stylesheet" />
+    <link href="~/Framwork/CSS/datepicker.css" rel="stylesheet" />
+
+    <style>
+        #pointer {
+            cursor: pointer;
+        }
+
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+        }
+
+            .pagination a.active {
+                background-color: #4CAF50;
+                color: white;
+                border: 1px solid #4CAF50;
+            }
+
+            .pagination a:hover:not(.active) {
+                background-color: #ddd;
+            }
+
+        #Form .label {
+            line-height: 35px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body ng-app="myApp" ng-controller="myCtrl" ng-init="init()">
+    <!-- Add your site or application content here -->
+    <!--pos page start-->
+    <div class="pos_page">
+        <div class="container">
+            <!--pos page inner-->
+            <div class="pos_page_inner">
+                <!--header area -->
+                <div class="header_area">
+                    <!--header top-->
+                    <div class="header_top">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6 col-md-6">
+                                <div class="switcher">
+                                    <ul>
+                                        <li class="languages">
+                                            <a href="#"><img src="~/Layout/LayoutShop/assets/img/logo/fontlogo.jpg" alt=""> English <i class="fa fa-angle-down"></i></a>
+                                            <ul class="dropdown_languages">
+                                                <li><a href="#"><img src="~/Layout/LayoutShop/assets/img/logo/fontlogo.jpg" alt=""> English</a></li>
+                                                <li><a href="#"><img src="~/Layout/LayoutShop/assets/img/logo/fontlogo2.jpg" alt=""> French </a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="currency">
+                                            <a href="#"> Currency : $ <i class="fa fa-angle-down"></i></a>
+                                            <ul class="dropdown_currency">
+                                                <li><a href="#"> Dollar (USD)</a></li>
+                                                <li><a href="#"> Euro (EUR)  </a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 isShowheader" style="display:none">
+                                <div class="header_links">
+                                    <ul>
+                                        <li><a href="/MyAccount/Index" title="Thôn tin cá nhân" ng-show="MyAccount" ng-bind="TenKH"></a></li>
+                                        <li><a href="/MyCart/Index" title="My cart">Giỏ hàng</a></li>
+                                        <li><a href="@Url.Action("Logout","LoginShop",new { @URL = Request.Url.ToString() })" title="Login" ng-show="Logout">Đăng xuất</a></li>
+                                        <li><a href="@Url.Action("LoginURL","LoginShop",new { @URL = Request.Url.ToString() })" title="Login" ng-show="Login">Đăng nhập</a></li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--header top end-->
+                    <!--header middel-->
+                    <div class="header_middel">
+                        <div class="row align-items-center">
+                            <!--logo start-->
+                            <div class="col-lg-3 col-md-3">
+                                <div class="logo">
+                                    <a href="/HomeShop/Index"><img src="~/img/1469936020.png" alt=""></a>
+                                </div>
+                            </div>
+                            <!--logo end-->
+                            <div class="col-lg-9 col-md-9">
+                                <div class="header_right_info">
+                                    <div class="search_bar">
+                                        <form action="@Url.Action("Index","ShopList")">
+                                            <input placeholder="Search..." type="text" name="search" ng-model="serach">
+                                            <button type="submit"><i class="fa fa-search" @*ng-click="ClickSerach()"*@></i></button>
+                                        </form>
+                                    </div>
+                                    <div class="shopping_cart">
+                                        <a href="#"><i class="fa fa-shopping-cart"></i> {{CountCart}} sản phẩm - <span style="color:red">{{TotalCart|number:0}} đ</span> <i class="fa fa-angle-down"></i></a>
+                                        <!--mini cart-->
+                                        <div class="mini_cart">
+                                            <div class="cart_item" ng-repeat="list in ListShopCart">
+                                                <div class="cart_img">
+                                                    <a href="#"><img ng-src="/img/{{list.iHinhAnh}}" alt="" class="img-thumbnail"></a>
+                                                </div>
+                                                <div class="cart_info">
+                                                    <a href="#" ng-bind="list.iTenSP"></a>
+                                                    <span class="cart_price" style="color:red">{{list.iGiaBan|number:0}} đ</span>
+                                                    <span class="quantity">Số lượng: {{list.iSoLuongBan}}</span>
+                                                </div>
+                                                <div class="cart_remove">
+                                                    <a title="Remove this item" href="#" ng-click="DeteleCart(list.iMaSP)"><i class="fa fa-times-circle"></i></a>
+                                                </div>
+
+                                            </div>
+                                            <p style="color:red" ng-bind="CartHollow" ng-show="isShowCartHollow"></p>
+                                            @*<div class="shipping_price">
+                                                    <span> Shipping </span>
+                                                    <span>  $7.00  </span>
+                                                </div>*@
+                                            <div class="total_price">
+                                                <span> Tổng tiền: </span>
+                                                <span class="prices" style="color:red">{{TotalCart|number:0}}</span>
+                                                <span> Tổng số lượng: </span>
+                                                <span class="prices" style="color:#4fc1f0" ng-bind="TotalQuanty"></span>
+                                            </div>
+                                            <div class="cart_button" ng-show="isShowButtonCart">
+                                                <a href="/MyCart/Index"> Xem giỏ hàng</a>
+                                                <a href="/Pay/Index"> Thanh toán</a>
+                                            </div>
+                                        </div>
+                                        <!--mini cart end-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--header middel end-->
+                    <div class="header_bottom">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="main_menu_inner">
+                                    <div class="main_menu d-none d-lg-block">
+                                        <nav>
+                                            <ul>
+                                                <li class="{{HomeShopActive}}">
+                                                    <a href="/HomeShop/Index">TRANG CHỦ</a>
+                                                    @*<div class="mega_menu jewelry">
+                                                            <div class="mega_items jewelry">
+                                                                <ul>
+                                                                    <li><a href="index.html">Home 1</a></li>
+                                                                    <li><a href="index-2.html">Home 2</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>*@
+                                                </li>
+                                                <li class="{{ShopListActive}}">
+                                                    <a href="/ShopList/Index/0">SẢN PHẨM</a>
+                                                    <div class="mega_menu jewelry">
+                                                        <div class="mega_items jewelry">
+                                                            <ul ng-repeat="list in ListLoaiSP">
+                                                                <li><a href="/ShopList/Index/{{list.MaLoai}}">{{list.TenLoai}}</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <a href="#">women</a>
+                                                    <div class="mega_menu">
+                                                        <div class="mega_top fix">
+                                                            <div class="mega_items">
+                                                                <h3><a href="#">Accessories</a></h3>
+                                                                <ul>
+                                                                    <li><a href="#">Cocktai</a></li>
+                                                                    <li><a href="#">day</a></li>
+                                                                    <li><a href="#">Evening</a></li>
+                                                                    <li><a href="#">Sundresses</a></li>
+                                                                    <li><a href="#">Belts</a></li>
+                                                                    <li><a href="#">Sweets</a></li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="mega_items">
+                                                                <h3><a href="#">HandBags</a></h3>
+                                                                <ul>
+                                                                    <li><a href="#">Accessories</a></li>
+                                                                    <li><a href="#">Hats and Gloves</a></li>
+                                                                    <li><a href="#">Lifestyle</a></li>
+                                                                    <li><a href="#">Bras</a></li>
+                                                                    <li><a href="#">Scarves</a></li>
+                                                                    <li><a href="#">Small Leathers</a></li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="mega_items">
+                                                                <h3><a href="#">Tops</a></h3>
+                                                                <ul>
+                                                                    <li><a href="#">Evening</a></li>
+                                                                    <li><a href="#">Long Sleeved</a></li>
+                                                                    <li><a href="#">Shrot Sleeved</a></li>
+                                                                    <li><a href="#">Tanks and Camis</a></li>
+                                                                    <li><a href="#">Sleeveless</a></li>
+                                                                    <li><a href="#">Sleeveless</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mega_bottom fix">
+                                                            <div class="mega_thumb">
+                                                                <a href="#"><img src="~/Layout/LayoutShop/assets/img/banner/banner1.jpg" alt=""></a>
+                                                            </div>
+                                                            <div class="mega_thumb">
+                                                                <a href="#"><img src="~/Layout/LayoutShop/assets/img/banner/banner2.jpg" alt=""></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <a href="#">men</a>
+                                                    <div class="mega_menu">
+                                                        <div class="mega_top fix">
+                                                            <div class="mega_items">
+                                                                <h3><a href="#">Rings</a></h3>
+                                                                <ul>
+                                                                    <li><a href="#">Platinum Rings</a></li>
+                                                                    <li><a href="#">Gold Ring</a></li>
+                                                                    <li><a href="#">Silver Ring</a></li>
+                                                                    <li><a href="#">Tungsten Ring</a></li>
+                                                                    <li><a href="#">Sweets</a></li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="mega_items">
+                                                                <h3><a href="#">Bands</a></h3>
+                                                                <ul>
+                                                                    <li><a href="#">Platinum Bands</a></li>
+                                                                    <li><a href="#">Gold Bands</a></li>
+                                                                    <li><a href="#">Silver Bands</a></li>
+                                                                    <li><a href="#">Silver Bands</a></li>
+                                                                    <li><a href="#">Sweets</a></li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="mega_items">
+                                                                <a href="#"><img src="~/Layout/LayoutShop/assets/img/banner/banner3.jpg" alt=""></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <a href="#">pages</a>
+                                                    <div class="mega_menu">
+                                                        <div class="mega_top fix">
+                                                            <div class="mega_items">
+                                                                <h3><a href="#">Column1</a></h3>
+                                                                <ul>
+                                                                    <li><a href="portfolio.html">Portfolio</a></li>
+                                                                    <li><a href="portfolio-details.html">single portfolio </a></li>
+                                                                    <li><a href="about.html">About Us </a></li>
+                                                                    <li><a href="about-2.html">About Us 2</a></li>
+                                                                    <li><a href="services.html">Service </a></li>
+                                                                    <li><a href="my-account.html">my account </a></li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="mega_items">
+                                                                <h3><a href="#">Column2</a></h3>
+                                                                <ul>
+                                                                    <li><a href="blog.html">Blog </a></li>
+                                                                    <li><a href="blog-details.html">Blog  Details </a></li>
+                                                                    <li><a href="blog-fullwidth.html">Blog FullWidth</a></li>
+                                                                    <li><a href="blog-sidebar.html">Blog  Sidebar</a></li>
+                                                                    <li><a href="faq.html">Frequently Questions</a></li>
+                                                                    <li><a href="404.html">404</a></li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="mega_items">
+                                                                <h3><a href="#">Column3</a></h3>
+                                                                <ul>
+                                                                    <li><a href="contact.html">Contact</a></li>
+                                                                    <li><a href="cart.html">cart</a></li>
+                                                                    <li><a href="checkout.html">Checkout  </a></li>
+                                                                    <li><a href="wishlist.html">Wishlist</a></li>
+                                                                    <li><a href="login.html">Login</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                                <li>
+                                                    <a href="blog.html">blog</a>
+                                                    <div class="mega_menu jewelry">
+                                                        <div class="mega_items jewelry">
+                                                            <ul>
+                                                                <li><a href="blog-details.html">blog details</a></li>
+                                                                <li><a href="blog-fullwidth.html">blog fullwidth</a></li>
+                                                                <li><a href="blog-sidebar.html">blog sidebar</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li><a href="contact.html">contact us</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                    <div class="mobile-menu d-lg-none">
+                                        <nav>
+                                            <ul>
+                                                <li>
+                                                    <a href="index.html">Home</a>
+                                                    <div>
+                                                        <div>
+                                                            <ul>
+                                                                <li><a href="index.html">Home 1</a></li>
+                                                                <li><a href="index-2.html">Home 2</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <a href="shop.html">shop</a>
+                                                    <div>
+                                                        <div>
+                                                            <ul>
+                                                                <li><a href="shop-list.html">shop list</a></li>
+                                                                <li><a href="shop-fullwidth.html">shop Full Width Grid</a></li>
+                                                                <li><a href="shop-fullwidth-list.html">shop Full Width list</a></li>
+                                                                <li><a href="shop-sidebar.html">shop Right Sidebar</a></li>
+                                                                <li><a href="shop-sidebar-list.html">shop list Right Sidebar</a></li>
+                                                                <li><a href="single-product.html">Product Details</a></li>
+                                                                <li><a href="single-product-sidebar.html">Product sidebar</a></li>
+                                                                <li><a href="single-product-video.html">Product Details video</a></li>
+                                                                <li><a href="single-product-gallery.html">Product Details Gallery</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <a href="#">women</a>
+                                                    <div>
+                                                        <div>
+                                                            <div>
+                                                                <h3><a href="#">Accessories</a></h3>
+                                                                <ul>
+                                                                    <li><a href="#">Cocktai</a></li>
+                                                                    <li><a href="#">day</a></li>
+                                                                    <li><a href="#">Evening</a></li>
+                                                                    <li><a href="#">Sundresses</a></li>
+                                                                    <li><a href="#">Belts</a></li>
+                                                                    <li><a href="#">Sweets</a></li>
+                                                                </ul>
+                                                            </div>
+                                                            <div>
+                                                                <h3><a href="#">HandBags</a></h3>
+                                                                <ul>
+                                                                    <li><a href="#">Accessories</a></li>
+                                                                    <li><a href="#">Hats and Gloves</a></li>
+                                                                    <li><a href="#">Lifestyle</a></li>
+                                                                    <li><a href="#">Bras</a></li>
+                                                                    <li><a href="#">Scarves</a></li>
+                                                                    <li><a href="#">Small Leathers</a></li>
+                                                                </ul>
+                                                            </div>
+                                                            <div>
+                                                                <h3><a href="#">Tops</a></h3>
+                                                                <ul>
+                                                                    <li><a href="#">Evening</a></li>
+                                                                    <li><a href="#">Long Sleeved</a></li>
+                                                                    <li><a href="#">Shrot Sleeved</a></li>
+                                                                    <li><a href="#">Tanks and Camis</a></li>
+                                                                    <li><a href="#">Sleeveless</a></li>
+                                                                    <li><a href="#">Sleeveless</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div>
+                                                                <a href="#"><img src="~/Layout/LayoutShop/assets/img/banner/banner1.jpg" alt=""></a>
+                                                            </div>
+                                                            <div>
+                                                                <a href="#"><img src="~/Layout/LayoutShop/assets/img/banner/banner2.jpg" alt=""></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <a href="#">men</a>
+                                                    <div>
+                                                        <div>
+                                                            <div>
+                                                                <h3><a href="#">Rings</a></h3>
+                                                                <ul>
+                                                                    <li><a href="#">Platinum Rings</a></li>
+                                                                    <li><a href="#">Gold Ring</a></li>
+                                                                    <li><a href="#">Silver Ring</a></li>
+                                                                    <li><a href="#">Tungsten Ring</a></li>
+                                                                    <li><a href="#">Sweets</a></li>
+                                                                </ul>
+                                                            </div>
+                                                            <div>
+                                                                <h3><a href="#">Bands</a></h3>
+                                                                <ul>
+                                                                    <li><a href="#">Platinum Bands</a></li>
+                                                                    <li><a href="#">Gold Bands</a></li>
+                                                                    <li><a href="#">Silver Bands</a></li>
+                                                                    <li><a href="#">Silver Bands</a></li>
+                                                                    <li><a href="#">Sweets</a></li>
+                                                                </ul>
+                                                            </div>
+                                                            <div>
+                                                                <a href="#"><img src="~/Layout/LayoutShop/assets/img/banner/banner3.jpg" alt=""></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <a href="#">pages</a>
+                                                    <div>
+                                                        <div>
+                                                            <div>
+                                                                <h3><a href="#">Column1</a></h3>
+                                                                <ul>
+                                                                    <li><a href="portfolio.html">Portfolio</a></li>
+                                                                    <li><a href="portfolio-details.html">single portfolio </a></li>
+                                                                    <li><a href="about.html">About Us </a></li>
+                                                                    <li><a href="about-2.html">About Us 2</a></li>
+                                                                    <li><a href="services.html">Service </a></li>
+                                                                    <li><a href="my-account.html">my account </a></li>
+                                                                </ul>
+                                                            </div>
+                                                            <div>
+                                                                <h3><a href="#">Column2</a></h3>
+                                                                <ul>
+                                                                    <li><a href="blog.html">Blog </a></li>
+                                                                    <li><a href="blog-details.html">Blog  Details </a></li>
+                                                                    <li><a href="blog-fullwidth.html">Blog FullWidth</a></li>
+                                                                    <li><a href="blog-sidebar.html">Blog  Sidebar</a></li>
+                                                                    <li><a href="faq.html">Frequently Questions</a></li>
+                                                                    <li><a href="404.html">404</a></li>
+                                                                </ul>
+                                                            </div>
+                                                            <div>
+                                                                <h3><a href="#">Column3</a></h3>
+                                                                <ul>
+                                                                    <li><a href="contact.html">Contact</a></li>
+                                                                    <li><a href="cart.html">cart</a></li>
+                                                                    <li><a href="checkout.html">Checkout  </a></li>
+                                                                    <li><a href="wishlist.html">Wishlist</a></li>
+                                                                    <li><a href="login.html">Login</a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                                <li>
+                                                    <a href="blog.html">blog</a>
+                                                    <div>
+                                                        <div>
+                                                            <ul>
+                                                                <li><a href="blog-details.html">blog details</a></li>
+                                                                <li><a href="blog-fullwidth.html">blog fullwidth</a></li>
+                                                                <li><a href="blog-sidebar.html">blog sidebar</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li><a href="contact.html">contact us</a></li>
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--header end -->
+                <!--pos home section-->
+                <div class="pos_home_section">
+
+                    <!--new product area start-->
+                    @*<div class="new_product_area product_two">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="block_title">
+                                        <h3>  New Products</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="single_p_active owl-carousel">
+                                    <div class="col-lg-3">
+                                        <div class="single_product">
+                                            <div class="product_thumb">
+                                                <a href="single-product.html"><img src="~/Layout/LayoutShop/assets/img/product/product1.jpg" alt=""></a>
+                                                <div class="img_icone">
+                                                    <img src="~/Layout/LayoutShop/assets/img/cart/span-new.png" alt="">
+                                                </div>
+                                                <div class="product_action">
+                                                    <a href="#"> <i class="fa fa-shopping-cart"></i> Add to cart</a>
+                                                </div>
+                                            </div>
+                                            <div class="product_content">
+                                                <span class="product_price">$50.00</span>
+                                                <h3 class="product_title"><a href="single-product.html">Curabitur sodales</a></h3>
+                                            </div>
+                                            <div class="product_info">
+                                                <ul>
+                                                    <li><a href="#" title="Add to Wishlist">Add to Wishlist</a></li>
+                                                    <li><a href="#" data-toggle="modal" data-target="#modal_box" title="Quick view">View Detail</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="single_product">
+                                            <div class="product_thumb">
+                                                <a href="single-product.html"><img src="~/Layout/LayoutShop/assets/img/product/product2.jpg" alt=""></a>
+                                                <div class="hot_img">
+                                                    <img src="~/Layout/LayoutShop/assets/img/cart/span-hot.png" alt="">
+                                                </div>
+                                                <div class="product_action">
+                                                    <a href="#"> <i class="fa fa-shopping-cart"></i> Add to cart</a>
+                                                </div>
+                                            </div>
+                                            <div class="product_content">
+                                                <span class="product_price">$40.00</span>
+                                                <h3 class="product_title"><a href="single-product.html">Quisque ornare dui</a></h3>
+                                            </div>
+                                            <div class="product_info">
+                                                <ul>
+                                                    <li><a href="#" title=" Add to Wishlist ">Add to Wishlist</a></li>
+                                                    <li><a href="#" data-toggle="modal" data-target="#modal_box" title="Quick view">View Detail</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="single_product">
+                                            <div class="product_thumb">
+                                                <a href="single-product.html"><img src="~/Layout/LayoutShop/assets/img/product/product3.jpg" alt=""></a>
+                                                <div class="img_icone">
+                                                    <img src="~/Layout/LayoutShop/assets/img/cart/span-new.png" alt="">
+                                                </div>
+                                                <div class="product_action">
+                                                    <a href="#"> <i class="fa fa-shopping-cart"></i> Add to cart</a>
+                                                </div>
+                                            </div>
+                                            <div class="product_content">
+                                                <span class="product_price">$60.00</span>
+                                                <h3 class="product_title"><a href="single-product.html">Sed non turpiss</a></h3>
+                                            </div>
+                                            <div class="product_info">
+                                                <ul>
+                                                    <li><a href="#" title="Add to Wishlist">Add to Wishlist</a></li>
+                                                    <li><a href="#" data-toggle="modal" data-target="#modal_box" title="Quick view">View Detail</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="single_product">
+                                            <div class="product_thumb">
+                                                <a href="single-product.html"><img src="~/Layout/LayoutShop/assets/img/product/product4.jpg" alt=""></a>
+                                                <div class="hot_img">
+                                                    <img src="~/Layout/LayoutShop/assets/img/cart/span-hot.png" alt="">
+                                                </div>
+                                                <div class="product_action">
+                                                    <a href="#"> <i class="fa fa-shopping-cart"></i> Add to cart</a>
+                                                </div>
+                                            </div>
+                                            <div class="product_content">
+                                                <span class="product_price">$65.00</span>
+                                                <h3 class="product_title"><a href="single-product.html">Duis convallis</a></h3>
+                                            </div>
+                                            <div class="product_info">
+                                                <ul>
+                                                    <li><a href="#" title="Add to Wishlist">Add to Wishlist</a></li>
+                                                    <li><a href="#" data-toggle="modal" data-target="#modal_box" title="Quick view">View Detail</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <div class="single_product">
+                                            <div class="product_thumb">
+                                                <a href="single-product.html"><img src="~/Layout/LayoutShop/assets/img/product/product6.jpg" alt=""></a>
+                                                <div class="img_icone">
+                                                    <img src="~/Layout/LayoutShop/assets/img/cart/span-new.png" alt="">
+                                                </div>
+                                                <div class="product_action">
+                                                    <a href="#"> <i class="fa fa-shopping-cart"></i> Add to cart</a>
+                                                </div>
+                                            </div>
+                                            <div class="product_content">
+                                                <span class="product_price">$50.00</span>
+                                                <h3 class="product_title"><a href="single-product.html">Curabitur sodales</a></h3>
+                                            </div>
+                                            <div class="product_info">
+                                                <ul>
+                                                    <li><a href="#" title="Add to Wishlist">Add to Wishlist</a></li>
+                                                    <li><a href="#" data-toggle="modal" data-target="#modal_box" title="Quick view">View Detail</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                    <!--new product area start-->
+                    <!--banner area start-->
+
+                    @RenderBody()
+                    <!--brand logo strat-->
+                    @*<div class="brand_logo brand_two">
+                            <div class="block_title">
+                                <h3>Brands</h3>
+                            </div>
+                            <div class="row">
+                                <div class="brand_active owl-carousel">
+                                    <div class="col-lg-2">
+                                        <div class="single_brand">
+                                            <a href="#"><img src="~/Layout/LayoutShop/assets/img/brand/brand1.jpg" alt=""></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="single_brand">
+                                            <a href="#"><img src="~/Layout/LayoutShop/assets/img/brand/brand2.jpg" alt=""></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="single_brand">
+                                            <a href="#"><img src="~/Layout/LayoutShop/assets/img/brand/brand3.jpg" alt=""></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="single_brand">
+                                            <a href="#"><img src="~/Layout/LayoutShop/assets/img/brand/brand4.jpg" alt=""></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="single_brand">
+                                            <a href="#"><img src="~/Layout/LayoutShop/assets/img/brand/brand5.jpg" alt=""></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <div class="single_brand">
+                                            <a href="#"><img src="~/Layout/LayoutShop/assets/img/brand/brand6.jpg" alt=""></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                    <!--brand logo end-->
+                </div>
+                <!--pos home section end-->
+            </div>
+            <!--pos page inner end-->
+        </div>
+    </div>
+    <!--pos page end-->
+    <!--footer area start-->
+    <div class="footer_area sanpham" style="margin-top:10px;" >
+        <div class="footer_top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="footer_widget">
+                            <h3>About us</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <div class="footer_widget_contect">
+                                <p><i class="fa fa-map-marker" aria-hidden="true"></i>  19 Interpro Road Madison, AL 35758, USA</p>
+                                <p><i class="fa fa-mobile" aria-hidden="true"></i> (012) 234 432 3568</p>
+                                <a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> Contact@plazathemes.com </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="footer_widget">
+                            <h3>My Account</h3>
+                            <ul>
+                                <li><a href="#">Your Account</a></li>
+                                <li><a href="#">My orders</a></li>
+                                <li><a href="#">My credit slips</a></li>
+                                <li><a href="#">My addresses</a></li>
+                                <li><a href="#">Login</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="footer_widget">
+                            <h3>Informations</h3>
+                            <ul>
+                                <li><a href="#">Specials</a></li>
+                                <li><a href="#">Our store(s)!</a></li>
+                                <li><a href="#">My credit slips</a></li>
+                                <li><a href="#">Terms and conditions</a></li>
+                                <li><a href="#">About us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6">
+                        <div class="footer_widget">
+                            <h3>extras</h3>
+                            <ul>
+                                <li><a href="#"> Brands</a></li>
+                                <li><a href="#"> Gift Vouchers </a></li>
+                                <li><a href="#"> Affiliates </a></li>
+                                <li><a href="#"> Specials </a></li>
+                                <li><a href="#"> Privacy policy </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer_bottom">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="copyright_area">
+                            <ul>
+                                <li><a href="#"> about us </a></li>
+                                <li><a href="#">  Customer Service  </a></li>
+                                <li><a href="#">  Privacy Policy  </a></li>
+                            </ul>
+                            <p>Copyright &copy; 2018 <a href="#">Pos Coron</a>. All rights reserved. </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="footer_social text-right">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                <li><a class="pinterest" href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
+                                <li><a href="#"><i class="fa fa-wifi" aria-hidden="true"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--footer area end-->
+    <!-- modal area start -->
+    @{Html.RenderAction("ModalDetail", "HomeShop");}
+
+
+    <!-- modal area end -->
+    <!-- all js here -->
+    <script src="~/Layout/LayoutShop/assets/js/vendor/jquery-1.12.0.min.js"></script>
+    <script src="~/Layout/LayoutShop/assets/js/popper.js"></script>
+    <script src="~/Layout/LayoutShop/assets/js/bootstrap.min.js"></script>
+    <script src="~/Layout/LayoutShop/assets/js/ajax-mail.js"></script>
+    <script src="~/Layout/LayoutShop/assets/js/plugins.js"></script>
+    <script src="~/Layout/LayoutShop/assets/js/main.js"></script>
+
+    <script src="~/Framwork/Script/angular.min.js"></script>
+    <script src="~/Framwork/Script/dirPagination.js"></script>
+    <script src="~/Framwork/Script/fileinput.min.js"></script>
+    <script src="~/Framwork/Script/angular-toastr.tpls.min.js"></script>
+    <script src="~/Scripts/Colorbox/jquery.colorbox-min.js"></script>
+    <script src="~/Framwork/Script/bootstrap-filestyle.min.js"></script>
+    <script src="~/Framwork/Script/select2.min.js"></script>
+    <script src="~/Framwork/Script/sweetalert.js"></script>
+    <script src="~/Framwork/Script/jquery-ui-1.10.3.min.js"></script>
+    <script src="~/Framwork/Script/loadMoreResults.js"></script>
+    <script src="~/Framwork/Script/slick-1.8.1/slick/slick.min.js"></script>
+    <script src="~/Framwork/Script/jquery.sortable.min.js"></script>
+    <script src="~/Framwork/Script/ckeditor/ckeditor.js"></script>
+    <script src="~/Framwork/Script/jquery.bxslider.js"></script>
+    <script src="~/Framwork/Script/angular-sanitize.js"></script>
+    <script src="~/Framwork/Script/jquery.star-rating-svg.min.js"></script>
+    <script src="~/Framwork/Script/jquery.Timeago.js"></script>
+    <script src="~/Framwork/Script/jquery.showLoading.min.js"></script>
+    <script src="~/Framwork/Script/jquery.inputmask.bundle.js"></script>
+
+    <!--thư viện slect chosen jquery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+
+
+    <!-- page script -->
+    <script>
+        $(function () {
+
+            $("#tabs").tabs();
+            $('.sortable').sortable();
+            //$('select').selectpicker();
+            $('#EndTime').inputmask({ mask: "99/99/9999" });
+
+        });
+    </script>
+    <script>
+        function ShowPopup(selector, url, width, height) {
+            selector.colorbox({
+                inline: true,
+                iframe: false,
+                innerWidth: width,
+                innerHeight: height,
+                href: url
+            });
+        }
+        $("#e2").select2({
+            placeholder: "--Chọn Tỉnh/Thành--",
+            allowClear: true
+        });
+
+        $("#e3").select2({
+            placeholder: "--Chọn Quận/Huyện--",
+            allowClear: true
+        });
+        $("#e4").select2({
+            //placeholder: "--Chọn xem--",
+            //allowClear: true
+        });
+
+        $('#ctrlFile').filestyle({
+            'text': 'Chọn ảnh',
+            'htmlIcon': '',
+            'btnClass': 'btn-primary',
+            'size': 'nr',
+            'input': true,
+            'badge': true,
+            'badgeName': 'badge-light',
+            'buttonBefore': false,
+            'disabled': false,
+            'placeholder': '',
+            'onChange': function () { }
+        });
+        var btnCust = '';
+        $("#avatar-2").fileinput({
+            overwriteInitial: true,
+            maxFileSize: 1500,
+            showClose: false,
+            showCaption: false,
+            showBrowse: false,
+            browseOnZoneClick: true,
+            removeLabel: '',
+            removeIcon: '<i class="fa fa-remove"></i>',
+            removeTitle: 'Cancel or reset changes',
+            elErrorContainer: '#kv-avatar-errors-2',
+            msgErrorClass: 'alert alert-block alert-danger',
+            defaultPreviewContent: '<img src="/img/top-10-khung-hinh-trang-dep-nhat-1.jpg" alt="Your Avatar"><h6 class="text-muted">Click to select</h6>',
+            layoutTemplates: { main2: '{preview} ' + btnCust + ' {remove} {browse}' },
+            allowedFileExtensions: ["jpg", "png", "gif"]
+        });
+        //setTimeout(function () {
+        //    $(".my-rating-4").starRating({
+        //        totalStars: 5,
+        //        emptyColor: 'lightgray',
+        //        hoverColor: '#009483',
+        //        activeColor: '#009483',
+        //        initialRating: 4,
+        //        strokeWidth: 0,
+        //        useGradient: false,
+        //        starSize: 20,
+        //        disableAfterRate: false,
+        //        readOnly: true
+
+        //        //callback: function (currentRating) {
+        //        //    alert(currentRating);
+        //        //},
+        //        //onHover: function (currentIndex, currentRating, $el) {
+        //        //    $('.live-rating').text(currentIndex);
+        //        //},
+        //        //onLeave: function (currentIndex, currentRating, $el) {
+        //        //    $('.live-rating').text(currentRating);
+        //        //}
+        //    });
+        //}, 300);
+
+       
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.bxslider').bxSlider({
+                mode: 'horizontal',
+                moveSlides: 1,
+                slideMargin: 40,
+                infiniteLoop: true,
+                slideWidth: 660,
+                minSlides: 3,
+                maxSlides: 3,
+                speed: 800,
+            });
+        });
+    </script>
+    @RenderSection("Angularjs", false);
+
+</body>
+<!-- Mirrored from demo.devitems.com/coron-v4/coron/index-2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 30 Jan 2019 17:25:56 GMT -->
+</html>

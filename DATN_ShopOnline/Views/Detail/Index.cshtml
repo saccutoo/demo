@@ -1,0 +1,299 @@
+﻿
+@{
+    ViewBag.Title = "Chi tiết sản phẩm";
+    Layout = "~/Views/Shared/LayoutShop.cshtml";
+}
+
+<div class="breadcrumbs_area sanpham"  style="display:none">
+    <div class="row">
+        <div class="col-12">
+            <div class="breadcrumb_content">
+                <ul>
+                    <li><a href="/HomeShop/Index">Trang chủ</a></li>
+                    <li><i class="fa fa-angle-right"></i></li>
+                    <li>Chi tiết sản phẩm</li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!--product wrapper start-->
+<div class="product_details video_details sanpham" style="display:none">
+    <div class="row">
+        <div class="col-lg-4 col-md-6">
+            <div class="product_tab product_video fix">
+
+                <div class="tab-content produc_tab_c">
+                    <div class="tab-pane fade show active" id="p_tab1" role="tabpanel">
+                        <div class="modal_img">
+                            <a href="#"><img ng-src="/img/{{HinhAnh}}" alt=""></a>
+                            <div class="img_icone">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-8 col-md-6">
+            <div class="product_d_right">
+                <h1 ng-bind="TenSP"></h1>
+                @*<div class="product_ratting mb-10">
+                        <ul>
+                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                            <li><a href="#"><i class="fa fa-star"></i></a></li>
+                            <li><a href="#"> Write a review </a></li>
+                        </ul>
+                    </div>*@
+                <div class="product_desc">
+                    <h5>Giới thiệu:</h5>
+
+                    <p><label style="font-weight:bold"> {{TenSP}}</label> {{GioiThieu1}}</p>
+                    <h5>Hãng sản xuất: <label ng-bind="TenNCC"></label></h5>
+                    <h5>Địa điểm bán: <label>Đội 9-Thôn Ngải Dương-Xã Đình Dù-Huyện Văn lâm-Tỉnh Hưng Yên</label></h5>
+                    <span>Hot line: 0971 828 374</span>
+                </div>
+
+                <div class="content_price mb-15">
+                    <span style="color:red">{{GiaBan|number:0}} đ</span>
+                </div>
+                <div class="box_quantity mb-20">
+                    <form action="#">
+                        <input style="text-align:center" value="1" ng-model="iSoLuong" type="text">
+                    </form>
+                    <button type="button" ng-click="AddCart2()"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                </div>
+
+                @*<div class="product_stock mb-20">
+                    <p>Số lương còn: </p>
+                    <p style="color:red" ng-bind="SoLuong"></p>
+                </div>*@
+                <div class="wishlist-share">
+                    <h4>Share on:</h4>
+                    <ul>
+                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="#"><i class="fa fa-vimeo"></i></a></li>
+                        <li><a href="#"><i class="fa fa-tumblr"></i></a></li>
+                        <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--product details end-->
+<!--product info start-->
+<div class="product_d_info sanpham"  style="display:none">
+    <div class="row">
+        <div class="col-12">
+            <div class="product_d_inner">
+                <div class="product_info_button">
+                    <ul class="nav" role="tablist">
+                        <li>
+                            <a class="active" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">MÔ TẢ SẢN PHẨM</a>
+                        </li>
+                        <li>
+                            <a data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">BÌNH LUẬN</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="info" role="tabpanel">
+                        <div class="product_info_content" ng-bind-html="GioiThieu2">
+                        </div>
+                    </div>
+
+
+                    <div class="tab-pane fade" id="reviews" role="tabpanel">
+                        @*<div class="product_info_content">
+                                <p ng-bind="GioiThieu1"></p>
+                            </div>*@
+                        <div class="product_info_inner" ng-repeat="list in BinhLuan">
+                            <div class="product_ratting mb-10">
+                                @*<ul>
+                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                        <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                    </ul>*@
+
+                                <strong ng-bind="list.TenNguoiBinhLuan"></strong>
+
+                                <p ng-bind="list.NgayBinhLuan"></p>
+                                <div>
+                                    <a id="pointer" style="color:blue" ng-click="ClickRep(list)" ng-init="list.Rep=true" ng-show="list.Rep">Trả lời</a>
+                                    <a id="pointer" style="color:blue" ng-click="ClickHideRep(list)" ng-init="list.HideRep=false" ng-show="list.HideRep">Hủy</a>
+                                    <a id="pointer" style="{{ColorLike}};margin-left:20px;"><i class="fa fa-thumbs-o-up"></i> <strong style="color:red">{{(list.Like)}}</strong></a>
+                                    <a id="pointer" style="{{ColorDisLike}};margin-left:20px;"><i class="fa fa-thumbs-o-down"></i> <strong style="color:red">{{(list.DisLike)}}</strong></a>
+                                </div>
+                                <div ng-show="list.loading">
+                                    <form>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <textarea class="form-control" ng-model="list.RepData.RepND" ng-change="ChangeRepND(list)"></textarea>
+                                                <span ng-bind="list.ErrorRepND" style="color:red"></span>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top:10px;">
+                                            <div class="col-9">
+                                                <input type="text" ng-model="list.RepData.TenNguoiBinhLuan" placeholder="Tên" class="form-control" ng-change="ChangeTenNguoiBinhLuan(list)" />
+                                            </div>
+                                            <div class="col-3">
+                                                <button class="btn btn-primary" ng-click="btnRep(list)" type="button" style="margin-left:-15px;margin-top:7px;">Gửi</button>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span ng-bind="list.ErrorTenNguoiBinhLuan" style="color:red"></span>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                                <div>
+                                    <strong ng-if="list.RepBinhLuan.length!=0" ng-show="list.LoadMore" ng-click="btnLoadMore(list)" id="pointer">Xem {{list.CountRep}} câu trả lời <i class="fa fa-angle-down"></i></strong>
+                                    <strong ng-show="list.HideMore" ng-click="btnHideMore(list)" id="pointer">Ẩn câu trả lời <i class="fa fa-angle-up"></i></strong>
+                                    <div>
+
+                                        @*Repcoment*@
+                                        <div ng-show="list.HideMore" style="margin-top:10px;margin-left:30px;" ng-repeat="ListRep in list.RepBinhLuan">
+
+                                            <strong >{{ListRep.TenNguoiBinhLuan}} <span style="font-weight:lighter;margin-left:10px;">{{ListRep.NgayBinhLuan}}</span></strong>
+                                            <div>
+                                                <a id="pointer" style="color:blue" ng-click="ClickRepRep(ListRep)" ng-init="ListRep.Rep=true" ng-show="ListRep.Rep">Trả lời</a>
+                                                <a id="pointer" style="color:blue" ng-click="ClickHideRepRep(ListRep)" ng-show="ListRep.HideRep">Hủy</a>
+                                                <a id="pointer" style="{{ColorRepLike}};margin-left:20px;"><i class="fa fa-thumbs-o-up"></i> <strong style="color:red">{{(ListRep.Like)}}</strong></a>
+                                                <a id="pointer" style="{{ColorRepDisLike}};margin-left:20px;"><i class="fa fa-thumbs-o-down"></i> <strong style="color:red">{{(ListRep.DisLike)}}</strong></a>
+                                            </div>
+                                            <div>                                               
+                                                <a id="pointer" style="color:blue">{{ListRep.Tag}} <span style="color:black">{{ListRep.NoiDung}}</span></a>
+                                            </div>
+                                           
+
+                                            <div ng-show="ListRep.loading" >
+                                                <form>
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <textarea class="form-control" ng-model="ListRep.RepData.RepND" ng-change="ChangeRepRepND(ListRep)"></textarea>
+                                                            <span ng-bind="ListRep.ErrorRepND" style="color:red"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row" style="margin-top:10px;">
+                                                        <div class="col-9">
+                                                            <input type="text" ng-model="ListRep.RepData.TenNguoiBinhLuan" placeholder="Tên" class="form-control" ng-change="ChangeRepRepTenNguoiBinhLuan(ListRep)" />
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <button class="btn btn-primary" ng-click="btnRepRep(list,ListRep)" type="button" style="margin-left:-15px;margin-top:7px;">Gửi</button>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <span ng-bind="ListRep.ErrorTenNguoiBinhLuan" style="color:red"></span>
+                                                    </div>
+
+                                                </form>
+
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="product_demo">
+                                <strong>
+                                    @*<span class="live-rating" >demo</span>*@
+                                </strong>
+                                <p ng-bind="list.NoiDung"></p>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="product_review_form">
+                            <form action="#">
+                                <h2>Bình luận </h2>
+                                <p> </p>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label for="review_comment">Nội dung <span style="color:red">(*)</span></label>
+                                        <textarea name="comment" id="review_comment" ng-model="Data.NoiDung" required ng-change="ChangeNoiDung()"></textarea>
+                                        <span style="color:red" ng-bind="ErrorNote" ng-mp></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <label for="author">Tên của bạn <span style="color:red">(*)</span></label>
+                                        <input id="author" type="text" ng-model="Data.TenNguoiBinhLuan" ng-change="ChangeTenNguoiBinhLuan()" required>
+                                        <span style="color:red" ng-bind="ErrorName"></span>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <label for="email">Email </label>
+                                        <input id="email" type="email" ng-model="Data.Gmail">
+                                    </div>
+                                </div>
+                                <button type="button" ng-click="btnSend()">Send</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="new_product_area product_two sanpham"  style="display:none">
+    <div class="row">
+        <div class="col-12">
+            <div class="block_title">
+                <h3>SẢN PHẨM TƯƠNG TỰ </h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div>
+            <div ng-repeat="list in ListSanPham " style="width:300px;height:370px;float:left">
+                <div class="single_product">
+                    <div class="product_thumb">
+                        <a href="/Detail/Index/{{list.MaSP}}" title="Xem Chi tiết"><img style="margin-left:70px;" ng-src="/img/{{list.HinhAnh}}" width="150" alt=""></a>
+                        <div @*class="img_icone"*@ class="{{list.NeworOld}}">
+                            <img ng-if="list.NeworOld!=null" ng-src="~/Layout/LayoutShop/assets/img/cart/{{list.ImgNeworOld}}" alt="">
+                        </div>
+                        <div class="product_action">
+                            <a style="color:white;" id="pointer" ng-click="AddCart(list.MaSP)"> <i class="fa fa-shopping-cart"></i> Add to cart</a>
+                        </div>
+                    </div>
+                    <div class="product_content">
+                        <span class="product_price" style="color:red">{{list.GiaBan|number:0}} đ</span>
+                        <h3 class="product_title"><a href="single-product.html" ng-bind="list.TenSP"></a></h3>
+                    </div>
+                    <div class="product_info">
+                        <ul>
+                            <li><a href="/Detail/Index/{{list.MaSP}}" title="Xem Chi tiết">Xem Chi tiết</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#modal_box" ng-click="ModalDetail(list.MaSP)" title="Quick view">Xem nhanh</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <center style="margin:auto">
+            <button type="button" class="btn btn-primary" ng-click="LoadMore()" ng-show="isShowLoadMore">Xem Thêm</button>
+            <button style="margin-left:10px;" class="btn btn-success" ng-click="HideMore()" ng-show="isShowHideMore">Ẩn Bớt</button>
+        </center>
+    </div>
+
+</div>
+
+<!--product info end-->
+<script>
+    var content=@Html.Raw(Json.Encode(ViewBag.ID));
+</script>
+
+@section Angularjs{
+    <script src="~/Scripts/Detail/Detail.js"></script>
+}

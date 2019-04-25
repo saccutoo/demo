@@ -1,0 +1,281 @@
+﻿
+@{
+    ViewBag.Title = "Thông tin cá nhân";
+    Layout = "~/Views/Shared/LayoutShop.cshtml";
+}
+
+<div class="breadcrumbs_area">
+    <div class="row">
+        <div class="col-12">
+            <div class="breadcrumb_content">
+                <ul>
+                    <li><a href="/HomeShop/Index">TRANG CHỦ</a></li>
+                    <li><i class="fa fa-angle-right"></i></li>
+                    <li>THÔNG TIN CÁ NHÂN</li>
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!-- Start Maincontent  -->
+<section class="main_content_area">
+    <div class="account_dashboard">
+        <div class="row">
+            <div class="col-sm-12 col-md-3 col-lg-3">
+                <!-- Nav tabs -->
+                <div class="dashboard_tab_button">
+                    <ul role="tablist" class="nav flex-column dashboard-list">
+                        <li><a href="#dashboard" data-toggle="tab" class="nav-link active">Bảng điều khiển</a></li>
+                        <li> <a href="#orders" data-toggle="tab" class="nav-link">Đơn hàng</a></li>
+                        <li><a href="#address" data-toggle="tab" class="nav-link">Địa chỉ thanh toán</a></li>
+                        <li><a href="#account-details" data-toggle="tab" class="nav-link">Thông tin tài khoản</a></li>
+                        @*<li><a href="@Url.Action("Logout","LoginShop",new { @URL = Request.Url.ToString() })" class="nav-link">Đăng xuất</a></li>*@
+                    </ul>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-9 col-lg-9">
+                <!-- Tab panes -->
+                <div class="tab-content dashboard_content">
+                    <div class="tab-pane fade show active" id="dashboard">
+                        <h3>Bảng điều khiển </h3>
+                        <p class="nav">Từ bảng điều khiển tài khoản của bạn. bạn có thể dễ dàng kiểm tra và xem các &nbsp;<a href="#">&nbsp;đơn đặt hàng gần đây</a>,&nbsp;quản lý &nbsp;<a href="#"> &nbsp;địa chỉ giao hàng và thanh toán</a>&nbsp; cũng như &nbsp;<a href="#">Chỉnh sửa mật khẩu và chi tiết tài khoản của bạn.</a></p>
+                    </div>
+                    <div class="tab-pane fade" id="orders">
+                        <h3 ng-show="isShowOrder">Đơn hàng</h3>
+                        <h3 ng-show="isShowOrderDetail">Chi tiết đơn hàng</h3>
+
+                        @*View đơn hàng*@
+                        <div class="coron_table table-responsive " ng-show="isShowOrder">
+                            <table class="table">
+                                <thead>
+                                    <tr style="text-align:center">
+                                        <th>STT</th>
+                                        <th>Ngày đặt</th>
+                                        <th>Trạng thái</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Trạng thái thanh toán</th>
+                                        <th>Chức năng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="list in GetListOrder">
+                                        <td ng-bind="$index+1"></td>
+                                        <td ng-bind="(list.NgayDat+'-'+list.ThangDat+'-'+list.NamDat+' '+list.GioDat)"></td>
+
+                                        @*Trạng thái đơn hàng*@
+                                        <td ng-if="list.TrangThai==0"><span class="text-warning" ng-bind="TrangThaiChoXuLy"></span></td>
+                                        <td ng-if="list.TrangThai==1"><span class="text-info" ng-bind="TrangThaiDaXuLy"></span></td>
+                                        <td ng-if="list.TrangThai==2"><span class="text-secondary" ng-bind="TrangThaiDangGiaoHang"></span></td>
+                                        <td ng-if="list.TrangThai==3"><span class="text-success" ng-bind="TrangThaiDaNhanHang"></span></td>
+                                        <td ng-if="list.TrangThai==4"><span class="text-danger" ng-bind="TrangThaiKhachHuyHang"></span></td>
+
+                                        <td style="color:red" ng-bind="list.TongTien|number:0"></td>
+
+                                        @*Trạng thái đơn hàng*@
+                                        <td ng-if="list.TrangThaiThanhToan==false"><span class="text-danger" ng-bind="TrangThaiChuaThanhToan"></span></td>
+                                        <td ng-if="list.TrangThaiThanhToan==true"><span class="text-success" ng-bind="TrangThaiDaThanhToan"></span></td>
+
+                                        <td>
+
+                                            <a id="pointer" ng-click="ViewDetail(list.MaDB)" style="color:blue" title="Xem chi tiết" class="modal-title"><i class="fa fa-eye"></i></a>
+                                            <span id="pointer" class="fa fa-times " ng-click="Remove(list)" style="color:red" title="Hủy đơn hàng"></span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        @*View chi tiết đơn hàng*@
+                        <div class="coron_table table-responsive" ng-show="isShowOrderDetail">
+                            <table class="table">
+                                <thead>
+                                    <tr style="text-align:center">
+                                        <th>STT</th>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Hình ảnh</th>
+                                        <th>Số lượng</th>
+                                        <th>Đơn giá</th>
+                                        <th>Thành tiền</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thanh toán</th>
+                                        <th>Chức năng</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="list in GetListOrderDetail">
+                                        <td ng-bind="$index+1"></td>
+                                        <td ng-bind="list.SANPHAM.TenSP"></td>
+                                        <td><img src="~/img/{{list.SANPHAM.HinhAnh}}" width="30" /></td>
+                                        <td ng-bind="list.SoLuong"></td>
+                                        <td style="color:red" ng-bind="list.SANPHAM.GiaBan|number:0"></td>
+                                        <td style="color:red" ng-bind="list.ThanhTien|number:0"></td>
+
+                                        @*Trạng thái đơn hàng*@
+                                        <td ng-if="list.TrangThai==0"><span class="text-warning" ng-bind="TrangThaiChoXuLy"></span></td>
+                                        <td ng-if="list.TrangThai==1"><span class="text-info" ng-bind="TrangThaiDaXuLy"></span></td>
+                                        <td ng-if="list.TrangThai==2"><span class="text-secondary" ng-bind="TrangThaiDangGiaoHang"></span></td>
+                                        <td ng-if="list.TrangThai==3"><span class="text-success" ng-bind="TrangThaiDaNhanHang"></span></td>
+                                        <td ng-if="list.TrangThai==4"><span class="text-danger" ng-bind="TrangThaiKhachHuyHang"></span></td>
+
+                                        @*Trạng thái đơn hàng*@
+                                        <td ng-if="list.TrangThaiThanhToan==false"><span class="text-danger" ng-bind="TrangThaiChuaThanhToan"></span></td>
+                                        <td ng-if="list.TrangThaiThanhToan==true"><span class="text-success" ng-bind="TrangThaiDaThanhToan"></span></td>
+                                        <td>
+                                            <span id="pointer" class="fa fa-times " ng-click="RemoveCTDH(list)" style="color:red" title="Hủy sản phẩm"></span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <button ng-click="Comback()" ng-show="isShowOrderDetail" class="btn btn-info" style="float:right"><i class="fa fa-mail-reply"></i> Trờ lại</button>
+                    </div>
+
+                    @*Thông tin địa chỉ thanh toán cá nhân*@
+                    <div class="tab-pane" id="address">
+                        <p>Các địa chỉ sau sẽ được sử dụng trên trang thanh toán theo mặc định.Mong các bạn điền thông tin cẩn thận và chính xác.</p>
+                        <h4 class="billing-address">Địa chỉ thanh toán</h4>
+                        <a ng-click="Edit()" class="view" id="pointer" style="color:blue"><i class="fa fa-edit"></i> Sửa</a>
+                        <address>
+                            <div class="row" style="margin-left:0px;">
+                                <p style="font-weight:bold">
+                                    Địa chỉ: <span style='font-weight:lighter;' ng-bind="DiaChi"></span>
+                                </p>
+
+                            </div>
+                            <div class="row" style="margin-left:0px;" ng-show="isShowEdit">
+                                <input type="text" ng-model="EditData.DiaChi" placeholder="Nhập địa chỉ..." class="form-control" />
+                            </div>
+                            <br ng-show="isShowEdit" />
+                            <p style="font-weight:bold">
+                                Tỉnh/Thành phố : <span style='font-weight:lighter;' ng-bind="Tinh"></span>
+                            </p>
+                            <div class="row" style="margin-left:0px;" ng-show="isShowEdit">
+                                <select class="form-control" ng-model="EditData.MaThanhPho" ng-options="list.MaThanhPho as list.TenThanhPho for list in ListCity" ng-change="ChangeCity()">
+                                    <option value="" selected>---Chọn Tỉnh/Thành phố ---</option>
+                                </select>
+
+                            </div>
+                            <br ng-show="isShowEdit" />
+                            <div class="row" style="margin-left:0px;">
+                                <p style="font-weight:bold">
+                                    Quận/Huyện: <span style='font-weight:lighter;' ng-bind="Huyen"></span>
+
+                                </p>
+                            </div>
+                            <div class="row" style="margin-left:0px;" ng-show="isShowEdit">
+                                <select class="form-control" ng-model="EditData.MaHuyen" ng-options="list.MaHuyen as list.TenHuyen for list in ListDistrict">
+                                    <option value="" selected>---Chọn Quận/Huyện---</option>
+                                </select>
+                            </div>
+                            <br />
+                            <div class="row" style="margin-left:0px;" ng-show="isShowEdit">
+                                <button ng-click="SavePay()" class="btn btn-primary"><i class="fa fa-save"></i> Lưu lại</button>
+                                &nbsp;
+                                <button class="btn btn-danger" ng-click="OK()">Ok!</button>
+                            </div>
+                        </address>
+                    </div>
+
+                    @*Thông tin các nhân*@
+                    <div class="tab-pane fade" id="account-details">
+                        <h3>Thông tin cá nhân </h3>
+                        <div class="login">
+                            <div class="login_form_container">
+                                <div class="account_login_form">
+                                    <form>
+                                        <div class="input-radio">
+                                            <span class="custom-radio"><input type="radio" ng-checked="CheckNam" value="Nam" name="id_gender"> Nam.</span>
+                                            <span class="custom-radio"><input type="radio" ng-checked="CheckNu" value="Nữ" name="id_gender"> Nữ.</span>
+                                        </div> <br>
+                                        <label>Tên <span style="color:red">(*)</span></label>
+                                        <input type="text" name="first-name" ng-model="SaveData.Ten">
+                                        <label>Tên đệm <span style="color:red">(*)</span></label>
+                                        <input type="text" name="last-name" ng-model="SaveData.TenDem">
+                                        <label>Số điện thoại </label>
+                                        <input type="text" name="last-name" ng-model="SaveData.SDT">
+                                        <label>Gmail</label>
+                                        <input type="text" name="email-name" ng-model="SaveData.Gmail">
+                                        <label>Ngày sinh</label>
+                                        <input type="text" ng-model="SaveData.NgaySinh1" class="datePicker123" id="EndTime" placeholder="DD/MM/YYYY" value="" name="birthday">
+                                        <br>
+                                        <div>
+                                            <button ng-click="SaveCustome()" class="btn btn-primary"><i class="fa fa-save"> Lưu lại</i></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Thông báo</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">Bạn có chắc chắn muốn hủy đơn hàng này???</div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" ng-click="btnRemoveDB()" class="btn btn-primary" data-dismiss="modal">OK</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModalCTDH">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Thông báo</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                Bạn có chắc chắn muốn hủy sản phẩm này???
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" ng-click="btnRemoveTDHB()" class="btn btn-primary" data-dismiss="modal">OK</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Angularjs{
+    <script src="~/Scripts/MyAccount/MyAccount.js"></script>
+    <script>
+        var endYear = new Date(new Date().getFullYear(), 11, 31);
+        $(".datePicker123").datepicker({
+            autoclose: true,
+            format: "dd/mm/yyyy",
+        })
+
+    </script>
+}
+
+
+
+

@@ -1,0 +1,153 @@
+﻿
+@{
+    ViewBag.Title = "Sản Phẩm";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+<style>
+    #pointer {
+        cursor: pointer;
+    }
+
+    .pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #ddd;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
+    #Form .label {
+        line-height: 35px;
+        margin:auto;
+    }
+
+</style>
+
+<!-- Content Header (Page header) -->
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Sản Phẩm</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/HomeAdmin/Index">Home</a></li>
+                        <li class="breadcrumb-item active">Sản phẩm</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+
+                        <div class="col-2">
+                            <input type="text" ng-model="txtSerach" class="form-control" placeholder="Serach..." />
+                        </div>
+                        <div class="col-2">
+                            <select id="e5" style="width:100%;" ng-model="MaLoai" class="form-control" ng-options="list.MaLoai as list.TenLoai for list in ListLoaiSP" ng-change="ChangListSP()">
+                                <option value="" selected>--Chọn loại sản phẩm--</option>
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <select id="e6" style="width:100%;" ng-model="MaSP" class="form-control" ng-options="list.MaSP as list.TenSP for list in ComboSanPham" >
+                                <option value="" selected>--Chọn sản phẩm--</option>
+                            </select>
+                        </div>
+                        <div class="col-2">
+                           <button ng-click="btnTimKiem()" class="btn btn-primary"><i class="fa fa-search"></i> Tìm kiếm</button>
+                        </div>
+                        <div class="col-4">
+                            <button style="float:right" class="btn btn-primary" ng-click="btnADD()"><i class="fa fa-plus"></i> Thêm sản phẩm</button>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table class="table table-hover table-condensed table-bordered" style="text-align:center">
+                        <thead>
+                            <tr class="success" style="font-weight:bold">
+                                <th>Tên sản phẩm</th>
+                                <th>Nhà cung cấp</th>
+                                <th>Loại</th>
+                                <th>Số lượng</th>
+                                <th>Hình ảnh</th>
+                                <th>Giá nhập</th>
+                                <th>Giá bán</th>
+                                <th>Số lượng đã bán</th>
+                                <th>Hệ số</th>
+                                <th>Trạng thái</th>
+                                <th>Chức năng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="list in ListSanPham | filter:txtSerach | orderBy:'-GiaBan' | itemsPerPage:10">
+                                <td style="line-height:55px;" id="pointer"><a href="" ng-bind="list.TenSP" ng-click="btnEdit(list.MaSP)" style="color:#007bff;"></a></td>
+                                <td style="line-height:55px;" ng-bind="list.NHACC.TenNCC"></td>
+                                <td style="line-height:55px;" ng-bind="list.LOAISP.TenLoai"></td>
+                                <td style="line-height:55px;" ng-bind="list.SoLuong"></td>
+                                <td>
+                                    <img ng-src="~/img/{{list.HinhAnh}}" class="img-thumbnail" style="width:40px;" />
+                                </td>
+                                <td style="line-height:55px;" ng-bind="list.GiaNhap|number:0"></td>
+                                <td style="line-height:55px;" ng-bind="list.GiaBan|number:0"></td>
+                                <td style="line-height:55px;" ng-bind="list.SoLuongDaBan"></td>
+                                <td style="line-height:55px;" >{{list.HeSo}}%</td>
+                                <td style="line-height:55px;" ng-bind="list.TrangThai"></td>
+                                <td style="line-height:55px;">
+                                    <a id="pointer" ng-click="btnDelete(list.MaSP)" class="fa fa-trash" style="color:red"></a>                                    
+                                    <a ng-show="(list.MOTASANPHAM.length==0)?true:false" id="pointer" ng-click="btnAddMTSP(list.MaSP)" class="fa fa-plus" style="color:green"></a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                        @*<tfoot>
+                                <tr>
+                                    <th>Rendering engine</th>
+                                    <th>Browser</th>
+                                    <th>Platform(s)</th>
+                                    <th>Engine version</th>
+                                    <th>CSS grade</th>
+                                </tr>
+                            </tfoot>*@
+                    </table>
+                </div>
+                <center style="margin:auto">
+                    <dir-pagination-controls max-size="10"
+                                             direction-links="true"
+                                             boundary-links="true">
+                    </dir-pagination-controls>
+                </center>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<div style="display: none;">
+    @Html.Action("SaveSanPham","SanPham");
+</div>
+<div style="display: none;">
+    @Html.Action("SaveMTSP", "SanPham");
+</div>
+
+
+@section Angularjs{
+    <script src="~/Scripts/SanPham/SanPham.js"></script>
+
+}

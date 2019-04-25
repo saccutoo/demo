@@ -1,0 +1,229 @@
+﻿
+@{
+    ViewBag.Title = "Shop List";
+    Layout = "~/Views/Shared/LayoutShop.cshtml";
+}
+
+ <!--breadcrumbs area start-->
+<div class="breadcrumbs_area">
+    <div class="row">
+        <div class="col-12">
+            <div class="breadcrumb_content">
+                <ul>
+                    <li><a href="/HomeShop/Index">home</a></li>
+                    <li><i class="fa fa-angle-right"></i></li>
+                    <li>Shop List</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumbs area end-->
+<!--pos home section-->
+<div class=" pos_home_section">
+    <div class="row pos_home">
+        <div class="col-lg-3 col-md-12">
+            <!--layere categorie"-->
+            <div class="sidebar_widget shop_c">
+                <div class="categorie__titile">
+                    <h4>LOẠI SẢN PHẨM</h4>
+                </div>
+                <div class="layere_categorie sanpham"  style="display:none;">
+                    <ul ng-repeat="list in ListLoaiSP">
+                        <li>
+                            <input id="{{list.MaLoai}}" type="checkbox" name="Check" value="{{list.MaLoai}}" checked ng-click="Check()">
+                            <label for="acces" ng-click="ChangeCheck(list.MaLoai)">{{list.TenLoai}}</label>
+                        </li>                       
+                    </ul>
+                </div>
+            </div>
+            <!--special product start-->
+            <div class="sidebar_widget special">
+                <div class="block_title">
+                    <h3>SẢN PHẨM BÁN CHẠY</h3>
+                </div>
+                <div class="special_product_inner mb-20">
+                    <div class="special_p_thumb">
+                        <a href="#"><img src="/Layout/LayoutShop/assets/img/cart/cart3.jpg" alt=""></a>
+                    </div>
+                    <div class="small_p_desc">
+                        <div class="product_ratting">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                            </ul>
+                        </div>
+                        <h3><a href="#">Lorem ipsum dolor</a></h3>
+                        <div class="special_product_proce">
+                            <span class="old_price">$124.58</span>
+                            <span class="new_price">$118.35</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="special_product_inner">
+                    <div class="special_p_thumb">
+                        <a href="#"><img src="/Layout/LayoutShop/assets/img/cart/cart18.jpg" alt=""></a>
+                    </div>
+                    <div class="small_p_desc">
+                        <div class="product_ratting">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                                <li><a href="#"><i class="fa fa-star"></i></a></li>
+                            </ul>
+                        </div>
+                        <h3><a href="#">Printed Summer</a></h3>
+                        <div class="special_product_proce">
+                            <span class="old_price">$124.58</span>
+                            <span class="new_price">$118.35</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--special product end-->
+
+
+        </div>
+        <div class="col-lg-9 col-md-12">
+          
+            <!--shop toolbar start-->
+            <div class="shop_toolbar list_toolbar mb-35">
+                <div class="list_button">
+                    <ul class="nav" role="tablist">
+                        <li>
+                            <a class="active" data-toggle="tab" href="#large" role="tab" aria-controls="large" aria-selected="true"><i class="fa fa-th-large"></i></a>
+                        </li>
+                        <li>
+                            <a  data-toggle="tab" href="#list" role="tab" aria-controls="list" aria-selected="false"><i class="fa fa-th-list"></i></a>
+                        </li>
+                    </ul>
+                </div>               
+                <div class="select_option">
+                    <form action="#">
+                        <label>Giá từ</label>
+                        <select  name="orderby" id="short" ng-model="FindData.GiaTu">
+                            <option value="" selected>---Chọn---</option>
+                            <option value="300000">300.000 VNĐ</option>
+                            <option value="500000">500.000 VNĐ</option>
+                            <option value="1000000">1.000.000 VNĐ</option>
+                            <option value="3000000">3.000.000 VNĐ</option>
+                        </select>
+                    </form>
+                </div>
+                <div class="select_option">
+                    <form action="#">
+                        <label>Giá đến</label>
+                        <select name="orderby" id="short1" ng-model="FindData.GiaDen">
+                            <option value="" selected>---Chọn---</option>
+                            <option value="500000">500.000 VNĐ</option>
+                            <option value="1000000">1.000.000 VNĐ</option>
+                            <option value="3000000">3.000.000 VNĐ</option>
+                            <option value="5000000">5.000.000 VNĐ</option>
+
+                        </select>
+                    </form>
+                </div>
+                <div>
+                    <button type="button" id="pointer" class="btn btn-primary" ng-click="btnTimKiem()"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
+            <!--shop toolbar end-->
+            <!--shop tab product-->
+            <div class="shop_tab_product sanpham" style="display:none;">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="large" role="tabpanel">
+                        <div class="row">                            
+                            <div class="col-lg-4 col-md-6" dir-paginate="list in ListSanPham |orderBy:'-GiaBan' | itemsPerPage:9" style="width:300px;height:370px;float:left">
+                                <div >
+                                    <div class="single_product">
+                                        <div class="product_thumb">
+                                            <a href="/Detail/Index/{{list.MaSP}}" title="Xem Chi tiết"><img style="margin-left:48px;" ng-src="/img/{{list.HinhAnh}}" width="150" alt=""></a>
+                                            <div @*class="img_icone"*@ class="{{list.NeworOld}}">
+                                                <img ng-if="list.NeworOld!=null" ng-src="~/Layout/LayoutShop/assets/img/cart/{{list.ImgNeworOld}}" alt="">
+                                            </div>
+                                            <div class="product_action">
+                                                <a style="color:white;" id="pointer" ng-click="AddCart(list.MaSP)"> <i class="fa fa-shopping-cart"></i> Add to cart</a>
+                                            </div>
+                                        </div>
+                                        <div class="product_content">
+                                            <span class="product_price" style="color:red">{{list.GiaBan|number:0}} đ</span>
+                                            <h3 class="product_title"><a href="/Detail/Index/{{list.MaSP}}" ng-bind="list.TenSP"></a></h3>
+                                        </div>
+                                        <div class="product_info">
+                                            <ul>
+                                                <li><a href="/Detail/Index/{{list.MaSP}}" title="Xem Chi tiết">Xem Chi tiết</a></li>
+                                                <li><a href="#" data-toggle="modal" data-target="#modal_box" ng-click="ModalDetail(list.MaSP)" title="Quick view">Xem nhanh</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>       
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="list" role="tabpanel">
+                        <div class="product_list_item mb-35" dir-paginate="list in ListSanPham |orderBy:'-GiaBan' | itemsPerPage:9">
+                            <div class="row align-items-center" >
+                                <div class="col-lg-4 col-md-6 col-sm-6" >
+                                    <div class="product_thumb">
+                                        <a href="/Detail/Index/{{list.MaSP}}"><img ng-src="/img/{{list.HinhAnh}}" width="170" style="margin-left:30px;" alt=""></a>
+                                        <div class="{{list.NeworOld}}">
+                                            <img ng-if="list.NeworOld!=null" ng-src="~/Layout/LayoutShop/assets/img/cart/{{list.ImgNeworOld}}" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-8 col-md-6 col-sm-6">
+                                    <div class="list_product_content">
+                                        
+                                        <div class="list_title">
+                                            <h3><a href="/Detail/Index/{{list.MaSP}}" style="font-weight:bold" ng-bind="list.TenSP"></a></h3>
+                                        </div>
+                                        <p class="design" ng-bind="list.MOTASANPHAM[0].GioiThieu1"> </p>
+                                        <br />
+                                        <div class="content_price">
+                                            <span style="color:red">{{list.GiaBan | number:0}} đ</span>
+                                            @*<span class="old-price">$130.00</span>*@
+                                        </div>
+                                        <div class="add_links">
+                                            <ul>
+                                                <li><a style="color:white;" ng-click="AddCart(list.MaSP)" title="add to cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
+                                                <li><a style="color:white;" ng-click="ModalDetail(list.MaSP)" data-toggle="modal" data-target="#modal_box" title="Quick view"><i class="fa fa-eye" aria-hidden="true"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                      
+                       
+                    </div>
+
+                </div>             
+            </div>
+            <!--shop tab product end-->
+            <!--pagination style start-->
+            <center style="margin-left:300px;">
+                <dir-pagination-controls max-size="9"
+                                         direction-links="true"
+                                         boundary-links="true">
+                </dir-pagination-controls>
+            </center>
+            <!--pagination style end-->
+        </div>
+
+    </div>
+</div>
+<script>
+    var IDMaLoai=@Html.Raw(Json.Encode(ViewBag.ID));
+    var search=@Html.Raw(Json.Encode(ViewBag.search));
+</script>
+@section Angularjs{
+<script src="~/Scripts/ShopList/ShopList.js"></script>
+}
+
+
+
+

@@ -1,0 +1,56 @@
+﻿@{
+    Layout = "";
+}
+
+<div class="container-fluid">
+    <div id="ShowPopupMTSP">
+        <br />
+        <form role="form" id="Form" name="EditForm" ng-submit="SaveAction(tableInfo.AddUrl,EditForm)">
+            <div class="row col-lg-12" style="margin: 0;">
+                <div>
+                    <h3 style="text-transform: none;font-weight:bold" ng-bind="Titile"></h3>
+                </div>
+            </div>
+            <hr />
+            <div class="row col-lg-12" style="margin: 0;">
+                <div class="col-md-6" >
+                    <img  ng-src="/img/{{HinhAnh1}}" class="img-thumbnail" style="margin-left:120px;"/>
+                </div>
+                <div class="col-md-6">
+                    <h3 ng-bind="TenSP"></h3>
+                    <label>Mô tả</label>
+                    <textarea ng-model="Data.GioiThieu1" class="form-control" rows="8"></textarea>
+                </div>               
+            </div>
+            <br />
+            <div class="row col-lg-12" style="margin: 0;">               
+                <div class="col-md-12">
+                    <label>Nội dung</label>
+                    <textarea @*name="editor" class="ckeditor"*@ ng-model="Data.GioiThieu2" @*class="form-control"*@ id="NoiDung"></textarea>
+                </div>
+            </div>
+            <hr />
+            <div class="row col-lg-12">
+                @*---------------------------------------------------------------Gửi duyệt lại và bỏ qua-------------------------------------------------------------------------------------------------------*@
+                <center style="margin:auto">
+                    <button title="Thêm mới" type="button" class="btn btn-primary btn-labeled" ng-click="SendMTSP()">
+                        <span class="btn-label">
+                            <i class="{{IconButton}}"></i>
+                        </span>{{ButtonTitle}}
+                    </button>
+                    <button type="reset" class="btn btn-labeled" ng-click="ClosePopupMTSP()">
+                        <span class="btn-label">
+                            <i class="fa fa-close"></i>
+                        </span>Bỏ qua
+                    </button>
+                </center>
+            </div>
+            <div class="row col-lg-12">
+
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
