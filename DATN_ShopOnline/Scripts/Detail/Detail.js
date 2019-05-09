@@ -313,6 +313,10 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
             toastr.error("Số lượng phải lớn hơn 0", 'Error');
             return
         }
+        if ($scope.iSoLuong > 10) {
+            toastr.error("Số lượng đặt không được vượt quá 10", 'Error');
+            return
+        }
         var data = {
             iMaSP: content,
             iSoLuong: $scope.iSoLuong,

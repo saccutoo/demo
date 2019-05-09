@@ -374,6 +374,12 @@
                                         <p>Sản Phẩm</p>
                                     </a>
                                 </li>
+                                <li class="nav-item" ng-show="ShowDH">
+                                    <a href="/DonHang/Index" class="nav-link {{ActiveDH}}">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>Đơn hàng</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -485,7 +491,10 @@
             placeholder: "--Chọn sản phẩm--",
             allowClear: true
         });
-
+        $("#TrangThai").select2({
+            placeholder: "--Trạng thái--",
+            allowClear: true
+        });
         $("#regular").slick({
             infinite: true,
             slidesToShow: 3,

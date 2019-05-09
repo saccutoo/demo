@@ -257,6 +257,7 @@
     <Compile Include="Class\Login.cs" />
     <Compile Include="Class\Messenger.cs" />
     <Compile Include="Class\ShopCart.cs" />
+    <Compile Include="Controllers\DonHangController.cs" />
     <Compile Include="Controllers\MyAccountController.cs" />
     <Compile Include="Controllers\DetailController.cs" />
     <Compile Include="Controllers\HomeAdminController.cs" />
@@ -810,6 +811,7 @@
     <Content Include="Framwork\Script\ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
     <Content Include="Framwork\Script\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
     <Content Include="Framwork\Script\ckeditor\skins\moono-lisa\readme.md" />
+    <Content Include="Scripts\DonHang\DonHang.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-touch.min.js.map" />
@@ -1662,6 +1664,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\MyAccount\Index.cshtml" />
     <Content Include="Views\Page404\Index.cshtml" />
+    <Content Include="Views\DonHang\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

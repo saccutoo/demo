@@ -23,6 +23,8 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
                 $scope.ShowLSP = true;
                 $scope.ShowNCC = true;
                 $scope.ShowSP = true;
+                $scope.ShowDH = true;
+
             }
             if (res.data.result[0].MaChucVu == 2) {
 

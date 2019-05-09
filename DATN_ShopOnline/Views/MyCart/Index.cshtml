@@ -42,8 +42,8 @@
                                     <td class="product_thumb"><a href="#"><img ng-src="~/img/{{list.iHinhAnh}}" style="width:50px" alt=""></a></td>
                                     <td class="product_name"  ><a href="#" ng-bind="list.iTenSP"></a></td>
                                     <td class="product-price" style="color:red">{{list.iGiaBan | number:0}} ₫</td>
-                                    <td class="product_quantity" ><input  type="number" ng-model="list.iSoLuongBan" ng-change="ChangeSoLuong(list.iMaSP,list.iSoLuongBan)"></td>
-                                    <td class="product_total" style="color:red">{{(list.iGiaBan*list.iSoLuongBan | number:0)}} ₫</td>
+                                    <td class="product_quantity" ><input  type="number" ng-model="list.iSoLuongBan" ng-change="ChangeSoLuong(list.iTenSP,list.iMaSP,list.iSoLuongBan)" ></td>
+                                    <td class="product_total" style="color:red;text-align:left">{{(list.iGiaBan*list.iSoLuongBan | number:0)}} ₫</td>
                                 </tr>                               
                             </tbody>
                         </table>

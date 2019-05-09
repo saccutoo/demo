@@ -75,7 +75,7 @@ namespace DATN_ShopOnline.Controllers
                 else
                 {
                     int SL = ShopCart.iSoLuongBan + iSoLuong;
-                    if (SL<=SanPham.SoLuong || SL >= SanPham.SoLuong)
+                    if (SL<=10)
                     {
                         ShopCart.iSoLuongBan = ShopCart.iSoLuongBan + iSoLuong;
                         ShopCart.ThanhTien = ShopCart.iSoLuongBan * ShopCart.iGiaBan;
@@ -91,7 +91,7 @@ namespace DATN_ShopOnline.Controllers
                     else
                     {
                         messenger.IsSuccess = false;
-                        messenger.Message = "Sản phẩm này chỉ còn lại" + " " + SanPham.SoLuong + " " + "không thể đặt được quá số lượng còn lại!!!";
+                        messenger.Message = "Không được phép đặt quá 10 số lượng của một sản phẩm.Trong giỏ bạn đã có" + ShopCart.iSoLuong + " sản phẩm này";
                         return Content(JsonConvert.SerializeObject(new
                         {
                             messenger,

@@ -29,11 +29,23 @@
             </div>
             <br />
             <div class="row col-lg-12" style="margin: 0;">
-                <div class="col-md-2">
-                    <label class="label">Giá Bán <span style="color:red">(*)</span></label>
+                <div class="col-md-2" ng-show="isShowGiaNhap">
+                    <label class="label">Giá Nhập <span style="color:red">(*)</span></label>
                 </div>
-                <div class="col-md-4">
-                    <input type="text" class="form-control" ng-model="Data.GiaBan" ng-change="ChangGiaBan()" />
+                <div class="col-md-4" ng-show="isShowGiaNhap">
+                    <input type="text" class="form-control" ng-model="Data.GiaNhap" ng-change="ChangGiaBan()" />
+                </div>
+                <div class="col-md-2" ng-show="isShowNeworOld">
+                    <label class="label">Chuyển đổi <span style="color:red">(*)</span></label>
+                </div>
+                <div class="col-md-4" ng-show="isShowNeworOld">
+                    @*<input type="text" class="form-control" ng-model="Data.NeworOld" ng-change="ChangNeworOld()" />*@
+                    <select class="form-control" ng-model="Data.NeworOld" ng-change="ChangNeworOld()">
+                        <option value="" selected>--Chọn xem--</option>
+                        <option value="img_icone" selected>Sản phẩm mới</option>
+                        <option value="hot_img" >Sản phẩm hot</option>
+                        <option value="old" >Sản cũ</option>
+                    </select>
                 </div>
                 <div class="col-md-2">
                     <label class="label">Loại sản phẩm <span style="color:red">(*)</span></label>

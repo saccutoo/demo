@@ -1,0 +1,167 @@
+﻿
+@{
+    ViewBag.Title = "Đơn hàng";
+    Layout = "~/Views/Shared/LayoutAdmin.cshtml";
+}
+<style>
+    #pointer {
+        cursor: pointer;
+    }
+
+    .pagination a {
+        color: black;
+        float: left;
+        padding: 8px 16px;
+        text-decoration: none;
+        border: 1px solid #ddd;
+    }
+
+        .pagination a.active {
+            background-color: #4CAF50;
+            color: white;
+            border: 1px solid #4CAF50;
+        }
+
+        .pagination a:hover:not(.active) {
+            background-color: #ddd;
+        }
+
+    #Form .label {
+        line-height: 35px;
+        margin: auto;
+    }
+</style>
+
+<!-- Content Header (Page header) -->
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Đơn hàng</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/HomeAdmin/Index">Home</a></li>
+                        <li class="breadcrumb-item active">Đơn hàng</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+
+                        <div class="col-2">
+                            <input type="text" ng-model="txtSerach" class="form-control" placeholder="Serach..." />
+                        </div>
+                        @*<div class="col-2">
+                            <select id="TrangThaiThanhToan" style="width:100%;" ng-model="MaLoai" class="form-control" ng-options="list.MaLoai as list.TenLoai for list in ListLoaiSP" ng-change="ChangListSP()">
+                                <option value="" selected>--Chọn loại sản phẩm--</option>
+                            </select>
+                        </div>*@
+                        <div class="col-2">
+                            <select id="TrangThai" style="width:100%;" ng-model="TrangThai" class="form-control" ng-change="Timkiem()">
+                                <option value="" selected>--Trạng thái--</option>
+                                <option value="0">Chờ xử lý</option>
+                                <option value="1">Đã xử lý</option>
+                                <option value="2">Đang giao hàng</option>
+                                <option value="3">Đã nhận hàng</option>
+                                <option value="4">Đã hủy</option>
+                            </select>
+                        </div>
+
+                        @*<div class="col-1">
+                            <button ng-click="btnTimKiem()" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        </div>*@
+                        <div class="col-5">
+
+                        </div>
+                        <div class="col-3 " style="text-align:center;float:right">
+                            <button style="margin-left:10px;" ng-click="btnADD() " class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Thêm</button>
+                            <button style="margin-left:10px;" ng-click="btnXuatFile()" class="btn btn-default pull-right"><i class="fa fa-file-excel-o"></i> Xuất file</button>
+                            @*<button style="margin-left:10px;" ng-click="btnDocFile()" class="btn btn-default"><i class="fa fa-upload"></i> Nhập file</button>*@
+                            
+                        </div>
+                        
+                    </div>
+
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <table class="table table-hover table-condensed table-bordered" style="text-align:center">
+                        <thead>
+                            <tr class="success" style="font-weight:bold">
+                                <th>Khách hàng</th>
+                                <th>Ngày đặt</th>
+                                <th>Phi ship</th>
+                                <th>Tổng tiền</th>
+                                <th>Phương thức thanh toán</th>
+                                <th>Trạng thái thanh toán</th>
+                                <th>Trạng thái đơn hàng</th>                              
+                                <th>Chức năng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr dir-paginate="list in ListDonHang | filter:txtSerach |  itemsPerPage:10">
+                                <td style="line-height:55px;" id="pointer"><a href="" ng-bind="list.KHACHHANG.TenKH" style="color:#007bff;"></a></td>
+                                <td style="line-height:55px;" >{{list.NgayDat}}/{{list.ThangDat}}/{{list.NamDat}} {{list.GioDat}}</td>
+                                <td style="line-height:55px;color:red" >{{list.PhiShip|number:0}} <span style="color:red" ng-show="list.PhiShip!=0"></span></td>
+                                <td style="line-height:55px;color:red" >{{list.TongTien|number:0}} <span style="color:red" ng-show="list.PhiShip!=0"></span></td>
+
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.PhuongThuc==0" ><span  ng-bind="ThanhTaiNha"></span></td>
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.PhuongThuc==1" ><span  ng-bind="ThanhToanThe"></span></td>
+
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThaiThanhToan==0" > <span class="text-danger" ng-bind="TrangThaiChuaThanhToan"></span></td>
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThaiThanhToan==1" ><span class="text-success" ng-bind="TrangThaiDaThanhToan"></span></td>
+
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThai==0"><span class="text-warning " ng-bind="TrangThaiChoXuLy"></span></td>
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThai==1"><span class="text-info" ng-bind="TrangThaiDaXuLy"></span></td>
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThai==2"><span class="text-secondary" ng-bind="TrangThaiDangGiaoHang"></span></td>
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThai==3"><span class="text-success" ng-bind="TrangThaiDaNhanHang"></span></td>
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThai==4"><span class="text-danger" ng-bind="TrangThaiKhachHuyHang"></span></td>
+
+
+                                <td style="line-height:55px;">
+                                    @*<a id="pointer" ng-click="btnEdit(list.MaDH)" class="fa fa-pencil " title="Sửa" style="color:blue"></a>*@
+                                    <a id="pointer" ng-click="btnDelete(list.MaDB)" class="fa fa-trash" title="Xóa" style="color:red"></a>
+                                    <a id="pointer" ng-click="ViewDetail(list.MaDB)" class="fa fa-eye" title="Xem chi tiết" style="color:blue"></a>
+
+                                </td>
+                            </tr>
+
+                        </tbody>
+                        @*<tfoot>
+                                <tr>
+                                    <th>Rendering engine</th>
+                                    <th>Browser</th>
+                                    <th>Platform(s)</th>
+                                    <th>Engine version</th>
+                                    <th>CSS grade</th>
+                                </tr>
+                            </tfoot>*@
+                    </table>
+                </div>
+                <center style="margin:auto">
+                    <dir-pagination-controls max-size="10"
+                                             direction-links="true"
+                                             boundary-links="true">
+                    </dir-pagination-controls>
+                </center>
+            </div>
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<div style="display: none;">
+    @Html.Action("SaveSanPham", "SanPham");
+</div>
+@section Angularjs{
+    <script src="~/Scripts/DonHang/DonHang.js"></script>
+}
+

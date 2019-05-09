@@ -131,42 +131,46 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
 
    
     //thay đổi số lượng trong json 
-    $scope.ChangeSoLuong = function (iMaSP, iSoLuong) {
+    $scope.ChangeSoLuong = function (iTenSP,iMaSP, iSoLuong) {
         debugger
         if (iSoLuong<=0) {
-            toastr.error('Sản phẩm không thể nhỏ hơn 0', 'Error');
+            toastr.error('Sản phẩm ' + iTenSP + ' không thể nhỏ hơn 0', 'Error');
             return
         }
-        else {
-            var data = {
-                iMaSP: iMaSP,
-            }
-            var response = $http({
-                url: "/ShopCart/GetSP",
-                method: "POST",
-                data: JSON.stringify(data),
-                dataType: "json"
-            });
-            response.then(function (res) {
-                $scope.SanPham = res.data.result;
-                console.log($scope.SanPham)
-                if ($scope.SanPham[0].MaSP == iMaSP) {
-                    if ($scope.SanPham[0].SoLuong < iSoLuong) {
-                        toastr.error("Số lượng sản phẩm này chỉ còn " + $scope.SanPham[0].SoLuong + " " + "sản phẩm", 'Error');
-                        for (var i = 0; i < $scope.ListShopCart.length; i++) {
-                            if ($scope.ListShopCart[i].iMaSP == iMaSP) {
-                                $scope.ListShopCart[i].iSoLuongBan = $scope.SanPham[0].SoLuong;
-                                break;
-                            }
-                        }
-                        return;
-                    }
-
-                }
-            }, function (res) {
-                AppendToToastr(false, "Thông báo", "... Lỗi rồi !");
-            });
+        if (iSoLuong>10) {
+            toastr.error('Sản phẩm ' + iTenSP + ' không thể lớn hơn 10', 'Error');
+            return
         }
+        //else {
+        //    var data = {
+        //        iMaSP: iMaSP,
+        //    }
+        //    var response = $http({
+        //        url: "/ShopCart/GetSP",
+        //        method: "POST",
+        //        data: JSON.stringify(data),
+        //        dataType: "json"
+        //    });
+        //    response.then(function (res) {
+        //        $scope.SanPham = res.data.result;
+        //        console.log($scope.SanPham)
+        //        if ($scope.SanPham[0].MaSP == iMaSP) {
+        //            if ($scope.SanPham[0].SoLuong < iSoLuong) {
+        //                toastr.error("Số lượng sản phẩm này chỉ còn " + $scope.SanPham[0].SoLuong + " " + "sản phẩm", 'Error');
+        //                for (var i = 0; i < $scope.ListShopCart.length; i++) {
+        //                    if ($scope.ListShopCart[i].iMaSP == iMaSP) {
+        //                        $scope.ListShopCart[i].iSoLuongBan = $scope.SanPham[0].SoLuong;
+        //                        break;
+        //                    }
+        //                }
+        //                return;
+        //            }
+
+        //        }
+        //    }, function (res) {
+        //        AppendToToastr(false, "Thông báo", "... Lỗi rồi !");
+        //    });
+        //}
         
     }
 
@@ -261,6 +265,16 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
     $scope.Update = function () {
         var data = [];
         var obj = {};
+        for (var i = 0; i < $scope.ListShopCart.length; i++) {
+            if ($scope.ListShopCart[i].iSoLuongBan<=0) {
+                toastr.error('Sản phẩm' + $scope.ListShopCart[i].iTenSP + 'không thể nhỏ hơn 0', 'Error');
+                return
+            }
+            if ($scope.ListShopCart[i].iSoLuongBan > 10) {
+                toastr.error('Sản phẩm' + $scope.ListShopCart[i].iTenSP + ' không thể lớn hơn 10', 'Error');
+                return
+            }
+        }
         for (var i = 0; i < $scope.ListShopCart.length; i++) {
             obj = { iMaSP: $scope.ListShopCart[i].iMaSP, iSoLuong: $scope.ListShopCart[i].iSoLuongBan };
             data.push(obj);

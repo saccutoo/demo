@@ -8,6 +8,7 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
     $scope.Select = false;
     $scope.Data = {};
     $scope.isShowAvatar = true;
+
     //Khởi tạo các hàm khi bắt đầu chạy giao diện
     $scope.init = function () {
         //các hàm dùng chung cho các giao diện
@@ -30,6 +31,7 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
                 $scope.ShowLSP = true;
                 $scope.ShowNCC = true;
                 $scope.ShowSP = true;
+                $scope.ShowDH = true;
             }
             if (res.data.result[0].MaChucVu == 2) {
 
@@ -148,8 +150,11 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
         $scope.Titile = "Thêm sản phẩm";
         $scope.IconButton = "fa fa-save";
         $scope.ButtonTitle = "Thêm mới";
+        $scope.isShowGiaNhap = true;
+        $scope.isShowNeworOld = false;
         $scope.isShowKhungAnh = false;
         $scope.isShowAvatar = true;
+
         if ($scope.MaSP != null) {
             $scope.MaSP = null;
         }
@@ -175,6 +180,8 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
         $scope.Titile = "Sửa sản phẩm";
         $scope.IconButton = "fa fa-edit";
         $scope.ButtonTitle = "Cập nhập";
+        $scope.isShowGiaNhap = false;
+        $scope.isShowNeworOld = true;
         $scope.MaSP = id;
         var id = id;
 
@@ -196,6 +203,7 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
             $scope.Data.MaLoai = res.data.result[0].MaLoai;
             $scope.Data.HeSo = res.data.result[0].HeSo.toString();
             $scope.Data.KhungAnh = res.data.result[0].HinhAnh;
+            $scope.Data.NeworOld = res.data.result[0].NeworOld;
             $scope.isShowKhungAnh = true;
             $scope.isShowAvatar = false;
             ShowPopup($, "#ShowPopup", 1000, 700)
@@ -209,22 +217,22 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
 
     //Định dạng giá tiền khi nhập số
     $scope.ChangGiaBan = function () {
-        var x = $scope.Data.GiaBan;
+        var x = $scope.Data.GiaNhap;
         var x1 = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         var x2 = x1.split(",");
         var list = x2.join("");
-        $scope.Data.GiaBan = list.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        $scope.Data.GiaNhap = list.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     //Update or insert sản phẩm
     $scope.Send = function () {
-        debugger
-        var position = $scope.Data.GiaBan.indexOf(',');
+
+        var position = $scope.Data.GiaNhap.indexOf(',');
         if (position != -1) {
-            var list = $scope.Data.GiaBan.split(",");
-            $scope.Data.GiaBan = list.join("");
+            var list = $scope.Data.GiaNhap.split(",");
+            $scope.Data.GiaNhap = list.join("");
         }
-        debugger
+
         if ($scope.theFile != null) {
             //modal.append('HinhAnh', $scope.theFile);
             $scope.Data.HinhAnh = $scope.theFile.name;
@@ -256,7 +264,7 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
                   $scope.ClosePopup();
               }
               else {
-                  if (res.data.messenger.RedirectToAction!=null && res.data.messenger.RedirectToAction == true) {
+                  if (res.data.messenger.RedirectToAction != null && res.data.messenger.RedirectToAction == true) {
                       window.location.href = "/Page404/Index";
                   }
                   else {
@@ -385,14 +393,13 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
             method: 'POST',
             url: "/SanPham/TimKiemSP",
             data: {
-                MaLoai,MaSP
-            },
-
-        }
+                MaLoai, MaSP
+                },
+                }
         $http(request)
           .then(function mySuccess(res) {
               $scope.ListSanPham = res.data.result;
-          }, function myError(res) {
+                }, function myError(res) {
           });
 
     }
@@ -416,7 +423,7 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
         }, function myError(response) {
             $scope.myWelcome = response.statusText;
         });
-       
+
         CKEDITOR.replace('NoiDung');
         $(document).ready(function () {
 
@@ -440,8 +447,8 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
 
     //Add mô tả sản phẩm
     $scope.SendMTSP = function () {
-        $scope.Data.MaSP=$scope.MaSP;
-        $scope.Data.GioiThieu2=CKEDITOR.instances["NoiDung"].getData();
+        $scope.Data.MaSP = $scope.MaSP;
+        $scope.Data.GioiThieu2 = CKEDITOR.instances["NoiDung"].getData();
         var request = {
             method: 'POST',
             url: "/SanPham/ADDMTSP",
@@ -473,7 +480,37 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
         window.location.reload();
         $.colorbox.close();
     }
-});
+
+    $scope.btnXuatFile = function () {
+        var MaLoai;
+        var MaSP;
+        if ($scope.MaLoai == null || $scope.MaLoai == "") {
+            MaLoai = 0;
+        }
+        else {
+            MaLoai = $scope.MaLoai;
+
+        }
+        if ($scope.MaSP == null || $scope.MaSP == "") {
+            MaSP = 0;
+        }
+        else {
+            MaSP = $scope.MaSP;
+
+        }
+        var request = {
+            method: 'POST',
+            url: "/SanPham/XuatFile",
+            data: {
+                MaLoai, MaSP
+            },
+        }
+        $http(request)
+          .then(function mySuccess(res) {
+                }, function myError(res) { 
+          });
+                }
+        });
 
 //khởi tạo thư viện toastr
 app.config(function (toastrConfig) {

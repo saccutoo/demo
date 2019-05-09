@@ -272,6 +272,7 @@
 /// <reference path="bootstrap.js" />
 /// <reference path="colorbox/jquery.colorbox-min.js" />
 /// <reference path="detail/detail.js" />
+/// <reference path="donhang/donhang.js" />
 /// <reference path="esm/popper.min.js" />
 /// <reference path="esm/popper-utils.min.js" />
 /// <reference path="homeadmin/homeadmin.js" />
