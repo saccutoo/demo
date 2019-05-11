@@ -168,27 +168,42 @@ namespace DATN_ShopOnline.Controllers
         }
         public ActionResult Delete(int id)
         {
-            try
+            bool Check = Permission("SanPham", "Add");
+            if (Check == true)
             {
-                SanPham sp = db.SanPhams.Find(id);
-                db.SanPhams.Remove(sp);
-                db.SaveChanges();
-                messenger.IsSuccess = true;
-                messenger.Message = "Xóa sản phẩm thành công!!!";
-                return Content(JsonConvert.SerializeObject(new
+                try
                 {
-                    messenger,
-                }));
+                    SanPham sp = db.SanPhams.Find(id);
+                    db.SanPhams.Remove(sp);
+                    db.SaveChanges();
+                    messenger.IsSuccess = true;
+                    messenger.Message = "Xóa sản phẩm thành công!!!";
+                    return Content(JsonConvert.SerializeObject(new
+                    {
+                        messenger,
+                    }));
+                }
+                catch (Exception)
+                {
+                    messenger.IsSuccess = false;
+                    messenger.Message = "Xóa sản phẩm thất bại!!!";
+                    return Content(JsonConvert.SerializeObject(new
+                    {
+                        messenger,
+                    }));
+                }
             }
-            catch (Exception)
+            else
             {
                 messenger.IsSuccess = false;
-                messenger.Message = "Xóa sản phẩm thất bại!!!";
+                messenger.RedirectToAction = true;
+                messenger.Message = "Thêm sản phẩm thất bại!!!";
                 return Content(JsonConvert.SerializeObject(new
                 {
                     messenger,
                 }));
             }
+               
 
         }
         public ActionResult ComboLoaiSP(int id)

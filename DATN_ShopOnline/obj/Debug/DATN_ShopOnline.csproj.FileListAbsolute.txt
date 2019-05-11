@@ -193,6 +193,6 @@ D:\aaaa\demo\DATN_ShopOnline\bin\Microsoft.Owin.Security.OAuth.xml
 D:\aaaa\demo\DATN_ShopOnline\bin\Microsoft.Owin.Security.Google.xml
 D:\aaaa\demo\DATN_ShopOnline\bin\Microsoft.Owin.Security.Twitter.xml
 D:\aaaa\demo\DATN_ShopOnline\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-D:\aaaa\demo\DATN_ShopOnline\obj\Debug\DATN_ShopOnline.csprojResolveAssemblyReference.cache
 D:\aaaa\demo\DATN_ShopOnline\obj\Debug\DATN_ShopOnline.dll
 D:\aaaa\demo\DATN_ShopOnline\obj\Debug\DATN_ShopOnline.pdb
+D:\aaaa\demo\DATN_ShopOnline\obj\Debug\DATN_ShopOnline.csprojResolveAssemblyReference.cache

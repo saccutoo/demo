@@ -24,7 +24,7 @@
         [StringLength(100)]
         public string QueQuan { get; set; }
 
-        public int? SDT { get; set; }
+        public Int32? SDT { get; set; }
 
         [StringLength(100)]
         public string Gmail { get; set; }

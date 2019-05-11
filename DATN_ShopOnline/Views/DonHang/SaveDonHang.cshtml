@@ -1,0 +1,192 @@
+﻿@{
+    Layout = "";
+}
+<style>
+    .imgAvatar {
+        background: linear-gradient(to right bottom, rgb(237, 222, 93), rgb(240, 152, 25));
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        width: 70px;
+        height: 70px;
+        border-radius: 35px;
+    }
+   .td img{
+       width:30px;
+   }
+</style>
+<div class="container-fluid">
+    <div id="SaveDonHang">
+        <br />
+        <form role="form" id="Form" name="EditForm" ng-submit="SaveAction(tableInfo.AddUrl,EditForm)">
+            <div class="row col-lg-12" style="margin: 0;">
+                <div>
+                    <h3 style="text-transform: none;font-weight:bold">Cập nhập đơn hàng</h3>
+                </div>
+            </div>
+            <hr />
+            <div class="row col-lg-12" style="margin: 0;">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <div class="imgAvatar">
+                                <div style="color: rgb(255, 255, 255); font-size: 53px;" ng-bind="AvatarName"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-10">
+                            <div class="text-bold" ng-bind="TenKH"></div>
+                            <div class="text" ng-bind="SDT"></div>
+                            <div class="text" ng-bind="DiaChi"></div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div  class="col-lg-12">
+                                    <div class="text-bold">Trạng thái giao nhận</div>
+                                    <div style="margin-top:10px;">
+                                        <select class="form-control" id="DH1" style="width:250px;" ng-model="ConvertData.TrangThai1">
+                                            <option id="TT0" value="0">Đang xử lý</option>
+                                            <option id="TT1" value="1">Đã xác nhận</option>
+                                            <option id="TT2" value="2">Đang giao hàng</option>
+                                            <option id="TT3" value="3">Đã nhận hàng</option>
+                                            <option id="TT4" value="4">Đã Hủy</option>
+                                        </select>
+                                    </div>                                 
+                                </div>                             
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="text-bold">Trạng thái thanh toán</div>
+                                    <div style="margin-top:10px;">
+                                        <select class="form-control" id="DH2" style="width:250px;" ng-model="ConvertData.TrangThaiThanhToan">
+                                            <option value="false">Chưa thanh toán</option>
+                                            <option value="true">Đã thanh toán</option>
+                                            @*<option value="2">Đã hoàn tiền</option>*@
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="text-bold">Thông tin sản phẩm</div>
+                        <div style="margin-top:10px;">
+                            <table class="table table-hover table-condensed table-bordered" style="text-align:center">
+                                <thead>
+                                    <tr class="success" style="font-weight:bold">
+                                        @*<th>
+                            <div class="checkbox">
+                                <label style="margin-left:10px;">
+                                    <input type="checkbox" ng-model="checkALL" ng-click="Checked()">
+                                    <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+
+                                </label>
+                            </div>
+                        </th>*@
+                                        <th>Tên sản phẩm</th>
+                                        <th>Hình ảnh</th>
+                                        <th>Số lượng</th>
+                                        <th>Đơn giá</th>
+                                        <th>Thành tiền</th>
+                                        @*<th>Trạng thái thanh toán</th>
+                        <th>Trạng thái đơn hàng</th>
+                        <th>Chức năng</th>*@
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="list in ListCTDH">
+                                        <td ng-bind="list.SANPHAM.TenSP" class="text-bold" style="line-height: 40px;"></td>
+                                        <td class="td">
+                                            <img ng-src="~/img/{{list.SANPHAM.HinhAnh}}" width="50" />
+                                        </td>
+                                        <td ng-bind="list.SoLuong" style="line-height: 40px;"></td>
+                                        <td style="color:red;line-height: 40px;" ng-bind="list.SANPHAM.GiaBan|number:0"></td>
+                                        <td style="color:red;line-height: 40px;" ng-bind="list.SANPHAM.GiaBan|number:0"></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="text-bold">Thông tin đơn hàng</div>
+                        <table class="table table-striped table-hover table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>Mã đơn</td>
+                                    <td ng-bind="MaDB"></td>
+                                </tr>
+                                <tr>
+                                    <td>Ngày đặt</td>
+                                    <td ng-bind="Date"></td>
+                                </tr>
+                                <tr>
+                                    <td>Hình thức thanh toán</td>
+                                    <td ng-if="HinhThucThanhToan==0" ng-bind="ThanhTaiNha"></td>
+                                    <td ng-if="HinhThucThanhToan==1" ng-bind="ThanhToanThe"></td>
+
+                                </tr>
+                                <tr>
+                                    <td>Trạng thái thanh toán</td>
+                                    <td ng-if="TrangThaiThanhToan==0" ng-bind="TrangThaiChuaThanhToan"></td>
+                                    <td ng-if="TrangThaiThanhToan==1" ng-bind="TrangThaiDaThanhToan"></td>
+                                </tr>
+                                <tr>
+                                    <td>Trạng thái đơn hàng</td>
+                                    <td ng-if="TrangThai==0" ng-bind="TrangThaiChoXuLy"></td>
+                                    <td ng-if="TrangThai==1" ng-bind="TrangThaiDaXuLy"></td>
+                                    <td ng-if="TrangThai==2" ng-bind="TrangThaiDangGiaoHang"></td>
+                                    <td ng-if="TrangThai==3" ng-bind="TrangThaiDaNhanHang"></td>
+                                    <td ng-if="TrangThai==4" ng-bind="TrangThaiKhachHuyHang"></td>
+                                </tr>
+                                <tr>
+                                    <td>Phí ship</td>
+                                    <td ng-bind="PhiShip|number:0" style="color:red"></td>
+                                </tr>
+                                <tr>
+                                    <td>Tổng tiền</td>
+                                    <td ng-bind="TongTien|number:0" style="color:red"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+               
+               
+            </div>
+                 
+            <hr />
+
+            <div class="row col-lg-12">
+
+                <center style="margin:auto">
+                    <button title="Thêm mới" type="button" class="btn btn-primary btn-labeled" ng-click="CapNhap()" ng-show="isShowCapNhap">
+                        <span class="btn-label">
+                            <i class="fa fa-refresh"></i>
+                        </span>Cập nhập
+                    </button>
+                    <button style="margin-left:10px;" type="reset" class="btn btn-labeled" ng-click="ClosePopup()">
+                        <span class="btn-label">
+                            <i class="fa fa-close"></i>
+                        </span>Bỏ qua
+                    </button>
+                </center>
+            </div>
+        </form>
+
+    </div>
+</div>

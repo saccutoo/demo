@@ -30,6 +30,73 @@
         line-height: 35px;
         margin: auto;
     }
+
+    .checkbox label:after,
+    .radio label:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+
+    .checkbox .cr,
+    .radio .cr {
+        position: relative;
+        display: inline-block;
+        border: 1px solid #a9a9a9;
+        border-radius: .25em;
+        width: 1.3em;
+        height: 1.3em;
+        float: left;
+        margin-right: .5em;
+    }
+
+    .radio .cr {
+        border-radius: 50%;
+    }
+
+        .checkbox .cr .cr-icon,
+        .radio .cr .cr-icon {
+            position: absolute;
+            font-size: .8em;
+            line-height: 0;
+            top: 50%;
+            left: 20%;
+        }
+
+        .radio .cr .cr-icon {
+            margin-left: 0.04em;
+        }
+
+    .checkbox label input[type="checkbox"],
+    .radio label input[type="radio"] {
+        display: none;
+    }
+
+        .checkbox label input[type="checkbox"] + .cr > .cr-icon,
+        .radio label input[type="radio"] + .cr > .cr-icon {
+            transform: scale(3) rotateZ(-20deg);
+            opacity: 0;
+            transition: all .3s ease-in;
+        }
+
+        .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+        .radio label input[type="radio"]:checked + .cr > .cr-icon {
+            transform: scale(1) rotateZ(0deg);
+            opacity: 1;
+        }
+
+        .checkbox label input[type="checkbox"]:disabled + .cr,
+        .radio label input[type="radio"]:disabled + .cr {
+            opacity: .5;
+        }
+        .jss365 {
+             border-width: 2px; 
+            border-style: solid;
+             border-radius: 16px; 
+             border-top-left-radius: 5px; 
+             border-bottom-right-radius: 5px;
+             background: transparent; 
+        }
 </style>
 
 <!-- Content Header (Page header) -->
@@ -61,12 +128,12 @@
                             <input type="text" ng-model="txtSerach" class="form-control" placeholder="Serach..." />
                         </div>
                         @*<div class="col-2">
-                            <select id="TrangThaiThanhToan" style="width:100%;" ng-model="MaLoai" class="form-control" ng-options="list.MaLoai as list.TenLoai for list in ListLoaiSP" ng-change="ChangListSP()">
-                                <option value="" selected>--Chọn loại sản phẩm--</option>
-                            </select>
-                        </div>*@
+                                <select id="TrangThaiThanhToan" style="width:100%;" ng-model="MaLoai" class="form-control" ng-options="list.MaLoai as list.TenLoai for list in ListLoaiSP" ng-change="ChangListSP()">
+                                    <option value="" selected>--Chọn loại sản phẩm--</option>
+                                </select>
+                            </div>*@
                         <div class="col-2">
-                            <select id="TrangThai" style="width:100%;" ng-model="TrangThai" class="form-control" ng-change="Timkiem()">
+                            <select id="TrangThai" style="width:100%;" ng-model="TrangThai" class="form-control">
                                 <option value="" selected>--Trạng thái--</option>
                                 <option value="0">Chờ xử lý</option>
                                 <option value="1">Đã xử lý</option>
@@ -75,65 +142,95 @@
                                 <option value="4">Đã hủy</option>
                             </select>
                         </div>
-
-                        @*<div class="col-1">
-                            <button ng-click="btnTimKiem()" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                        </div>*@
-                        <div class="col-5">
+                        <div class="col-2">
+                            <input type="text" class="form-control datepicker" placeholder="Chọn ngày đặt" id="datePicker" ng-model="NgayDat" />
+                        </div>
+                        <div class="col-1">
+                            <button ng-click="Timkiem()" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        </div>
+                        <div class="col-2">
 
                         </div>
                         <div class="col-3 " style="text-align:center;float:right">
                             <button style="margin-left:10px;" ng-click="btnADD() " class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Thêm</button>
                             <button style="margin-left:10px;" ng-click="btnXuatFile()" class="btn btn-default pull-right"><i class="fa fa-file-excel-o"></i> Xuất file</button>
+                            <button style="margin-left:10px;" ng-click="btnDetele()" class="btn btn-default pull-right" ><i class="fa fa-trash" ></i> Xóa</button>
+                            <button style="margin-left:10px;" ng-click="btnDetele()" class="btn btn-default pull-right"><i class="fa fa-refresh "></i> Xử lý</button>
+
                             @*<button style="margin-left:10px;" ng-click="btnDocFile()" class="btn btn-default"><i class="fa fa-upload"></i> Nhập file</button>*@
-                            
+
                         </div>
-                        
+
                     </div>
 
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body">
-                    <table class="table table-hover table-condensed table-bordered" style="text-align:center">
+                <div class="card-body" id="table-tbody" style="display:none">
+                    <table class="table table-striped table-hover table-bordered" style="text-align:center">
                         <thead>
                             <tr class="success" style="font-weight:bold">
+                                <th>
+                                    <div class="checkbox" >
+                                        <label style="margin-left:10px;">
+                                            <input type="checkbox" ng-model="checkALL" ng-click="Checked()">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+
+                                        </label>
+                                    </div>
+                                </th>
                                 <th>Khách hàng</th>
                                 <th>Ngày đặt</th>
                                 <th>Phi ship</th>
                                 <th>Tổng tiền</th>
                                 <th>Phương thức thanh toán</th>
                                 <th>Trạng thái thanh toán</th>
-                                <th>Trạng thái đơn hàng</th>                              
-                                <th>Chức năng</th>
+                                <th>Trạng thái đơn hàng</th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr dir-paginate="list in ListDonHang | filter:txtSerach |  itemsPerPage:10">
-                                <td style="line-height:55px;" id="pointer"><a href="" ng-bind="list.KHACHHANG.TenKH" style="color:#007bff;"></a></td>
-                                <td style="line-height:55px;" >{{list.NgayDat}}/{{list.ThangDat}}/{{list.NamDat}} {{list.GioDat}}</td>
-                                <td style="line-height:55px;color:red" >{{list.PhiShip|number:0}} <span style="color:red" ng-show="list.PhiShip!=0"></span></td>
-                                <td style="line-height:55px;color:red" >{{list.TongTien|number:0}} <span style="color:red" ng-show="list.PhiShip!=0"></span></td>
-
-                                <td style="line-height:55px;font-weight:bold" ng-if="list.PhuongThuc==0" ><span  ng-bind="ThanhTaiNha"></span></td>
-                                <td style="line-height:55px;font-weight:bold" ng-if="list.PhuongThuc==1" ><span  ng-bind="ThanhToanThe"></span></td>
-
-                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThaiThanhToan==0" > <span class="text-danger" ng-bind="TrangThaiChuaThanhToan"></span></td>
-                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThaiThanhToan==1" ><span class="text-success" ng-bind="TrangThaiDaThanhToan"></span></td>
-
-                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThai==0"><span class="text-warning " ng-bind="TrangThaiChoXuLy"></span></td>
-                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThai==1"><span class="text-info" ng-bind="TrangThaiDaXuLy"></span></td>
-                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThai==2"><span class="text-secondary" ng-bind="TrangThaiDangGiaoHang"></span></td>
-                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThai==3"><span class="text-success" ng-bind="TrangThaiDaNhanHang"></span></td>
-                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThai==4"><span class="text-danger" ng-bind="TrangThaiKhachHuyHang"></span></td>
-
-
-                                <td style="line-height:55px;">
-                                    @*<a id="pointer" ng-click="btnEdit(list.MaDH)" class="fa fa-pencil " title="Sửa" style="color:blue"></a>*@
-                                    <a id="pointer" ng-click="btnDelete(list.MaDB)" class="fa fa-trash" title="Xóa" style="color:red"></a>
-                                    <a id="pointer" ng-click="ViewDetail(list.MaDB)" class="fa fa-eye" title="Xem chi tiết" style="color:blue"></a>
-
+                        <tbody >
+                            <tr dir-paginate="list in ListDonHang |  itemsPerPage:10 | filter:txtSerach as filtered" style="height:10px;">
+                                <td >
+                                    <div class="checkbox" style="height: 10px;line-height: 80px;">
+                                        <label style="margin-left: 10px;">
+                                            <input type="checkbox" value="{{list.MaDB}}" ng-model="CheckMaDH" ng-checked="checkALL" name="Check">
+                                            <span class="cr"><i class="cr-icon fa fa-check"></i></span>
+                                        </label>
+                                    </div>
                                 </td>
+                                <td style="line-height:55px;" id="pointer"><a href="" ng-bind="list.KHACHHANG.TenKH" style="color:#007bff;" ng-click="ViewDetail(list.MaDB)"></a></td>
+                                <td style="line-height:55px;" ng-bind="list.Date"></td>
+                                <td style="line-height:55px;color:red" ng-bind="list.PhiShip|number:0"> <span style="color:red" ng-show="list.PhiShip!=0"></span></td>
+                                <td style="line-height:55px;color:red" ng-bind="list.TongTien|number:0"> <span style="color:red" ng-show="list.PhiShip!=0"></span></td>
+
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.PhuongThuc==0"><span ng-bind="ThanhTaiNha"></span></td>
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.PhuongThuc==1"><span ng-bind="ThanhToanThe"></span></td>
+
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThaiThanhToan==0"><span  ng-bind="TrangThaiChuaThanhToan"></span></td>
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThaiThanhToan==1"><span  ng-bind="TrangThaiDaThanhToan"></span></td>
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThaiThanhToan==2"><span  ng-bind="TrangThaiDaHoantien"></span></td>
+
+
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThai==0"><span  ng-bind="TrangThaiChoXuLy"></span></td>
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThai==1"><span  ng-bind="TrangThaiDaXuLy"></span></td>
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThai==2"><span  ng-bind="TrangThaiDangGiaoHang"></span></td>
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThai==3"><span  ng-bind="TrangThaiDaNhanHang"></span></td>
+                                <td style="line-height:55px;font-weight:bold" ng-if="list.TrangThai==4"><span  ng-bind="TrangThaiKhachHuyHang"></span></td>
+
+
+                                <td >
+                                    <button class="btn btn-primary" style="font-weight:bold;margin-top:9px;" ng-if="list.TrangThai==0 || list.TrangThai==1 || list.TrangThai==2" ng-click="Convert(list)"><i class="fa fa-refresh"></i> Xử lý</button>
+                                    <button class="btn btn-success" style="font-weight:bold;margin-top:9px;" ng-if="list.TrangThai==3" ng-click="Convert(list)"><i class="fa fa-check"></i> Ok</button>
+                                    <button class="btn btn-default" style="font-weight:bold;margin-top:9px;" ng-if="list.TrangThai==4" ng-click="Convert(list)">Đã hủy</button>
+                                </td>
+                                <td colspan="9" ng-if="filtered.length === 0">
+                                    <span ng-bind="MessengerDH"></span>
+                                </td>
+
                             </tr>
+                            @*<tr ng-if="ListDonHang.length===0">
+                                    <td colspan="9" ng-bind="MessengerDH"></td>
+                                </tr>*@
 
                         </tbody>
                         @*<tfoot>
@@ -159,7 +256,7 @@
     <!-- /.content -->
 </div>
 <div style="display: none;">
-    @Html.Action("SaveSanPham", "SanPham");
+    @Html.Action("SaveDonHang", "Donhang");
 </div>
 @section Angularjs{
     <script src="~/Scripts/DonHang/DonHang.js"></script>

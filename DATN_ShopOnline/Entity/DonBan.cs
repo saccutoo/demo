@@ -12,7 +12,7 @@ namespace DATN_ShopOnline.Entity
         [Key]
         public int MaDB { get; set; }
 
-        public int? MaKH { get; set; }
+        public int MaKH { get; set; }
 
         public int? NgayDat { get; set; }
 

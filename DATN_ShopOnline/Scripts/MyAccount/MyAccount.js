@@ -9,11 +9,12 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
     //$scope.HomeShopActive = "active";
 
     $scope.TrangThaiChoXuLy = "Chờ xử lý";//0  
-    $scope.TrangThaiDaXuLy = "Đã xử lý";//1
+    $scope.TrangThaiDaXuLy = "Đã xác nhận";//1
     $scope.TrangThaiDangGiaoHang = "Đang giao hàng";//2
     $scope.TrangThaiDaNhanHang = "Đã nhận hàng";//3
     $scope.TrangThaiKhachHuyHang = "Đã hủy";//4
 
+    $scope.TrangThaiDaHoantien = "Đã hoàn tiền";//2
     $scope.TrangThaiDaThanhToan = "Đã thanh toán";//1
     $scope.TrangThaiChuaThanhToan = "Chưa thanh toán";//0
 

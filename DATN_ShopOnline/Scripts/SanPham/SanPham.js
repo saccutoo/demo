@@ -310,8 +310,14 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
                     $scope.LoadSanPham();
                 }
                 else {
-                    toastr.error(res.data.messenger.Message, 'Error');
-                    $scope.LoadSanPham();
+                    if (res.data.messenger.RedirectToAction != null && res.data.messenger.RedirectToAction == true) {
+                        window.location.href = "/Page404/Index";
+                    }
+                    else {
+                        toastr.error(res.data.messenger.Message, 'Error');
+                        $scope.LoadSanPham();
+                    }
+
                 }
             }, function myError(response) {
                 toastr.error("Lỗi rồi....!", 'Error');

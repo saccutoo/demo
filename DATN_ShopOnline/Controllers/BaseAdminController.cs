@@ -11,15 +11,18 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Web.Hosting;
 using DATN_ShopOnline.Class;
-using ClosedXML.Excel;
-using OfficeOpenXml;
+using System.Net.Mail;
+using System.Net;
+using System.Globalization;
+using System.Net.Mime;
 
 namespace DATN_ShopOnline.Controllers
 {
     public class BaseAdminController : Controller
     {
         // GET: BaseAdmin
-        private ShopOnline db = new ShopOnline();       
+        private ShopOnline db = new ShopOnline();
+        private Messenger messenger = new Messenger();
         public bool Permission(string Controller, string Action)
         {
             if (Session["TaiKhoan1"] != null)
@@ -85,6 +88,33 @@ namespace DATN_ShopOnline.Controllers
             else
             {
                 return false;
+            }
+        }
+        public Messenger SendMail(string body, string ToMail)
+        {
+            try
+            {
+                MailMessage message = new MailMessage(new MailAddress("kimlam2207@gmail.com", "RuouPlaza.com"), new MailAddress(ToMail));
+                message.Subject = "Thông tin đơn hàng từ RuouPlaza.com";
+                message.IsBodyHtml = true;
+                message.Body = body;
+                SmtpClient smtp = new SmtpClient();
+                smtp.UseDefaultCredentials = false;
+                smtp.Host = "smtp.gmail.com"; //Or Your SMTP Server Address                  
+                smtp.Credentials = new NetworkCredential("kimlam2207@gmail.com", "tranlam123");
+                //client.UseDefaultCredentials = true;
+                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                smtp.EnableSsl = true;
+                smtp.Port = 587;
+
+                smtp.Send(message);
+                messenger.IsSuccess = true;
+                return messenger;
+            }
+            catch (Exception e)
+            {
+                messenger.IsSuccess = false;
+                return messenger;
             }
         }
 

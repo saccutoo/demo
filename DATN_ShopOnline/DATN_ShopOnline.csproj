@@ -310,6 +310,7 @@
     <Content Include="Framwork\CSS\angular-toastr.css" />
     <Content Include="Framwork\CSS\angular-toastr.min.css" />
     <Content Include="Framwork\CSS\bootstrap-clockpicker.min.css" />
+    <Content Include="Framwork\CSS\bootstrap-datepicker.min.css" />
     <Content Include="Framwork\CSS\bootstrap-select.min.css" />
     <Content Include="Framwork\CSS\chosen-sprite.png" />
     <Content Include="Framwork\CSS\chosen.css" />
@@ -340,6 +341,7 @@
     <Content Include="Framwork\Script\angular-toastr.tpls.min.js" />
     <Content Include="Framwork\Script\angular.min.js" />
     <Content Include="Framwork\Script\bootstrap-clockpicker.min.js" />
+    <Content Include="Framwork\Script\bootstrap-datepicker.min.js" />
     <Content Include="Framwork\Script\bootstrap-filestyle.min.js" />
     <Content Include="Framwork\Script\bootstrap-select.min.js" />
     <Content Include="Framwork\Script\chosen.jquery.js" />
@@ -1667,6 +1669,7 @@
     <Content Include="Views\MyAccount\Index.cshtml" />
     <Content Include="Views\Page404\Index.cshtml" />
     <Content Include="Views\DonHang\Index.cshtml" />
+    <Content Include="Views\DonHang\SaveDonHang.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

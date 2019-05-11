@@ -120,50 +120,7 @@ namespace DATN_ShopOnline.Controllers
                         db.SaveChanges();
                     }
                     #endregion
-                        #region Gửi mail
-                    //int i = 1;
-                    //CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
-                    //double TT = Convert.ToDouble(listShopCart.Sum(n => n.ThanhTien)) + dh.PhiShip;
-                    //string PhiShip = dh.PhiShip.ToString("#,###", cul.NumberFormat);
-                    //string TongTien = TT.ToString("#,###", cul.NumberFormat);
-                    //ThanhPho TP = db.ThanhPhos.Find(kh.MaThanhPho);
-                    //Huyen huyen = db.Huyens.Find(kh.MaHuyen);
-
-                    //var Body = "";
-                    //Body += " <html>";
-                    //Body += "<body>";
-
-                    //Body += "<p style='font-weight:bold'>Họ và tên:" + "<span style='font-weight:lighter;'>" + " " + kh.TenKH + "</span>" + "</p>";
-                    //Body += "<p style='font-weight:bold'>Địa chỉ:" + "<span style='font-weight:lighter;'>" + " " + kh.DiaChi +" - "+ huyen.TenHuyen+ " - " + TP.TenThanhPho + "</span>" + "</p>";
-                    //Body += "<p style='font-weight:bold'>Số điện thoại:" + "<span style='font-weight:lighter;'>" + " " + 0 + "" + kh.SDT + "</span>" + "</p>";
-
-                    //Body += "<table border='1' width='1000' class='table table-striped table-bordered table-hover'>";
-                    //Body += "<tr  style='text-align:center' class='success'>";
-                    //Body += "<td colspan='5'><h3>Đơn hàng của bạn từ Rượu plaza</h3> </td>";
-                    //Body += "</tr>";
-
-                    //Body += "<tr  style='text-align:center'>";
-                    //Body += "<td>STT</td> <td> Tên sản phẩm </td><td> Số lượng </td><td> Đơn giá </td> <td> Thành tiền</td>";
-                    //Body += "<tr >";
-
-                    //foreach (var item in listShop)
-                    //{
-                    //    string GiaBan = item.iGiaBan.ToString("#,###", cul.NumberFormat);
-                    //    string Monney = (item.iSoLuongBan * item.iGiaBan).ToString("#,###", cul.NumberFormat);
-
-                    //    Body += "<tr >";
-                    //    Body += "<td style='text-align:center;'> " + (i++) + "</td>" + "<td  style='text-align:left;'> " + "<p style='margin-left:20px;'>" + item.iTenSP + "</p>" + "</td>" + "<td style='text-align:center;color:red'> " + item.iSoLuongBan + "</td>" + "<td style='text-align:center;color:red'> " + GiaBan + "</td>" + "<td style='text-align:center;color:red'> " + Monney + "</td>";
-                    //    Body += "<tr >";
-                    //}
-
-                    //Body += "</table>";
-                    //Body += "<p style='font-weight:bold'>Phí ship:" + "<span style='font-weight:lighter;color:red'>" + " " + PhiShip + " " + "₫" + "</span>" + "</p>";
-                    //Body += "<p style='font-weight:bold'>Tổng tiền:" + "<span style='font-weight:lighter;color:red'>" + " " + TongTien + " " + "₫" + "</span>" + "</p>";
-                    //Body += "<p>Đơn hàng của bạn đã được xử lý.Trong vòng 1 tuần đơn hàng sẽ đến địa chỉ của bạn mong bạn hãy kiểm tra sản phẩm trước khi thanh toán.Cảm ơn bạn rất nhiều chúc bạn có một ngày mới vui vẻ <3 !!!</p>";
-                    //Body += "</body>";
-                    //Body += "</html>";
-                    //var Mail = SendMail(Body, kh.Gmail);
-                    #endregion
+                        
                     #region mail thông báo
                     var Body = "";
                     Body += " <html>";

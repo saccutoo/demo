@@ -6,6 +6,7 @@
 /// <reference path="../framwork/script/angular-toastr.js" />
 /// <reference path="../framwork/script/angular-toastr.tpls.js" />
 /// <reference path="../framwork/script/bootstrap-clockpicker.min.js" />
+/// <reference path="../framwork/script/bootstrap-datepicker.min.js" />
 /// <reference path="../framwork/script/bootstrap-filestyle.min.js" />
 /// <reference path="../framwork/script/bootstrap-select.min.js" />
 /// <reference path="../framwork/script/chosen.jquery.min.js" />

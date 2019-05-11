@@ -20,7 +20,7 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
 
     $scope.MessengerDH = "Không tìm thấy đơn hàng nào...";
 
-    $scope.ConvertData = [];
+
 
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
@@ -112,8 +112,6 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
                 }
                 $scope.ListDonHang[i].Date = $scope.ListDonHang[i].NgayDat + '/' + $scope.ListDonHang[i].ThangDat + '/' + $scope.ListDonHang[i].NamDat + ' ' + $scope.ListDonHang[i].GioDat;
             }
-            $('#table-tbody').css('display', 'block');
-
         }, function myError(res) {
         });
     }
@@ -182,14 +180,8 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
 
                             }
                             else {
-                                if (res.data.messenger.RedirectToAction != null && res.data.messenger.RedirectToAction == true) {
-                                    window.location.href = "/Page404/Index";
-                                }
-                                else {
-                                    toastr.error(res.data.messenger.Message, 'Error');
-                                    $scope.LoadDonHang();
-
-                                }
+                                toastr.error(res.data.messenger.Message, 'Error');
+                                $scope.LoadDonHang();
 
                             }
                         }, function (res) {
@@ -200,119 +192,15 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
     }
 
     $scope.Convert = function (list) {
-        
-        $scope.isShowCapNhap = true;
+        ShowPopup($, "#SaveDonHang", 1200, 500)
 
-        $scope.ConvertData.MaDB = list.MaDB;
-
-        var ListName = list.KHACHHANG.TenKH.split(" ");
-        ListName = ListName[2].slice(0, 1);
-        $scope.AvatarName = ListName.toLocaleUpperCase();
-
-        $scope.TenKH = list.KHACHHANG.TenKH;
-        $scope.SDT = list.KHACHHANG.SDT;
-        $scope.DiaChi = list.KHACHHANG.DiaChi + '-' + list.KHACHHANG.HUYEN.TenHuyen + '-' + list.KHACHHANG.THANHPHO.TenThanhPho;
-        debugger
-        $scope.ConvertData.TrangThai1 = list.TrangThai.toString();
-        $scope.ConvertData.TrangThaiThanhToan = list.TrangThaiThanhToan.toString();
-
-        
-        if ($scope.ConvertData.TrangThaiThanhToan=='true') {
-            $('#DH2').prop('disabled', 'disabled');
-        }
-        else {
-            $('#DH2').prop('disabled', false);
-        }
-        if ($scope.ConvertData.TrangThai1 == 4) {
-            $scope.isShowCapNhap = false;
-        }
-        if ($scope.ConvertData.TrangThaiThanhToan == 'true' && $scope.ConvertData.TrangThai1 == 3 || $scope.ConvertData.TrangThai1 == 4) {
-            $scope.isShowCapNhap = false;
-
-        }
-        if ($scope.ConvertData.TrangThai1 == 1) {
-            //$("#TT0").prop('disabled', true);
-            $('#TT0').prop('disabled', true);
-            $('#DH1').select2();
-        }
-        else if ($scope.ConvertData.TrangThai1 == 2) {
-            $('#TT0').prop('disabled', true);
-            $('#TT1').prop('disabled', !$('#TT1').prop('disabled'));
-            $('#DH1').select2();
-        }
-        else if ($scope.ConvertData.TrangThai1 == 3) {
-            $('#DH1').prop('disabled', 'disabled');
-            $('#DH1').select2();
-        }
-        else if ($scope.ConvertData.TrangThai1 == 4) {
-            $('#DH1').prop('disabled', 'disabled');
-            $('#DH2').prop('disabled', 'disabled');
-            //$('#DH1').select2();
-        }
-
-        $scope.ListCTDH = list.CHITIETDONBAN;
-
-        $scope.MaDB = list.MaDB;
-        $scope.Date = list.Date;
-        $scope.HinhThucThanhToan = list.PhuongThuc;
-        $scope.TrangThaiThanhToan = list.TrangThaiThanhToan;
-        $scope.TrangThai = list.TrangThai;
-        $scope.PhiShip = list.PhiShip;
-        $scope.TongTien = list.TongTien;
-
-        ShowPopup($, "#SaveDonHang", 1200, 800)       
         $('#cboxClose').css('display', 'none');
 
     }
-
     $scope.ClosePopup = function () {
-        $.colorbox.close();
-        //$('#SaveDonHang').css('display', 'none');
-        $('#TT0').prop('disabled', false);
-        $('#TT1').prop('disabled', false);
-        $('#TT2').prop('disabled', false);
-        $('#TT3').prop('disabled', false);
-        $('#TT4').prop('disabled', false);
-        $('#DH1').select2();
+        //$.colorbox.close();
+        $('#SaveDonHang').css('display', 'none');
 
-        $('#DH1').prop('disabled', false);
-        $('#DH2').prop('disabled', false);
-    }
-
-    $scope.CapNhap = function () {
-        debugger
-        var data = {
-            MaDB:$scope.ConvertData.MaDB,
-            TrangThai:$scope.ConvertData.TrangThai1,
-            TrangThaiThanhToan: $scope.ConvertData.TrangThaiThanhToan,
-        }
-        var response = $http({
-            url: "/DonHang/ConvertDH",
-            method: "POST",
-            data: JSON.stringify(data),
-            dataType: "json"
-        });
-        response.then(function (res) {
-            if (res.data.messenger.IsSuccess == true) {
-                toastr.success(res.data.messenger.Message, 'Success');
-                $scope.LoadDonHang();
-                $scope.ClosePopup();
-            }
-            else {
-                if (res.data.messenger.RedirectToAction != null && res.data.messenger.RedirectToAction == true) {
-                    window.location.href = "/Page404/Index";
-                }
-                else {
-                    toastr.error(res.data.messenger.Message, 'Error');
-                    $scope.LoadDonHang();
-                    $scope.ClosePopup();
-                }
-
-            }
-
-        }, function (res) {
-            AppendToToastr(false, "Thông báo", "... Lỗi rồi !");
-        });
     }
 });
 

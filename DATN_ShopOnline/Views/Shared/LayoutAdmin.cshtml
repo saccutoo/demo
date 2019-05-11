@@ -18,9 +18,7 @@
     <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/morris/morris.css">
     <!-- jvectormap -->
     <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-    <!-- Date Picker -->
-    <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/datepicker/datepicker3.css">
-    <!-- Daterange picker -->
+    <!-- Date Picker -->    <!-- Daterange picker -->
     <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/daterangepicker/daterangepicker-bs3.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
@@ -40,7 +38,7 @@
     <link href="~/Framwork/Script/slick-1.8.1/slick/slick.css" rel="stylesheet" />
     <link href="~/Framwork/CSS/bootstrap-select.min.css" rel="stylesheet" />
     <link href="~/Framwork/CSS/fileinput.min.css" rel="stylesheet" />
-
+    <link href="~/Framwork/CSS/bootstrap-datepicker.min.css" rel="stylesheet" />
 
     @*slick slider*@
     <style>
@@ -442,13 +440,10 @@
     <script src="~/Framwork/Script/jquery.sortable.min.js"></script>
     <script src="~/Framwork/Script/ckeditor/ckeditor.js"></script>
     <script src="~/Framwork/Script/jquery.Timeago.js"></script>
-
-
+    <script src="~/Framwork/Script/bootstrap-datepicker.min.js"></script>
     <!--thư viện slect chosen jquery -->
 
 
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
 
 
     <!-- page script -->
@@ -495,6 +490,14 @@
             placeholder: "--Trạng thái--",
             allowClear: true
         });
+        $("#DH1").select2({
+            placeholder: "--Trạng thái--",
+            allowClear: true
+        });
+        $("#DH2").select2({
+            placeholder: "--Trạng thái--",
+            allowClear: true
+        });
         $("#regular").slick({
             infinite: true,
             slidesToShow: 3,
@@ -534,6 +537,14 @@
             layoutTemplates: { main2: '{preview} ' + btnCust + ' {remove} {browse}' },
             allowedFileExtensions: ["jpg", "png", "gif"]
         });
+
+        $(".datepicker").datepicker({
+            autoclose: true,
+            format: "dd/mm/yyyy",
+        }).datepicker("setDate", new Date());
+
+        $('#cboxClose').css('display', 'none');
+
     </script>
 
     @RenderSection("Angularjs", false);
