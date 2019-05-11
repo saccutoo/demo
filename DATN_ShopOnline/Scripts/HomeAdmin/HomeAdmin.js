@@ -320,20 +320,8 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
         }
     }
 
-    //định dạng input type file
-    $('#ctrlFile').filestyle({
-        'text' : 'Chọn ảnh',
-        'htmlIcon' : '',
-        'btnClass' : 'btn-primary',
-        'size' : 'nr',
-        'input' : true,
-        'badge' : true,
-        'badgeName': 'badge-light',
-        'buttonBefore' : false,
-        'disabled' : false,
-        'placeholder': '',
-        'onChange': function () {}
-});
+    
+    
 
     //Tính tổng số ngày trong khaoảng ngày bất kì 
     function TotalDay(StartDay, EndDate) {

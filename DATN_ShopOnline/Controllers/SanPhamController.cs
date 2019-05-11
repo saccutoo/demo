@@ -16,7 +16,7 @@ using OfficeOpenXml;
 
 namespace DATN_ShopOnline.Controllers
 {
-    public class SanPhamController : Controller
+    public class SanPhamController : BaseAdminController
     {
         // GET: SanPham
         private ShopOnline db = new ShopOnline();
@@ -310,15 +310,16 @@ namespace DATN_ShopOnline.Controllers
             {
                 List<SanPham> result;
                 DataTable dt = new DataTable("Grid");
-                dt.Columns.AddRange(new DataColumn[8]
+                dt.Columns.AddRange(new DataColumn[9]
                 {
                 new DataColumn("Tên sản phẩm"),
                 new DataColumn("Nhà cung cấp"),
-                new DataColumn("Loại"),
+                new DataColumn("Loại sản phẩm"),
                 new DataColumn("Số lượng"),
+                new DataColumn("Giá nhập"),
+                new DataColumn("Hệ số"),
                 new DataColumn("Giá bán"),
                 new DataColumn("Số lượng đã bán"),
-                new DataColumn("Hệ số"),
                 new DataColumn("Trạng thái")
                 });
                 dt.Columns[0].DataType = typeof(string);
@@ -328,6 +329,7 @@ namespace DATN_ShopOnline.Controllers
                 dt.Columns[4].DataType = typeof(double);
                 dt.Columns[5].DataType = typeof(int);
                 dt.Columns[6].DataType = typeof(double);
+                dt.Columns[4].DataType = typeof(int);
                 dt.Columns[7].DataType = typeof(bool);
 
                 if (MaLoai == 0 && MaSP == 0)
@@ -348,7 +350,7 @@ namespace DATN_ShopOnline.Controllers
                 }
                 foreach (var item in result)
                 {
-                    dt.Rows.Add(item.TenSP, item.LOAISP.TenLoai, item.NHACC.TenNCC, item.SoLuong, item.GiaBan, item.SoLuongDaBan, item.HeSo, item.TrangThai);
+                    dt.Rows.Add(item.TenSP, item.LOAISP.TenLoai, item.NHACC.TenNCC, item.SoLuong,item.GiaNhap,item.HeSo, item.GiaBan, item.SoLuongDaBan, item.TrangThai);
                 }
 
                 var wb = new XLWorkbook();
@@ -372,117 +374,78 @@ namespace DATN_ShopOnline.Controllers
         }
         public ActionResult Upload(HttpPostedFileBase file)
         {
-            if (Request != null)
+            if (Session["TaiKhoan1"] != null)
             {
-                file = Request.Files["file"];
-                if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
+                bool Check = Permission("SanPham", "ImportExecel");
+                if (Check == true)
                 {
-                    string fileName = file.FileName;
-                    string fileContentType = file.ContentType;
-                    byte[] fileBytes = new byte[file.ContentLength];
-                    var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
-
-                    using (var package = new ExcelPackage(file.InputStream))
+                    if (Request != null)
                     {
-                        var currentSheet = package.Workbook.Worksheets;
-                        var workSheet = currentSheet.First();
-                        var noOfCol = workSheet.Dimension.End.Column;
-                        var noOfRow = workSheet.Dimension.End.Row;
-
-                        for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+                        file = Request.Files["file"];
+                        if ((file != null) && (file.ContentLength > 0) && !string.IsNullOrEmpty(file.FileName))
                         {
-                            var SP = new SanPham();
-                            SP.TenSP = workSheet.Cells[rowIterator, 1].Value == null ? null : workSheet.Cells[rowIterator, 1].Value.ToString();
-                            //SP.GiaBan = workSheet.Cells[rowIterator, 2].Value == null ? (double?)null : Convert.ToDouble(workSheet.Cells[rowIterator, 2].Value.ToString());
-                            SP.SoLuong= workSheet.Cells[rowIterator, 2].Value == null ? (int?)null : Convert.ToInt32(workSheet.Cells[rowIterator, 2].Value.ToString());
-                            SP.GiaNhap = workSheet.Cells[rowIterator, 2].Value == null ? (double?)null : Convert.ToDouble(workSheet.Cells[rowIterator, 3].Value.ToString());
-                            db.SanPhams.Add(SP);
-                            db.SaveChanges();
+                            string fileName = file.FileName;
+                            string fileContentType = file.ContentType;
+                            byte[] fileBytes = new byte[file.ContentLength];
+                            var data = file.InputStream.Read(fileBytes, 0, Convert.ToInt32(file.ContentLength));
+
+                            using (var package = new ExcelPackage(file.InputStream))
+                            {
+                                var currentSheet = package.Workbook.Worksheets;
+                                var workSheet = currentSheet.First();
+                                var noOfCol = workSheet.Dimension.End.Column;
+                                var noOfRow = workSheet.Dimension.End.Row;
+
+                                for (int rowIterator = 2; rowIterator <= noOfRow; rowIterator++)
+                                {
+                                    var SP = new SanPham();
+                                    SP.TenSP = workSheet.Cells[rowIterator, 1].Value == null ? null : workSheet.Cells[rowIterator, 1].Value.ToString();
+                                    //SP.GiaBan = workSheet.Cells[rowIterator, 2].Value == null ? (double?)null : Convert.ToDouble(workSheet.Cells[rowIterator, 2].Value.ToString());
+                                    SP.SoLuong = workSheet.Cells[rowIterator, 4].Value == null ? (int?)null : Convert.ToInt32(workSheet.Cells[rowIterator, 4].Value.ToString());
+                                    SP.GiaNhap = workSheet.Cells[rowIterator, 5].Value == null ? (double?)null : Convert.ToDouble(workSheet.Cells[rowIterator, 5].Value.ToString());
+                                    SP.HeSo = workSheet.Cells[rowIterator, 6].Value == null ? (int?)null : Convert.ToInt32(workSheet.Cells[rowIterator, 6].Value.ToString());
+                                    double hesotang = (100 + Convert.ToDouble(SP.HeSo)) / 100;
+                                    double GiaBan = hesotang * Convert.ToDouble(SP.GiaNhap);
+                                    SP.GiaBan = GiaBan;
+                                    SP.SoLuongDaBan = 0;
+                                    SP.TrangThai = true;
+                                    db.SanPhams.Add(SP);
+                                    db.SaveChanges();
+                                }
+                            }
+                            messenger.IsSuccess = true;
+                            messenger.Message = "Thêm sản phẩm thành công!!!";
+
+                            return Content(JsonConvert.SerializeObject(new
+                            {
+                                messenger
+                            }));
                         }
                     }
-                    messenger.IsSuccess = true;
-                    messenger.Message = "Thêm sản phẩm thành công!!!";
+                    messenger.IsSuccess = false;
+                    messenger.Message = "Thất bại";
 
                     return Content(JsonConvert.SerializeObject(new
                     {
                         result = messenger
                     }));
                 }
-            }
-            messenger.IsSuccess = false;
-            messenger.Message = "Thất bại";
-
-            return Content(JsonConvert.SerializeObject(new
-            {
-                result = messenger
-            }));
-        }
-        public bool Permission(string Controller, string Action)
-        {
-            if (Session["TaiKhoan1"] != null)
-            {
-                var TaiKhoan = Session["TaiKhoan1"].ToString();
-                var resultNV = db.NhanViens.Single(s => s.TaiKhoan.Contains(TaiKhoan));
-                try
+                else
                 {
-                    var resultAction = db.Actions.Single(s => s.Controller == Controller && s.MaNV == resultNV.MaNV);
-                    if (Action == "Index")
+                    messenger.IsSuccess = false;
+                    messenger.RedirectToAction = true;
+                    messenger.Message = "Thêm sản phẩm thất bại!!!";
+                    return Content(JsonConvert.SerializeObject(new
                     {
-                        if (resultAction.isIndex == true) return true;
-                        else return false;
-                    }
-                    else if (Action == "Get")
-                    {
-                        if (resultAction.isGet == true) return true;
-                        else return false;
-                    }
-                    else if (Action == "Add")
-                    {
-                        if (resultAction.isAdd == true) return true;
-                        else return false;
-                    }
-                    else if (Action == "Edit")
-                    {
-                        if (resultAction.isEdit == true) return true;
-                        else return false;
-                    }
-                    if (Action == "Delete")
-                    {
-                        if (resultAction.isDelete == true) return true;
-                        else return false;
-                    }
-                    else if (Action == "Submit")
-                    {
-                        if (resultAction.isSubmit == true) return true;
-                        else return false;
-                    }
-                    else if (Action == "ExportExcel")
-                    {
-                        if (resultAction.isExportExcel == true) return true;
-                        else return false;
-                    }
-                    else if (Action == "ImportExecel")
-                    {
-                        if (resultAction.isImportExcel == true) return true;
-                        else return false;
-                    }
-                    else
-                    {
-                        return false;
-
-                    }
+                        messenger,
+                    }));
                 }
-                catch (Exception)
-                {
-
-                    return false;
-                }
-
             }
             else
             {
-                return false;
+                return RedirectToAction("Index", "LoginAdmin");
             }
+         
         }
        
     }

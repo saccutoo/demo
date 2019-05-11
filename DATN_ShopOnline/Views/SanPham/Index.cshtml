@@ -81,8 +81,8 @@
                         </div>
                         <div class="col-3">
                             <button style="margin-left:10px;" ng-click="btnADD()" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Thêm</button>
-                            <button style="margin-left:10px;" ng-click="btnDocFile()" class="btn btn-default  pull-right"><i class="fa fa-upload"></i> Nhập file</button>
-                            <button style="margin-left:10px;" ng-click="btnXuatFile()" class="btn btn-default pull-right"><i class="fa fa-file-excel-o"></i> Xuất file</button>
+                            <button style="margin-left:10px;" @*ng-click="btnDocFile()"*@ class="btn btn-default  pull-right" tabindex="-1"  data-toggle="modal" data-target="#ImportExcel"><i class="fa fa-upload"></i> Nhập file</button>
+                            <button  style="margin-left:10px;" ng-click="btnXuatFile()" class="btn btn-default pull-right" ><i class="fa fa-file-excel-o"></i> Xuất file</button>
                         </div>
                     </div>
 
@@ -106,13 +106,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr dir-paginate="list in ListSanPham | filter:txtSerach | orderBy:'-GiaBan' | itemsPerPage:10">
+                            <tr dir-paginate="list in ListSanPham | filter:txtSerach | orderBy:'-MaSP' | itemsPerPage:10">
                                 <td style="line-height:55px;" id="pointer"><a href="" ng-bind="list.TenSP" ng-click="btnEdit(list.MaSP)" style="color:#007bff;"></a></td>
                                 <td style="line-height:55px;" ng-bind="list.NHACC.TenNCC"></td>
                                 <td style="line-height:55px;" ng-bind="list.LOAISP.TenLoai"></td>
                                 <td style="line-height:55px;" ng-bind="list.SoLuong"></td>
-                                <td>
-                                    <img ng-src="~/img/{{list.HinhAnh}}" class="img-thumbnail" style="width:40px;" />
+                                <td ng-if="list.HinhAnh!=null">
+                                    <img  ng-src="~/img/{{list.HinhAnh}}" class="img-thumbnail" style="width:40px;" />
+                                </td>
+                                <td ng-if="list.HinhAnh==null">
+                                    @*<img src="~/img/66583171a81503e.jpg" class="img-thumbnail" style="width:40px;display:none" />*@
+                                    
                                 </td>
                                 <td style="line-height:55px;" ng-bind="list.GiaNhap|number:0"></td>
                                 <td style="line-height:55px;" ng-bind="list.GiaBan|number:0"></td>
@@ -153,6 +157,38 @@
 </div>
 <div style="display: none;">
     @Html.Action("SaveMTSP", "SanPham");
+</div>
+
+<style></style>
+<!-- Modal nhập file-->
+<div class="container">
+    <div class="modal fade" id="ImportExcel" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="col-sm-12">
+                        <div class="md-sm-6">
+                            <p class="modal-title pull-left font-weight-bold">Nhập file</p>
+                        </div>
+                        <div class="md-sm-6">
+                            <button type="button"  class="close pull-right" data-dismiss="modal">&times;</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <form action="" style="width:450px;margin-top:10px;">
+                        <input type="file" id="ctrlFile" onchange="angular.element(this).scope().setFile1(this)" ng-model="file"  name="file">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"  ng-click="btnDocFile()">Ok</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 

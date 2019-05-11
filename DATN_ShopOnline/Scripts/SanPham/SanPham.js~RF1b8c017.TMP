@@ -205,13 +205,7 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
             //$scope.Data.KhungAnh = res.data.result[0].HinhAnh;
             $scope.Data.NeworOld = res.data.result[0].NeworOld;
             //$scope.isShowKhungAnh = true;
-            if (res.data.result[0].HinhAnh!=null) {
-                $('.clickable img').attr('src', '/img/' + res.data.result[0].HinhAnh);
-            }
-            else {
-                $('.clickable img').attr('src', '/img/top-10-khung-hinh-trang-dep-nhat-1.jpg');
-
-            }
+            $('.clickable img').attr('src', '/img/' + res.data.result[0].HinhAnh);
             $scope.Data.HinhAnh = res.data.result[0].HinhAnh;
             $scope.isShowAvatar = true;
             ShowPopup($, "#ShowPopup", 1000, 700)
