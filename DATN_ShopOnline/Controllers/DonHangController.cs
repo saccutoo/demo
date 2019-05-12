@@ -52,11 +52,11 @@ namespace DATN_ShopOnline.Controllers
             }));
 
         }
-        public ActionResult Timkiem(int? TrangThai,string NgayDat)
+        public ActionResult Timkiem(int? TrangThai, string NgayDat)
         {
-            if (TrangThai!= null && NgayDat !=null)
+            if (TrangThai != null && NgayDat != null)
             {
-                string[] words = NgayDat.Split('/');                             
+                string[] words = NgayDat.Split('/');
                 int index = words[0].IndexOf("0");
                 if (index == 0)
                 {
@@ -92,7 +92,7 @@ namespace DATN_ShopOnline.Controllers
                 string[] words = NgayDat.Split('/');
                 int index = words[0].IndexOf("0");
 
-                if (index==0)
+                if (index == 0)
                 {
                     words[0] = words[0].Remove(0, 1);
 
@@ -124,7 +124,7 @@ namespace DATN_ShopOnline.Controllers
 
         }
 
-        public ActionResult Delete(int [] data)
+        public ActionResult Delete(int[] data)
         {
             bool Check = Permission("DonHang", "Delete");
             if (Check == true)
@@ -177,7 +177,7 @@ namespace DATN_ShopOnline.Controllers
                     messenger,
                 }));
             }
-           
+
 
         }
 
@@ -186,13 +186,13 @@ namespace DATN_ShopOnline.Controllers
             return View();
         }
 
-        public ActionResult ConvertDH(int MaDB, int TrangThai, bool TrangThaiThanhToan)
+        public ActionResult ConvertDH(int MaDB,int TrangThai,bool TrangThaiThanhToan)
         {
             bool Check = Permission("DonHang", "Submit");
             if (Check == true)
             {
                 DonBan dh = db.DonBans.Find(MaDB);
-                int MaKH = dh.MaKH;               
+                int MaKH = dh.MaKH;
                 dh.TrangThai = TrangThai;
                 if (TrangThai == 3)
                 {
@@ -211,7 +211,7 @@ namespace DATN_ShopOnline.Controllers
                     {
                         ChiTietDonBan CTDB = db.ChiTietDonBans.Find(item.MaCTDB);
                         CTDB.TrangThai = TrangThai;
-                        if (TrangThai==3)
+                        if (TrangThai == 3)
                         {
                             CTDB.TrangThaiThanhToan = true;
                         }
@@ -277,7 +277,7 @@ namespace DATN_ShopOnline.Controllers
 
                 #endregion
 
-                if (TrangThai==1)
+                if (TrangThai == 1)
                 {
                     var Mail = SendMail(Body, kh.Gmail);
                     if (Mail.IsSuccess == true)
@@ -310,7 +310,7 @@ namespace DATN_ShopOnline.Controllers
                         messenger,
                     }));
                 }
-               
+
             }
             else
             {
@@ -328,7 +328,7 @@ namespace DATN_ShopOnline.Controllers
         {
             return View();
         }
-        public ActionResult ConvertListDH(int []data, int TrangThai, bool TrangThaiThanhToan)
+        public ActionResult ConvertListDH(int[] data, int TrangThai, bool TrangThaiThanhToan)
         {
             bool Check = Permission("DonHang", "Submit");
             if (Check == true)
@@ -343,7 +343,7 @@ namespace DATN_ShopOnline.Controllers
                     db.Entry(dh).State = EntityState.Modified;
 
                     var ListCTDH = db.ChiTietDonBans.Where(s => s.MaDB == MaDB).ToList();
-                    if (ListCTDH!=null)
+                    if (ListCTDH != null)
                     {
                         foreach (var item in ListCTDH)
                         {
@@ -353,7 +353,7 @@ namespace DATN_ShopOnline.Controllers
                             db.Entry(CTDB).State = EntityState.Modified;
                         }
                     }
-                    if (TrangThai==1)
+                    if (TrangThai == 1)
                     {
                         #region Gửi mail
                         int j = 1;
@@ -402,7 +402,7 @@ namespace DATN_ShopOnline.Controllers
                         Body += "</html>";
 
                         #endregion
-                        var Mail = SendMail(Body, kh.Gmail);                        
+                        var Mail = SendMail(Body, kh.Gmail);
                     }
 
                 }
@@ -425,5 +425,147 @@ namespace DATN_ShopOnline.Controllers
                 }));
             }
         }
+        public ActionResult XuatFile(int? TrangThai, string NgayDat)
+        {
+            if (NgayDat=="null")
+            {
+                NgayDat = null;
+            }
+            bool Check = Permission("DonHang", "ExportExcel");
+            if (Check == true)
+            {
+                List<DonBan> result;
+                DataTable dt = new DataTable("Grid");
+                dt.Columns.AddRange(new DataColumn[7]
+                {
+                new DataColumn("Khách hàng"),
+                new DataColumn("Ngày đặt"),
+                new DataColumn("Phí ship"),
+                new DataColumn("Tổng tiền"),
+                new DataColumn("Phương thức thanh toán"),
+                new DataColumn("Trạng thái thanh toán"),
+                new DataColumn("Trạng thái đơn hàng"),
+                });
+                dt.Columns[0].DataType = typeof(string);
+                dt.Columns[1].DataType = typeof(string);
+                dt.Columns[2].DataType = typeof(double);
+                dt.Columns[3].DataType = typeof(double);
+                dt.Columns[4].DataType = typeof(string);
+                dt.Columns[5].DataType = typeof(string);
+                dt.Columns[6].DataType = typeof(string);
+
+                if (TrangThai != null && NgayDat != null)
+                {
+                    string[] words = NgayDat.Split('/');
+                    int index = words[0].IndexOf("0");
+                    if (index == 0)
+                    {
+                        words[0] = words[0].Remove(0, 1);
+
+                    }
+                    index = words[1].IndexOf("0");
+                    if (index == 0)
+                    {
+                        words[1] = words[1].Remove(0, 1);
+                    }
+                    int NgayDat1 = Convert.ToInt16(words[0]);
+                    int ThangDat = Convert.ToInt16(words[1]);
+                    int NamDat = Convert.ToInt16(words[2]);
+
+                    result = db.DonBans.Include(s => s.KHACHHANG).Where(s => s.TrangThai == TrangThai).Where(s => s.NgayDat == NgayDat1).Where(s => s.ThangDat == ThangDat).Where(s => s.NamDat == NamDat).ToList();
+                }
+                else if (TrangThai != null && NgayDat == null)
+                {
+                    result = db.DonBans.Include(s => s.KHACHHANG).Where(s => s.TrangThai == TrangThai).ToList();
+                }
+                else if (TrangThai == null && NgayDat != null)
+                {
+                    string[] words = NgayDat.Split('/');
+                    int index = words[0].IndexOf("0");
+
+                    if (index == 0)
+                    {
+                        words[0] = words[0].Remove(0, 1);
+
+                    }
+                    index = words[1].IndexOf("0");
+                    if (index == 0)
+                    {
+                        words[1] = words[1].Remove(0, 1);
+
+                    }
+                    int NgayDat1 = Convert.ToInt16(words[0]);
+                    int ThangDat = Convert.ToInt16(words[1]);
+                    int NamDat = Convert.ToInt16(words[2]);
+                    result = db.DonBans.Include(s => s.KHACHHANG).Where(s => s.NgayDat == NgayDat1).Where(s => s.ThangDat == ThangDat).Where(s => s.NamDat == NamDat).ToList();
+                }
+                else
+                {
+                    result = db.DonBans.Include(s => s.KHACHHANG).ToList();
+                }
+
+                foreach (var item in result)
+                {
+                    var Date = item.NgayDat + '/' + item.ThangDat + '/' + item.NamDat + ' ' + item.GioDat;
+                    string PhuongThucThanhToan, TrangThaiThanhToan, TrangThaiDonHang = "";
+                    if (item.PhuongThuc==0)
+                    {
+                        PhuongThucThanhToan = "Thanh toán tại nhà";
+                    }
+                    else
+                    {
+                        PhuongThucThanhToan = "Thanh toán qua thẻ";
+                    }
+                    if (item.TrangThaiThanhToan==false)
+                    {
+                        TrangThaiThanhToan = "Chưa thanh toán";
+                    }
+                    else
+                    {
+                        TrangThaiThanhToan = "Đã thanh toán";
+                    }
+                    if (item.TrangThai==0)
+                    {
+                        TrangThaiDonHang = "Chờ xử lý";
+                    }
+                    else if (item.TrangThai == 1)
+                    {
+                        TrangThaiDonHang = "Đã xác nhận";
+                    }
+                    else if (item.TrangThai == 2)
+                    {
+                        TrangThaiDonHang = "Đang giao hàng";
+                    }
+                    else if (item.TrangThai == 3)
+                    {
+                        TrangThaiDonHang = "Đã nhận hàng";
+                    }
+                    else
+                    {
+                        TrangThaiDonHang = "Đã hủy";
+                    }
+                    dt.Rows.Add(item.KHACHHANG.TenKH, Date, item.PhiShip, item.TongTien, PhuongThucThanhToan, TrangThaiThanhToan, TrangThaiDonHang);
+                }
+
+                var wb = new XLWorkbook();
+                wb.Worksheets.Add(dt);
+                byte[] data = null;
+                using (var stream = new MemoryStream())
+                {
+                    wb.SaveAs(stream);
+                    data = stream.ToArray();
+                }
+                return File(data, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", " DonHang.xlsx");
+
+            }
+            else
+            {
+                var TK = Session["TaiKhoan1"].ToString();
+                var m = db.NhanViens.Single(s => s.TaiKhoan == TK);
+                return RedirectToAction("Index", "Page404", m);
+            }
+
+        }
+
     }
 }

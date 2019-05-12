@@ -401,6 +401,18 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
         }
        
     }
+
+    $scope.btnXuatFile = function () {
+    debugger
+        if ($scope.TrangThai == null || $scope.TrangThai == "") {
+            $scope.TrangThai = "";
+        }
+        if ($scope.NgayDat == null || $scope.NgayDat == "") {
+            $scope.NgayDat = null;
+        }
+        window.location = "/DonHang/XuatFile?TrangThai=" + $scope.TrangThai + "&NgayDat=" + $scope.NgayDat;
+
+    }
 });
 
 //khởi tạo thư viện toastr
