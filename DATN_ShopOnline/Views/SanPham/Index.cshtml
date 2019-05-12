@@ -3,34 +3,8 @@
     ViewBag.Title = "Sản Phẩm";
     Layout = "~/Views/Shared/LayoutAdmin.cshtml";
 }
-<style>
-    #pointer {
-        cursor: pointer;
-    }
 
-    .pagination a {
-    color: black;
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-    border: 1px solid #ddd;
-}
-
-.pagination a.active {
-    background-color: #4CAF50;
-    color: white;
-    border: 1px solid #4CAF50;
-}
-
-.pagination a:hover:not(.active) {background-color: #ddd;}
-
-    #Form .label {
-        line-height: 35px;
-        margin:auto;
-    }
-
-</style>
-
+<link href="~/Framwork/CSS/Common.css" rel="stylesheet" />
 <!-- Content Header (Page header) -->
 <div class="content-wrapper">
     <div class="content-header">
@@ -81,7 +55,7 @@
                         </div>
                         <div class="col-3">
                             <button style="margin-left:10px;" ng-click="btnADD()" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Thêm</button>
-                            <button style="margin-left:10px;" @*ng-click="btnDocFile()"*@ class="btn btn-default  pull-right" tabindex="-1"  data-toggle="modal" data-target="#ImportExcel"><i class="fa fa-upload"></i> Nhập file</button>
+                            <button style="margin-left:10px;" @*ng-click="btnDocFile()"*@ id="btnDocFile" class="btn btn-default  pull-right" tabindex="-1"  data-toggle="modal" data-target="#ImportExcel"><i class="fa fa-upload"></i> Nhập file</button>
                             <button  style="margin-left:10px;" ng-click="btnXuatFile()" class="btn btn-default pull-right" ><i class="fa fa-file-excel-o"></i> Xuất file</button>
                         </div>
                     </div>
@@ -159,9 +133,8 @@
     @Html.Action("SaveMTSP", "SanPham");
 </div>
 
-<style></style>
 <!-- Modal nhập file-->
-<div class="container">
+<div class="container"  >
     <div class="modal fade" id="ImportExcel" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->

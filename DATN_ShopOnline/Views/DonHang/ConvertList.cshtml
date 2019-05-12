@@ -1,0 +1,64 @@
+﻿
+@{
+    Layout = null;
+}
+
+<div class="container-fluid">
+    <div id="ConvertList">
+        <br />
+        <form role="form" id="Form" name="EditForm" ng-submit="SaveAction(tableInfo.AddUrl,EditForm)">
+            <div class="row col-lg-12" style="margin: 0;">
+                <div>
+                    <h3 style="text-transform: none;font-weight:bold">Cập nhập danh sách đơn hàng</h3>
+                </div>
+            </div>
+            <hr />
+            <div class="row col-lg-12" style="margin: 0;">
+                <div class="col-lg-6">
+                    <div class="text-bold">Trạng thái giao nhận</div>
+                    <div style="margin-top:10px;">
+                        <select class="form-control" id="DH3" style="width:330px;" ng-model="ConvertListData.TrangThai">
+                            <option value="" selected>--Trạng thái đơn hàng--</option>
+                            <option value="0">Đang xử lý</option>
+                            <option value="1">Đã xác nhận</option>
+                            <option value="2">Đang giao hàng</option>
+                            <option  value="3">Đã nhận hàng</option>
+                            <option  value="4">Đã Hủy</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="text-bold">Trạng thái thanh toán</div>
+                    <div style="margin-top:10px;">
+                        <select class="form-control" id="DH4" style="width:330px;" ng-model="ConvertListData.TrangThaiThanhToan">
+                            <option value="" selected>--Trạng thái thanh toán--</option>  
+                            <option value="false">Chưa thanh toán</option>
+                            <option value="true">Đã thanh toán</option>
+                            @*<option value="2">Đã hoàn tiền</option>*@
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <hr />
+
+            <div class="row col-lg-12">
+
+                <center style="margin:auto">
+                    <button title="Thêm mới" type="button" class="btn btn-primary btn-labeled" ng-click="CapNhapList()">
+                        <span class="btn-label">
+                            <i class="fa fa-refresh"></i>
+                        </span>Cập nhập
+                    </button>
+                    <button style="margin-left:10px;" type="reset" class="btn btn-labeled" ng-click="ClosePopup()">
+                        <span class="btn-label">
+                            <i class="fa fa-close"></i>
+                        </span>Bỏ qua
+                    </button>
+                </center>
+            </div>
+        </form>
+
+    </div>
+</div>

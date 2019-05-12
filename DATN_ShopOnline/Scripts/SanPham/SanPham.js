@@ -556,11 +556,13 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
         }
        
     }
+
     $scope.setFile1 = function (element) {
         $scope.$apply(function ($scope) {
             $scope.theFile = element.files[0];
         });
     };
+    
 });
 
 //khởi tạo thư viện toastr

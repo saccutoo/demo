@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/daterangepicker/daterangepicker-bs3.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="~/Layout/LayoutAdmin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+
+
     <link href="~/Framwork/CSS/style.css" rel="stylesheet" />
 
 
@@ -38,6 +40,7 @@
     <link href="~/Framwork/Script/slick-1.8.1/slick/slick.css" rel="stylesheet" />
     <link href="~/Framwork/CSS/bootstrap-select.min.css" rel="stylesheet" />
     <link href="~/Framwork/CSS/fileinput.min.css" rel="stylesheet" />
+    <link href="~/Framwork/CSS/showLoading.css" rel="stylesheet" />
     <link href="~/Framwork/CSS/bootstrap-datepicker.min.css" rel="stylesheet" />
 
     @*slick slider*@
@@ -405,11 +408,10 @@
     </div>
     <!-- ./wrapper -->
     <!-- jQuery -->
-    @*<script src="~/Layout/LayoutAdmin/plugins/jquery/jquery.min.js"></script>*@
-    <script src="~/Framwork/Script/jquery-3.2.1.min.js"></script>
-
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="~/Layout/LayoutAdmin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
     <!-- DataTables -->
     <script src="~/Layout/LayoutAdmin/plugins/datatables/jquery.dataTables.js"></script>
     <script src="~/Layout/LayoutAdmin/plugins/datatables/dataTables.bootstrap4.js"></script>
@@ -440,6 +442,7 @@
     <script src="~/Framwork/Script/jquery.sortable.min.js"></script>
     <script src="~/Framwork/Script/ckeditor/ckeditor.js"></script>
     <script src="~/Framwork/Script/jquery.Timeago.js"></script>
+    <script src="~/Framwork/Script/jquery.showLoading.min.js"></script>
     <script src="~/Framwork/Script/bootstrap-datepicker.min.js"></script>
     <!--thư viện slect chosen jquery -->
 
@@ -496,6 +499,14 @@
         });
         $("#DH2").select2({
             placeholder: "--Trạng thái--",
+            allowClear: true
+        });
+        $("#DH3").select2({
+            placeholder: "--Trạng thái đơn hàng--",
+            allowClear: true
+        });
+        $("#DH4").select2({
+            placeholder: "--Trạng thái thanh toán--",
             allowClear: true
         });
         $("#regular").slick({

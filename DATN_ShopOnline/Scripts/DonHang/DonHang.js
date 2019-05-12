@@ -21,6 +21,7 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
     $scope.MessengerDH = "Không tìm thấy đơn hàng nào...";
 
     $scope.ConvertData = [];
+    $scope.ConvertListData = [];
 
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
@@ -200,7 +201,7 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
     }
 
     $scope.Convert = function (list) {
-        
+
         $scope.isShowCapNhap = true;
 
         $scope.ConvertData.MaDB = list.MaDB;
@@ -216,8 +217,8 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
         $scope.ConvertData.TrangThai1 = list.TrangThai.toString();
         $scope.ConvertData.TrangThaiThanhToan = list.TrangThaiThanhToan.toString();
 
-        
-        if ($scope.ConvertData.TrangThaiThanhToan=='true') {
+
+        if ($scope.ConvertData.TrangThaiThanhToan == 'true') {
             $('#DH2').prop('disabled', 'disabled');
         }
         else {
@@ -260,9 +261,8 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
         $scope.PhiShip = list.PhiShip;
         $scope.TongTien = list.TongTien;
 
-        ShowPopup($, "#SaveDonHang", 1200, 800)       
+        ShowPopup($, "#SaveDonHang", 1200, 800)
         $('#cboxClose').css('display', 'none');
-
     }
 
     $scope.ClosePopup = function () {
@@ -282,8 +282,8 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
     $scope.CapNhap = function () {
         debugger
         var data = {
-            MaDB:$scope.ConvertData.MaDB,
-            TrangThai:$scope.ConvertData.TrangThai1,
+            MaDB: $scope.ConvertData.MaDB,
+            TrangThai: $scope.ConvertData.TrangThai1,
             TrangThaiThanhToan: $scope.ConvertData.TrangThaiThanhToan,
         }
         var response = $http({
@@ -293,10 +293,14 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
             dataType: "json"
         });
         response.then(function (res) {
+            var $body = $('body');
+            $body.showLoading();
             if (res.data.messenger.IsSuccess == true) {
                 toastr.success(res.data.messenger.Message, 'Success');
                 $scope.LoadDonHang();
                 $scope.ClosePopup();
+                $scope.ConvertData = [];
+                $body.hideLoading();
             }
             else {
                 if (res.data.messenger.RedirectToAction != null && res.data.messenger.RedirectToAction == true) {
@@ -306,6 +310,9 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
                     toastr.error(res.data.messenger.Message, 'Error');
                     $scope.LoadDonHang();
                     $scope.ClosePopup();
+                    $body.hideLoading();
+                    $scope.ConvertData = [];
+
                 }
 
             }
@@ -313,6 +320,86 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
         }, function (res) {
             AppendToToastr(false, "Thông báo", "... Lỗi rồi !");
         });
+    }
+
+    $scope.btnConvertList = function () {
+        $scope.ListCheck = [];
+        var checkbox = document.getElementsByName('Check');
+        for (var i = 0; i < checkbox.length; i++) {
+            if (checkbox[i].checked === true) {
+                $scope.ListCheck.push(checkbox[i].value);
+            }
+        }
+        if ($scope.ListCheck.length == 0) {
+            toastr.error("Bạn chưa tích chọn xóa ô nào", 'Error');
+            return
+        }
+        else {
+            ShowPopup($, "#ConvertList", 700, 300);
+            $('#cboxClose').css('display', 'none');
+        }
+
+
+    }
+
+    $scope.CapNhapList = function () {
+        if ($scope.ConvertListData.TrangThai == null || $scope.ConvertListData.TrangThai == "") {
+            toastr.error("Bạn chưa chọn trạng thái đơn hàng", 'Error');
+            return;
+        }
+        else if ($scope.ConvertListData.TrangThaiThanhToan == null || $scope.ConvertListData.TrangThaiThanhToan == "") {
+            toastr.error("Bạn chưa chọn trạng thái thanh toán", 'Error');
+            return;
+        }
+        else {
+        debugger
+            var $body = $('body');
+            $body.showLoading();
+            $scope.ListCheck = [];
+            var checkbox = document.getElementsByName('Check');
+            for (var i = 0; i < checkbox.length; i++) {
+                if (checkbox[i].checked === true) {
+                    $scope.ListCheck.push(checkbox[i].value);
+                }
+            }
+            var data = {
+                data: $scope.ListCheck,
+                TrangThai: $scope.ConvertListData.TrangThai,
+                TrangThaiThanhToan: $scope.ConvertListData.TrangThaiThanhToan,
+            }
+            var response = $http({
+                url: "/DonHang/ConvertListDH",
+                method: "POST",
+                data: JSON.stringify(data),
+                dataType: "json"
+            });
+            response.then(function (res) {
+
+                if (res.data.messenger.IsSuccess == true) {
+                    toastr.success(res.data.messenger.Message, 'Success');
+                    $scope.LoadDonHang();
+                    $scope.ClosePopup();
+                    $body.hideLoading();
+                    $scope.ConvertListData = [];
+                }
+                else {
+                    if (res.data.messenger.RedirectToAction != null && res.data.messenger.RedirectToAction == true) {
+                        window.location.href = "/Page404/Index";
+                    }
+                    else {
+                        toastr.error(res.data.messenger.Message, 'Error');
+                        $scope.LoadDonHang();
+                        $scope.ClosePopup();
+                        $body.hideLoading();
+                        $scope.ConvertListData = [];
+
+
+                    }
+
+                }
+            });
+        }
+       
     }
 });
 

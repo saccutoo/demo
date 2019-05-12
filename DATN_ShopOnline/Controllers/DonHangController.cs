@@ -213,11 +213,11 @@ namespace DATN_ShopOnline.Controllers
                         CTDB.TrangThai = TrangThai;
                         if (TrangThai==3)
                         {
-                            dh.TrangThaiThanhToan = true;
+                            CTDB.TrangThaiThanhToan = true;
                         }
                         else
                         {
-                            dh.TrangThaiThanhToan = false;
+                            CTDB.TrangThaiThanhToan = false;
                         }
                         db.Entry(CTDB).State = EntityState.Modified;
                     }
@@ -317,6 +317,108 @@ namespace DATN_ShopOnline.Controllers
                 messenger.IsSuccess = false;
                 messenger.RedirectToAction = true;
                 messenger.Message = "Cập nhập thất bại!!!";
+                return Content(JsonConvert.SerializeObject(new
+                {
+                    messenger,
+                }));
+            }
+        }
+
+        public ActionResult ConvertList()
+        {
+            return View();
+        }
+        public ActionResult ConvertListDH(int []data, int TrangThai, bool TrangThaiThanhToan)
+        {
+            bool Check = Permission("DonHang", "Submit");
+            if (Check == true)
+            {
+                for (int i = 0; i < data.Length; i++)
+                {
+                    int MaDB = data[i];
+                    DonBan dh = db.DonBans.Find(MaDB);
+                    int MaKH = dh.MaKH;
+                    dh.TrangThai = TrangThai;
+                    dh.TrangThaiThanhToan = TrangThaiThanhToan;
+                    db.Entry(dh).State = EntityState.Modified;
+
+                    var ListCTDH = db.ChiTietDonBans.Where(s => s.MaDB == MaDB).ToList();
+                    if (ListCTDH!=null)
+                    {
+                        foreach (var item in ListCTDH)
+                        {
+                            ChiTietDonBan CTDB = db.ChiTietDonBans.Find(item.MaCTDB);
+                            CTDB.TrangThai = TrangThai;
+                            CTDB.TrangThaiThanhToan = TrangThaiThanhToan;
+                            db.Entry(CTDB).State = EntityState.Modified;
+                        }
+                    }
+                    if (TrangThai==1)
+                    {
+                        #region Gửi mail
+                        int j = 1;
+                        CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
+
+                        string TongTien = dh.TongTien.Value.ToString("#,###", cul.NumberFormat);
+                        string PhiShip = dh.PhiShip.ToString("#,###", cul.NumberFormat);
+                        KhachHang kh = db.KhachHangs.Find(MaKH);
+                        ThanhPho TP = db.ThanhPhos.Find(kh.MaThanhPho);
+                        Huyen huyen = db.Huyens.Find(kh.MaHuyen);
+
+                        var ListCTDB1 = db.ChiTietDonBans.Include(s => s.SANPHAM).Where(s => s.MaDB == MaDB).ToList();
+
+                        var Body = "";
+                        Body += " <html>";
+                        Body += "<body>";
+
+                        Body += "<p style='font-weight:bold'>Họ và tên:" + "<span style='font-weight:lighter;'>" + " " + kh.TenKH + "</span>" + "</p>";
+                        Body += "<p style='font-weight:bold'>Địa chỉ:" + "<span style='font-weight:lighter;'>" + " " + kh.DiaChi + " - " + huyen.TenHuyen + " - " + TP.TenThanhPho + "</span>" + "</p>";
+                        Body += "<p style='font-weight:bold'>Số điện thoại:" + "<span style='font-weight:lighter;'>" + " " + 0 + "" + kh.SDT + "</span>" + "</p>";
+
+                        Body += "<table border='1' width='1000' class='table table-striped table-bordered table-hover'>";
+                        Body += "<tr  style='text-align:center' class='success'>";
+                        Body += "<td colspan='5'><h3>Đơn hàng của bạn từ Rượu plaza</h3> </td>";
+                        Body += "</tr>";
+
+                        Body += "<tr  style='text-align:center'>";
+                        Body += "<td>STT</td> <td> Tên sản phẩm </td><td> Số lượng </td><td> Đơn giá </td> <td> Thành tiền</td>";
+                        Body += "<tr >";
+
+                        foreach (var item in ListCTDB1)
+                        {
+                            string GiaBan = item.SANPHAM.GiaBan.Value.ToString("#,###", cul.NumberFormat);
+                            string Monney = (item.SoLuong.Value * item.SANPHAM.GiaBan.Value).ToString("#,###", cul.NumberFormat);
+
+                            Body += "<tr >";
+                            Body += "<td style='text-align:center;'> " + (j++) + "</td>" + "<td  style='text-align:left;'> " + "<p style='margin-left:20px;font-weight:bold'>" + item.SANPHAM.TenSP + "</p>" + "</td>" + "<td style='text-align:center;color:red'> " + item.SoLuong + "</td>" + "<td style='text-align:center;color:red'> " + GiaBan + "</td>" + "<td style='text-align:center;color:red'> " + Monney + "</td>";
+                            Body += "<tr >";
+                        }
+
+                        Body += "</table>";
+                        Body += "<p style='font-weight:bold'>Phí ship:" + "<span style='font-weight:lighter;color:red'>" + " " + PhiShip + " " + "₫" + "</span>" + "</p>";
+                        Body += "<p style='font-weight:bold'>Tổng tiền:" + "<span style='font-weight:lighter;color:red'>" + " " + TongTien + " " + "₫" + "</span>" + "</p>";
+                        Body += "<p>Đơn hàng của bạn đã được xử lý.Trong vòng 1 tuần đơn hàng sẽ đến địa chỉ của bạn mong bạn hãy kiểm tra sản phẩm trước khi thanh toán.Cảm ơn bạn rất nhiều chúc bạn có một ngày mới vui vẻ <3 !!!</p>";
+                        Body += "</body>";
+                        Body += "</html>";
+
+                        #endregion
+                        var Mail = SendMail(Body, kh.Gmail);                        
+                    }
+
+                }
+                db.SaveChanges();
+                messenger.IsSuccess = true;
+                messenger.Message = "Cập nhập thành công!!!";
+                return Content(JsonConvert.SerializeObject(new
+                {
+                    messenger,
+                }));
+            }
+            else
+            {
+                messenger.IsSuccess = false;
+                messenger.RedirectToAction = true;
+                messenger.Message = "Thêm sản phẩm thất bại!!!";
                 return Content(JsonConvert.SerializeObject(new
                 {
                     messenger,
