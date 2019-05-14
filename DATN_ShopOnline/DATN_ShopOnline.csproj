@@ -280,9 +280,11 @@
     <Compile Include="Entity\ChucVu.cs" />
     <Compile Include="Entity\DonBan.cs" />
     <Compile Include="Entity\DonNhap.cs" />
+    <Compile Include="Entity\Grid.cs" />
     <Compile Include="Entity\Huyen.cs" />
     <Compile Include="Entity\KhachHang.cs" />
     <Compile Include="Entity\LoaiSanPham.cs" />
+    <Compile Include="Entity\Menu.cs" />
     <Compile Include="Entity\MoTaSanPham.cs" />
     <Compile Include="Entity\NhaCungCap.cs" />
     <Compile Include="Entity\NhanVien.cs" />

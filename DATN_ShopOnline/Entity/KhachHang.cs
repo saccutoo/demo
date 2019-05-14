@@ -15,7 +15,7 @@ namespace DATN_ShopOnline.Entity
         [StringLength(50)]
         public string TenKH { get; set; }
 
-        public decimal? SDT { get; set; }
+        public string SDT { get; set; }
 
         [StringLength(3)]
         public string GioiTinh { get; set; }

@@ -54,7 +54,7 @@
             margin: 0px 20px;
         }
 
-        
+
 
         .slick-prev:before,
         .slick-next:before {
@@ -74,8 +74,9 @@
         .slick-current {
             opacity: 1;
         }
-        .slick-track{
-            width:500px;
+
+        .slick-track {
+            width: 500px;
         }
     </style>
     @*load more*@
@@ -306,88 +307,29 @@
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-                             with font-awesome or any other icon font library -->
-                        <li class="nav-item has-treeview">
-                            <a href="~/HomeAdmin/Index" class="nav-link {{HomeActive}}">
-                                <i class="nav-icon fa fa-dashboard"></i>
+                        <li class="nav-item has-treeview" ng-repeat="list in ListGrid" ng-class="(list.link==null  ) ?'menu-open':' ' ">
+                            <a href="{{list.link}}" class="nav-link" ng-class="(link==list.link  ) ?'active':' ' ">
+                                <i class="nav-icon {{list.icon}}"></i>
                                 <p>
-                                    Trang Chủ
-                                    @*<i class="right fa fa-angle-left"></i>*@
+                                    {{list.Name}}
+                                    <i class="fa fa-angle-left right" ng-if="list.Check=='true'"></i>
                                 </p>
                             </a>
 
-                        </li>
+                            <ul class="nav nav-treeview" ng-if="list.Check=='true'"  >
+                                    <li class="nav-item" ng-repeat="listmenu in ListMenu" ng-if="listmenu.GridId==list.GridId">
+                                        <a href="{{listmenu.Link}}" class="nav-link " ng-class="(link==listmenu.Link ) ?'active':' ' ">
+                                            <i class="fa fa-circle-o nav-icon"></i> 
+                                            <p>{{listmenu.Name}}</p>
+                                        </a>
+                                    </li>
 
-                        <li class="nav-item has-treeview">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fa fa-pie-chart"></i>
-                                <p>
-                                    Thống kê
-                                    @*<i class="right fa fa-angle-left"></i>*@
-                                </p>
-                            </a>
-                            @*<ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="pages/charts/chartjs.html" class="nav-link">
-                                            <i class="fa fa-circle-o nav-icon"></i>
-                                            <p>ChartJS</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/charts/flot.html" class="nav-link">
-                                            <i class="fa fa-circle-o nav-icon"></i>
-                                            <p>Flot</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="pages/charts/inline.html" class="nav-link">
-                                            <i class="fa fa-circle-o nav-icon"></i>
-                                            <p>Inline</p>
-                                        </a>
-                                    </li>
-                                </ul>*@
+                                </ul>
                         </li>
-                        <li class="nav-item has-treeview {{TableOpen}}">
-                            <a href="#" class="nav-link {{TableActive}}">
-                                <i class="nav-icon fa fa-table"></i>
-                                <p>
-                                    Quản lý
-                                    <i class="fa fa-angle-left right"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item" ng-show="ShowLSP">
-                                    <a href="#" class="nav-link {{ActiveLSP}}">
-                                        <i class="fa fa-circle-o nav-icon"></i>
-                                        <p>Loại sản phẩm</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item" ng-show="ShowNCC">
-                                    <a href="#" class="nav-link {{ActiveNCC}}">
-                                        <i class="fa fa-circle-o nav-icon"></i>
-                                        <p>Nhà cung cấp</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item" ng-show="ShowSP">
-                                    <a href="/SanPham/Index" class="nav-link {{ActiveSP}}">
-                                        <i class="fa fa-circle-o nav-icon"></i>
-                                        <p>Sản Phẩm</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item" ng-show="ShowDH">
-                                    <a href="/DonHang/Index" class="nav-link {{ActiveDH}}">
-                                        <i class="fa fa-circle-o nav-icon"></i>
-                                        <p>Đơn hàng</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                  
                     </ul>
                 </nav>
-                <!-- /.sidebar-menu -->
             </div>
-            <!-- /.sidebar -->
         </aside>
         <!-- Content Wrapper. Contains page content -->
         @RenderBody()
@@ -445,14 +387,10 @@
     <script src="~/Framwork/Script/jquery.showLoading.min.js"></script>
     <script src="~/Framwork/Script/bootstrap-datepicker.min.js"></script>
     <!--thư viện slect chosen jquery -->
-
-
-
-
     <!-- page script -->
     <script>
         $(function () {
-           
+
             $("#tabs").tabs();
             $('.sortable').sortable();
             //$('select').selectpicker();
@@ -528,7 +466,7 @@
             'buttonBefore': false,
             'disabled': false,
             'placeholder': 'Chọn file của bạn',
-            'width':300,
+            'width': 300,
             'onChange': function () { }
         });
         var btnCust = '';

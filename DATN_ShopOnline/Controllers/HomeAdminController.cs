@@ -18,12 +18,11 @@ using static DATN_ShopOnline.Class.Constant;
 
 namespace DATN_ShopOnline.Controllers
 {
-    public class HomeAdminController : Controller
+    public class HomeAdminController : BaseAdminController
     {
         // GET: HomeAdmin
         private ShopOnline db = new ShopOnline();
         private Messenger messenger = new Messenger();
-
 
         public ActionResult Index()
         {
@@ -211,64 +210,35 @@ namespace DATN_ShopOnline.Controllers
                 result = messenger
             }));
         }
-
-        public bool Permission(string Controller,string Action)
+        public ActionResult LoadMenu()
         {
             if (Session["TaiKhoan1"] != null)
-            {
-                var TaiKhoan = Session["TaiKhoan1"].ToString();
-                var resultNV = db.NhanViens.Single(s => s.TaiKhoan.Contains(TaiKhoan));
-                var resultAction = db.Actions.Single(s => s.Controller== Controller && s.MaNV == resultNV.MaNV);
-                if (Action=="Index")
+            {          
+               try
                 {
-                    if (resultAction.isIndex==true)return true;
-                    else return false;
+                    var TK = Session["TaiKhoan1"].ToString();
+                    NhanVien nv = db.NhanViens.Single(s => s.TaiKhoan == TK);
+                    var result = db.Grids.Where(s => s.MaChucVu == nv.MaChucVu);
+                    return Content(JsonConvert.SerializeObject(new
+                    {
+                        result
+                    }));
                 }
-                else if (Action == "Get")
+                catch (Exception)
                 {
-                    if (resultAction.isGet == true) return true;
-                    else return false;
+                    var TK = Session["TaiKhoan1"].ToString();
+                    var m = db.NhanViens.Single(s => s.TaiKhoan == TK);
+                    return RedirectToAction("Index", "Page404", m);
                 }
-                else if (Action == "Add")
-                {
-                    if (resultAction.isAdd == true) return true;
-                    else return false;
-                }
-                else if (Action == "Edit")
-                {
-                    if (resultAction.isEdit == true) return true;
-                    else return false;
-                }
-                if (Action == "Delete")
-                {
-                    if (resultAction.isDelete == true) return true;
-                    else return false;
-                }
-                else if (Action == "Submit")
-                {
-                    if (resultAction.isSubmit == true) return true;
-                    else return false;
-                }
-                else if (Action == "ExportExcel")
-                {
-                    if (resultAction.isExportExcel == true) return true;
-                    else return false;
-                }
-                else if (Action == "ImportExecel")
-                {
-                    if (resultAction.isImportExcel == true) return true;
-                    else return false;
-                }
-                else
-                {
-                    return false;
-
-                }
+               
             }
             else
             {
-                return false;
+                return RedirectToAction("Index", "LoginAdmin");
             }
+
         }
+
+
     }
 }

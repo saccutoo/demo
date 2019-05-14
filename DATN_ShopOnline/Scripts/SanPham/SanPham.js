@@ -1,19 +1,22 @@
 ﻿var app = angular.module('myApp', ['angularUtils.directives.dirPagination', 'toastr']);//khởi tạo ungularjs cùng với thư viện dirPagination và toastr
 
 app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
-    $scope.TableActive = "active";
-    $scope.ActiveSP = "active";
-    $scope.TableOpen = "menu-open";
+    //$scope.TableActive = "active";
+    //$scope.ActiveSP = "active";
+    //$scope.TableOpen = "menu-open";
     $scope.Titile = "";
+    $scope.Open = "";
     $scope.Select = false;
     $scope.Data = {};
     $scope.isShowAvatar = true;
 
+    $scope.link = window.location.pathname;
+
     //Khởi tạo các hàm khi bắt đầu chạy giao diện
     $scope.init = function () {
         //các hàm dùng chung cho các giao diện
+        $scope.Grid();
         $scope.Login();
-        $scope.Seigneur();
         $scope.LoadLoaiSP();
         $scope.LoadNCC();
         $scope.ComBoSanPham();
@@ -21,22 +24,28 @@ app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
         $scope.LoadSanPham();
 
     }
-    //Lấy quyền hiển thị giao diện từ bảng nhân viên
-    $scope.Seigneur = function () {
-        $http({
-            url: "/HomeAdmin/XemQuyen",
-            method: 'GET'
-        }).then(function mySuccess(res) {
-            if (res.data.result[0].MaChucVu == 1) {
-                $scope.ShowLSP = true;
-                $scope.ShowNCC = true;
-                $scope.ShowSP = true;
-                $scope.ShowDH = true;
-            }
-            if (res.data.result[0].MaChucVu == 2) {
 
-                $scope.ShowSP = true;
+    //Load menu
+    $scope.Grid = function () {
+        $http({
+            url: "/BaseAdmin/LoadMenu",
+            method: 'POST'
+        }).then(function mySuccess(res) {
+        debugger
+            $scope.ListGrid = res.data.result;
+            $scope.ListMenu = res.data.result1;
+            for (var i = 0; i < $scope.ListGrid.length; i++) {
+                if ($scope.ListGrid[i].link==null) {
+                    for (var j = 0; j < $scope.ListMenu.length; j++) {
+                        if ($scope.ListMenu[j].Link==$scope.link) {
+                            $scope.ListGrid[i].link = $scope.ListMenu[j].Link;
+                            $scope.ListGrid[i].Check = 'true';
+                        }
+                    }
+                }
+                    
             }
+            console.log($scope.ListGrid)
         }, function myError(res) {
         });
     }

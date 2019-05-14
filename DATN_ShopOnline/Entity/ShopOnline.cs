@@ -31,6 +31,8 @@ namespace DATN_ShopOnline.Entity
         public virtual DbSet<TuongTac> TuongTacs { get; set; }
         public virtual DbSet<RepBinhLuan> RepBinhLuans { get; set; }
         public virtual DbSet<Action> Actions { get; set; }
+        public virtual DbSet<Grid> Grids { get; set; }
+        public virtual DbSet<Menu> Menu { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

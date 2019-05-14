@@ -3,37 +3,39 @@
 
 app.controller('myCtrl', function ($scope, $http, toastr, $rootScope) {
 
-    $scope.HomeActive = "active";
-  
+    $scope.link = window.location.pathname;
+
     //Khởi tạo các hàm khi bắt đầu chạy giao diện
     $scope.init = function () {
         //các hàm dùng chung cho các giao diện
         $scope.Login();
-        $scope.Seigneur();
+        $scope.Grid();
     }
 
-    //Lấy quyền hiển thị giao diện từ bảng nhân viên
-    $scope.Seigneur = function () {
+
+    //Load menu
+    $scope.Grid = function () {
         $http({
-            url: "/HomeAdmin/XemQuyen",
-            method: 'GET'
-        }).then(function mySuccess(res) {
-       debugger
-            if (res.data.result[0].MaChucVu==1) {
-                $scope.ShowLSP = true;
-                $scope.ShowNCC = true;
-                $scope.ShowSP = true;
-                $scope.ShowDH = true;
+            url: "/BaseAdmin/LoadMenu",
+            method: 'POST'
+        }).then(function mySuccess(res) {        
+            $scope.ListGrid = res.data.result;
+            $scope.ListMenu = res.data.result1;
+            for (var i = 0; i < $scope.ListGrid.length; i++) {
+                if ($scope.ListGrid[i].link == null) {
+                    for (var j = 0; j < $scope.ListMenu.length; j++) {
+                        if ($scope.ListMenu[j].Link == $scope.link) {
+                            $scope.ListGrid[i].link = $scope.ListMenu[j].Link;
+                            $scope.ListGrid[i].Check = 'true';
+                        }
+                    }
+                }
 
-            }
-            if (res.data.result[0].MaChucVu == 2) {
-
-                $scope.ShowSP = true;
             }
         }, function myError(res) {
         });
     }
-
+    
     //lấy hình ảnh và tên nhân viên
     $scope.Login = function () {
         $http({

@@ -117,6 +117,36 @@ namespace DATN_ShopOnline.Controllers
                 return messenger;
             }
         }
+        public ActionResult LoadMenu()
+        {
+            if (Session["TaiKhoan1"] != null)
+            {
+                try
+                {
+                    var TK = Session["TaiKhoan1"].ToString();
+                    NhanVien nv = db.NhanViens.Single(s => s.TaiKhoan == TK);
+                    var result = db.Grids.Where(s => s.MaChucVu == nv.MaChucVu).OrderBy(s => s.Order).ToList();
+                    var result1 = db.Menu.Where(s => s.MaChucVu == nv.MaChucVu).OrderBy(s=>s.Order).ToList();
+                    return Content(JsonConvert.SerializeObject(new
+                    {
+                        result,
+                        result1
+                    }));
+                }
+                catch (Exception)
+                {
+                    var TK = Session["TaiKhoan1"].ToString();
+                    var m = db.NhanViens.Single(s => s.TaiKhoan == TK);
+                    return RedirectToAction("Index", "Page404", m);
+                }
+
+            }
+            else
+            {
+                return RedirectToAction("Index", "LoginAdmin");
+            }
+
+        }
 
     }
 }
